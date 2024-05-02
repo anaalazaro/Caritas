@@ -26,17 +26,21 @@ SECRET_KEY = 'django-insecure-h=pg&y22=9!d_(-qynef^$kn-l!p#xzfpog&a&ics34z1g=qw2
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+CRISPY_ALLOWED_TEMPLATE_PACKS= "bootstrap5"
+CRISPY_TEMPLATE_PACK= "bootstrap5"
 
 # Application definition
 
 INSTALLED_APPS = [
+    'crispy_forms',
+    'crispy_bootstrap5',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app',
 ]
 
 MIDDLEWARE = [
@@ -79,6 +83,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+AUTH_USER_MODEL = 'app.CustomUser'
+
 
 
 # Password validation
@@ -103,13 +109,22 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_TZ = True
+# settings.py
+
+LANGUAGE_CODE = 'es-es'
+
+LANGUAGES = [
+    ('es', 'Spanish'),
+]
+
+TIME_ZONE = 'UTC'  # Opcional, según tu zona horaria
 
 
 # Static files (CSS, JavaScript, Images)
