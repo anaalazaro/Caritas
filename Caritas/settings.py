@@ -25,6 +25,15 @@ SECRET_KEY = 'django-insecure-h=pg&y22=9!d_(-qynef^$kn-l!p#xzfpog&a&ics34z1g=qw2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    os.path.join(BASE_DIR, 'app/static'),
+]
+
+
+
 ALLOWED_HOSTS = []
 CRISPY_ALLOWED_TEMPLATE_PACKS= "bootstrap5"
 CRISPY_TEMPLATE_PACK= "bootstrap5"

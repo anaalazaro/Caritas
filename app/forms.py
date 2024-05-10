@@ -19,13 +19,17 @@ class CustomUserCreationForm(UserCreationForm):
 
     fechaNacimiento = forms.DateField(
         label=_('Fecha de nacimiento'),
-        widget=forms.DateInput(attrs={'type': 'date'}),
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
     )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Modificar los mensajes de validación de la contraseña
         self.fields['password1'].help_text = _("La contraseña debe tener al menos 6 caracteres y ser alfanumérica.")
+        # Agregar clases CSS al formulario
+        self.fields['dni'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password1'].widget.attrs.update({'class': 'form-control'})
+        self.fields['telefono'].widget.attrs.update({'class': 'form-control'})
 
     def clean_dni(self):
         dni = self.cleaned_data.get('dni')
