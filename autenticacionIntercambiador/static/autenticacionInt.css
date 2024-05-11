@@ -1,0 +1,57 @@
+/* autenticacion/static/autenticacion/css/login.css */
+
+/* Contenedor del formulario */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f1f1f1; /* Fondo claro */
+    border: 1px solid #ccc;   /* Borde gris */
+    border-radius: 10px;      /* Bordes redondeados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+/* Campos de entrada */
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: all 0.3s ease; /* Transición para efectos */
+}
+
+/* Efectos al enfocar el campo */
+.login-container input:focus {
+    border-color: #007BFF; /* Azul al enfocar */
+    outline: none;
+}
+
+/* Botón de inicio de sesión */
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF; /* Azul para el botón */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Transición para hover */
+}
+
+/* Efectos al pasar el ratón por el botón */
+.login-container button:hover {
+    background-color: #0056b3; /* Azul oscuro al hacer hover */
+}
+
+/* Mensajes de error */
+.error-message {
+    color: #FF0000; /* Rojo para mensajes de error */
+    font-weight: bold;
+}
+
+/* Mensajes de éxito */
+.success-message {
+    color: #28a745; /* Verde para mensajes de éxito */
+}

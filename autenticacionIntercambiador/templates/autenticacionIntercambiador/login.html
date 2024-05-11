@@ -1,0 +1,30 @@
+<!-- autenticacion/templates/autenticacion/login.html -->
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Iniciar Sesión</button>
+</form>
+<!-- autenticacion/templates/autenticacion/login.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio de Sesión</title>
+    <!-- Enlace al archivo CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'autenticacion/css/login.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+        <!-- Ejemplo de mensaje de error -->
+        {% if error_message %}
+            <div class="error-message">{{ error_message }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
