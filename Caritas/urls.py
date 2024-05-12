@@ -17,11 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from app import views
+from cargarArticulo.views import agregar_articulo
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.hello),
-  path('register/', views.registro, name='register'),
+    path('register/', views.registro, name='register'),
+    path('cargarArticulo/', agregar_articulo, name='cargar_articulo'),
 ]
