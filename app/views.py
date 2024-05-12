@@ -19,7 +19,7 @@ def registro(request):
             # Verificar si el número de teléfono es de La Plata y Argentina
             if not telefono.startswith('221'):
                 # Si el número de teléfono no es válido, añadir un mensaje de error al formulario
-                user_creation_form.add_error('telefono', 'El número de teléfono debe ser de La Plata.')
+                user_creation_form.add_error('telefono', 'El teléfono debe corresponder a La Plata')
             else:
                 # Si el formulario es válido, guardar el usuario y autenticarlo
                 user_creation_form.save()

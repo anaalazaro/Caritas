@@ -34,7 +34,7 @@ class CustomUserCreationForm(UserCreationForm):
     def clean_dni(self):
         dni = self.cleaned_data.get('dni')
         if CustomUser.objects.filter(dni=dni).exists():
-            raise forms.ValidationError(_("Este DNI ya está registrado. Por favor, utiliza otro."))
+            raise forms.ValidationError(_("Ya existe un usuario registrado con ese número de DNI"))
         return dni
 
     def clean_fechaNacimiento(self):
@@ -42,13 +42,13 @@ class CustomUserCreationForm(UserCreationForm):
         today = datetime.today()
         age = today.year - fecha_nacimiento.year - ((today.month, today.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
         if age < 18:
-            raise forms.ValidationError(_("Debe tener al menos 18 años para registrarse."))
+            raise forms.ValidationError(_("No puedes registrarte en el sistema por ser menor de edad"))
         return fecha_nacimiento
 
     def clean_password1(self):
         password1 = self.cleaned_data.get('password1')
         if len(password1) < 6:
-            raise forms.ValidationError(_("La contraseña debe tener al menos 6 caracteres."))
+            raise forms.ValidationError(_("La contraseña debe poseer 6 o más caracteres"))
         if not password1.isalnum():
             raise forms.ValidationError(_("La contraseña debe ser alfanumérica."))
         return password1
