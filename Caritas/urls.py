@@ -18,10 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from app import views
 
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.hello),
-  path('register/', views.registro, name='register'),
+    path('register/', views.registro, name='register'),
+    path('', include('ayudanteAuth.urls')),
+    path('', include('chngPassRequest.urls')),
+    path('', include('changePassword.urls'))
 ]

@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'ayudanteAuth',
+    'chngPassRequest',
+    'changePassword',
 ]
 
 MIDDLEWARE = [
