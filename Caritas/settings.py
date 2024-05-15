@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'verPerfilPropio',
+    'autenticacionIntercambiador',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +60,10 @@ ROOT_URLCONF = 'Caritas.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'app', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'app', 'templates'),
+                 os.path.join (BASE_DIR, 'autenticacionIntercambiador','templates' ),
+                 ],
+
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,17 +1,10 @@
-<!-- autenticacion/templates/autenticacion/login.html -->
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Iniciar Sesión</button>
-</form>
-<!-- autenticacion/templates/autenticacion/login.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Inicio de Sesión</title>
     <!-- Enlace al archivo CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'autenticacion/css/login.css' %}">
+
 </head>
 <body>
     <div class="login-container">

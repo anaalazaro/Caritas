@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from .models import Intercambiador
 from .forms import LoginForm
-import random
+
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -25,12 +26,13 @@ def login_view(request):
             else:
                 # Intento de usuario inexistente
                 if not Intercambiador.objects.filter(dni=dni).exists():
-                    return HttpResponse("El usuario y/o la contraseña son incorrectos")
+                    error_message = "El usuario no existe"
+                else:
+                    error_message = "El usuario y/o la contraseña son incorrectos"
+                    
+                return render(request, 'autenticacionIntercambiador/login.html', {'form': form, 'error_message': error_message})
 
-                # Intento con usuario existente pero contraseña incorrecta
-                user_instance = Intercambiador.objects.get(dni=dni)
-                user_instance.failed_login_attempts += 1
+    else:
+        form = LoginForm()
 
-                
-                user_instance.save()
-                return HttpResponse("El usuario y/o la contraseña son incorrectos")
+    return render(request, 'autenticacionIntercambiador/login.html', {'form': form})
