@@ -15,6 +15,7 @@ def agregar_articulo(request):
             articulo.pendiente = True  # Establece el estado del artículo como pendiente
             articulo.save()
             messages.success(request, 'La publicación del artículo ha quedado pendiente a la aprobación del ayudante.')
+          
             # Enviar notificación al ayudante
         #    ayudante = User.objects.filter(groups__name='Ayudantes').first()  # Suponiendo que los ayudantes estén en un grupo llamado 'Ayudantes'
          #   if ayudante:
@@ -25,7 +26,7 @@ def agregar_articulo(request):
               #      [ayudante.email],
                #  fail_silently=True,
               #  )
-            return redirect('http://127.0.0.1:8000/')  # Redirecciona al usuario a la página principal después de agregar el artículo
+           # return redirect('http://127.0.0.1:8000/')  # Redirecciona al usuario a la página principal después de agregar el artículo
     else:
         form = ArticuloForm()
     return render(request, 'cargarArticulo.html', {'form': form})

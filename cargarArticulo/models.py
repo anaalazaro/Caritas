@@ -9,3 +9,4 @@ class Articulo(models.Model):
     Descripcion = models.TextField()
     Estado = models.CharField(max_length=20)
     pendiente = models.BooleanField(default=True)
+    aprobado= models.BooleanField(default=False)
