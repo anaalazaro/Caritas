@@ -1,5 +1,5 @@
 from django import forms
-from app.models import CustomUser
+from registrarAyudante.models import CustomUser
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.utils.translation import gettext, gettext_lazy as _

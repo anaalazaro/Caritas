@@ -20,7 +20,7 @@ class CustomUser(AbstractUser):
     ]
     roles = models.CharField(max_length=8, choices=OPCIONES_ROL, default='usuario')
     class Meta:
-        app_label = 'app'
+        app_label = 'registrarAyudante'
     # Establece grupos y permisos de usuario como campos no relacionales
     # groups = None
     # user_permissions = None

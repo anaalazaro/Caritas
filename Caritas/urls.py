@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from app import views
+from registrarAyudante import views
 from editarPerfilAdministrador.views import editar_perfil
 
 urlpatterns = [

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,reverse
 from .forms import UsuarioIntercambiadorForm
-from app.models import CustomUser
+from registrarAyudante.models import CustomUser
 
 def editar_perfil(request, usuario_id):
     usuario = CustomUser.objects.get(pk=usuario_id)
