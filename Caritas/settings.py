@@ -50,8 +50,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app', 'cargarArticulo',
-    'verArticulosPendientes', 'controlarPublicacion',
+    'app',
+    'cargarArticulo',
+    'verArticulosPendientes', 
+    'controlarPublicacion',
+    'ayudanteAuth',
+    'chngPassRequest',
+    'changePassword',
 ]
 
 MIDDLEWARE = [
@@ -69,7 +74,7 @@ ROOT_URLCONF = 'Caritas.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'app', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'Caritas', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
