@@ -1,16 +1,21 @@
-
-
 {% block content %}
-
+<!-- Mueve el bloque de carga de las etiquetas crispy_forms_tags fuera del bloque -->
 {% load crispy_forms_tags %}
+{% load static %} <!-- Asegúrate de cargar las etiquetas estáticas -->
+
 
 <h3>REGISTRO DE USUARIO</h3>
 <br>
 
-<form id="register-form" action="" method="post">
+<!-- Agrega la línea para incluir el archivo CSS -->
+<!-- <link rel="stylesheet" type="text/css" href="/Caritas/app/static/styles.css"> -->
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+
+
+<form id="register-form" action="" method="post" class="custom-form">
     {% csrf_token %}
     <div class="card mx-auto" style="width: 30rem;">
-        <div class="card-body">
+        <div class="card-body"> 
             <h5 class="card-title">Complete todos los campos</h5>
             {{ form | crispy }}
             <button class="btn btn-sm btn-primary float-end" type="submit">Registrarse</button>

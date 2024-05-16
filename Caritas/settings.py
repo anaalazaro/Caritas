@@ -25,6 +25,16 @@ SECRET_KEY = 'django-insecure-h=pg&y22=9!d_(-qynef^$kn-l!p#xzfpog&a&ics34z1g=qw2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR/"static",
+    os.path.join(BASE_DIR, 'app/static'),
+    os.path.join(BASE_DIR, 'cargarArticulo/static')
+]
+
+
+
 ALLOWED_HOSTS = []
 CRISPY_ALLOWED_TEMPLATE_PACKS= "bootstrap5"
 CRISPY_TEMPLATE_PACK= "bootstrap5"
@@ -41,6 +51,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'cargarArticulo',
+    'verArticulosPendientes', 
+    'controlarPublicacion',
     'ayudanteAuth',
     'chngPassRequest',
     'changePassword',
@@ -61,7 +74,7 @@ ROOT_URLCONF = 'Caritas.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'app', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'Caritas', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

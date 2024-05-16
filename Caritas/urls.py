@@ -17,11 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from app import views
+from cargarArticulo.views import agregar_articulo
+from verArticulosPendientes.views import mostrar_articulos_pendientes
+from controlarPublicacion.views import controlar_publicacion
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.hello),
     path('register/', views.registro, name='register'),
+    path('cargarArticulo/', agregar_articulo, name='cargar_articulo'),
+    path('articulos_pendientes/', mostrar_articulos_pendientes, name='mostrar_articulos_pendientes'),
+    path('controlar_publicacion/<int:articulo_id>/', controlar_publicacion, name='controlar_articulo'),
     path('', include('ayudanteAuth.urls')),
     path('', include('chngPassRequest.urls')),
     path('', include('changePassword.urls'))

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Controlar Publicación</title>
+</head>
+<body>
+    <h1>{{ articulo.Nombre }}</h1>
+    <p><strong>Descripción:</strong> {{ articulo.Descripcion }}</p>
+    <p><strong>Foto:</strong> <img src="{{ articulo.Foto.url }}" alt="Foto del artículo"></p>
+    <p><strong>Categoría:</strong> {{ articulo.Categoria }}</p>
+    <p><strong>Título:</strong> {{ articulo.Titulo }}</p>
+    <p><strong>Estado:</strong> {{ articulo.Estado }}</p>
+    
+        {% csrf_token %}
+        <button type="submit">Aprobar</button>
+
+        {% csrf_token %}
+        <button type="submit">Desaprobar</button>
+
+</body>
+</html>
