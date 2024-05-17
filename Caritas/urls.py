@@ -28,7 +28,7 @@ from verPerfilPropio import views as perfil_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', viewsInicio.hello),
+    path('Inicio/', viewsInicio.hello, name='inicio'),
     path('register/', views.registro, name='register'),
     path('cargarArticulo/', agregar_articulo, name='cargar_articulo'),
     path('articulos_pendientes/', mostrar_articulos_pendientes, name='mostrar_articulos_pendientes'),
