@@ -21,6 +21,10 @@ from django.conf.urls.static import static
 from app import views
 from autenticacionIntercambiador import views as autenticacion_views
 from verPerfilPropio import views as perfil_views
+from verOtroUsuario import views as other_profile_views
+
+
+
 
 
 
@@ -32,5 +36,6 @@ urlpatterns = [
   path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),  # Incluye las URLs de verPerfilPropio
   #path('login/', autenticacion_views.login_view, name='login'),
  #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
+  path('verOtroUsuario/', other_profile_views.view_other_profile, name= 'ver_otro_usuario'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
