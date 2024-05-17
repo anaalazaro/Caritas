@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from app import views
+from . import views as viewsInicio
 from cargarArticulo.views import agregar_articulo
 from verArticulosPendientes.views import mostrar_articulos_pendientes
 from controlarPublicacion.views import controlar_publicacion
@@ -27,7 +28,7 @@ from verPerfilPropio import views as perfil_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.hello),
+    path('Inicio/', viewsInicio.hello, name='inicio'),
     path('register/', views.registro, name='register'),
     path('cargarArticulo/', agregar_articulo, name='cargar_articulo'),
     path('articulos_pendientes/', mostrar_articulos_pendientes, name='mostrar_articulos_pendientes'),

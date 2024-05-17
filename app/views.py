@@ -10,8 +10,6 @@ from .forms import CustomUserCreationForm
 
 
 
-def hello(request):
-    return render(request, 'inicio.html')
 
 
 def registro(request):
