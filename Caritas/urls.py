@@ -31,7 +31,6 @@ urlpatterns = [
     path('register/', views.registro, name='register'),
     path('cargarArticulo/', agregar_articulo, name='cargar_articulo'),
     path('articulos_pendientes/', mostrar_articulos_pendientes, name='mostrar_articulos_pendientes'),
-<<<<<<< HEAD
      path('controlar_publicacion/<int:articulo_id>/', controlar_publicacion, name='controlar_articulo'),
 
   path('register/', views.registro, name='register'),
