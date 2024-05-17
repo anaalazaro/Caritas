@@ -54,6 +54,9 @@ INSTALLED_APPS = [
     'verArticulosPendientes', 'controlarPublicacion',
     'verPerfilPropio',
     'autenticacionIntercambiador',
+    'ayudanteAuth',
+    'chngPassRequest',
+    'changePassword',
 ]
 
 MIDDLEWARE = [
@@ -72,7 +75,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'app', 'templates'),
-                 os.path.join (BASE_DIR, 'autenticacionIntercambiador','templates' ),
+                 os.path.join (BASE_DIR, 'autenticacionIntercambiador','templates' ),[os.path.join(BASE_DIR, 'Caritas', 'templates')]
                  ],
 
         'APP_DIRS': True,
