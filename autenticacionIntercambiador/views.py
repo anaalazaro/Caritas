@@ -20,13 +20,13 @@ def login_view(request):
             # Escenario 1: Inicio de sesión exitoso
             if user is not None:
                 login(request, user)
-                return HttpResponse("Inicio de sesión exitoso")
+                return HttpResponse("Inició sesión exitosamente")
 
             # Escenario 2 y 3: Fallos por usuario inexistente o contraseña incorrecta
             else:
                 # Intento de usuario inexistente
                 if not Intercambiador.objects.filter(dni=dni).exists():
-                    error_message = "El usuario no existe"
+                    error_message = "El usuario y/o la contraseña son incorrectos"
                 else:
                     error_message = "El usuario y/o la contraseña son incorrectos"
                     
