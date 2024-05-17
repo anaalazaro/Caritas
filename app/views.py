@@ -4,8 +4,6 @@ from django.contrib.auth import authenticate, login
 
 from django.shortcuts import render
 
-def hello(request):
-    return render(request, 'inicio.html')
 
 
 def registro(request):

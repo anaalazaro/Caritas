@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from app import views
+from . import views as viewsInicio
 from cargarArticulo.views import agregar_articulo
 from verArticulosPendientes.views import mostrar_articulos_pendientes
 from controlarPublicacion.views import controlar_publicacion
@@ -25,7 +26,7 @@ from controlarPublicacion.views import controlar_publicacion
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.hello),
+    path('', viewsInicio.hello),
     path('register/', views.registro, name='register'),
     path('cargarArticulo/', agregar_articulo, name='cargar_articulo'),
     path('articulos_pendientes/', mostrar_articulos_pendientes, name='mostrar_articulos_pendientes'),
