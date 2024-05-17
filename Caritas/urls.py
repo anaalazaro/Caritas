@@ -37,9 +37,10 @@ urlpatterns = [
   path('register/', views.registro, name='register'),
   path('login/', autenticacion_views.login_view, name='login'),  # Incluye las URLs de autenticacionIntercambiador
   path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),  
-    path('', include('ayudanteAuth.urls')),
-    path('', include('chngPassRequest.urls')),
-    path('', include('changePassword.urls'))# Incluye las URLs de verPerfilPropio
+  path('', include('ayudanteAuth.urls')),
+  path('', include('chngPassRequest.urls')),
+  path('', include('changePassword.urls')),
+  path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal')# Incluye las URLs de verPerfilPropio
   #path('login/', autenticacion_views.login_view, name='login'),
  #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,41 +1,34 @@
-{% extends 'base.html' %}  <!-- Extiende de una plantilla base si tienes -->
+{% extends 'base.html' %}
 
 {% block content %}
-<h1>Perfil de {{ user.username }}</h1>
+    <h1>Perfil de {{ user.username }}</h1>
 
-{% if user.profile_picture %}
-    <img src="{{ user.profile_picture.url }}" alt="Foto de perfil" width="100" height="100">
-{% endif %}
-
-<p><strong>Email:</strong> {{ user.email }}</p>
-<p><strong>Número de Teléfono:</strong> {{ user.phone_number }}</p>
-<p><strong>Puntaje:</strong> {{ user.score }}</p>
-
-{% endblock %}
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Perfil de Usuario</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">  <!-- Carga el CSS -->
-</head>
-<body>
-    <div class="profile-section">
-        <h1>Perfil de {{ user.username }}</h1>
-
+    {% if user.profile_picture %}
         <img src="{{ user.profile_picture.url }}" alt="Foto de perfil" width="100" height="100">
+    {% endif %}
 
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Número de Teléfono:</strong> {{ user.phone_number }}</p>
-        <p><strong>Puntaje:</strong> {{ user.score }}</p>
+    {% if custom_user %}
+        <p><strong>Email:</strong> <span style="color: black;">{{ custom_user.email }}</span></p>
+        <p><strong>Número de Teléfono:</strong> <span style="color: black;">{{ custom_user.telefono }}</span></p>
+        <p><strong>Puntaje:</strong> <span style="color: black;">{{ custom_user.score }}</span></p>
+        <!-- Aquí puedes agregar más campos específicos de CustomUser si es necesario -->
+    {% else %}
+        <p>No se encontró información adicional del usuario.</p>
+    {% endif %}
 
-        <div class="action-buttons">
-            <button onclick="window.location.href='/users/products/'">Ver Productos</button>
-            <button onclick="window.location.href='/users/reviews/'">Ver Reseñas</button>
-            <button onclick="window.location.href='/users/ratings/'">Ver Calificaciones</button>
-        </div>
+    <div class="action-buttons">
+        <button onclick="window.location.href='/users/products/'">Ver Productos</button>
+        <button onclick="window.location.href='/users/reviews/'">Ver Reseñas</button>
+        <button onclick="window.location.href='/users/ratings/'">Ver Calificaciones</button>
     </div>
-</body>
-</html>
+
+    <form method="post">
+        {% csrf_token %}
+        <!-- Aquí puedes agregar cualquier otro campo de formulario si es necesario -->
+        <button type="submit">Enviar</button>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    <!-- Cualquier script adicional que necesites -->
+{% endblock %}
