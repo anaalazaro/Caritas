@@ -1,22 +1,35 @@
-<!-- profile.html -->
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil de Usuario</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <h1>Perfil de Usuario</h1>
-    {% if user_profile %}
-        <p><strong>Nombre:</strong> {{ user_profile.first_name }}</p>
-        <p><strong>Apellido:</strong> {{ user_profile.last_name }}</p>
-        <p><strong>Puntaje:</strong> {{ user_profile.score }}</p>
-        <a href="{% url 'productos_del_usuario' user_profile.username %}"><button>Ver Productos</button></a>
-        <a href="{% url 'resenas_del_usuario' user_profile.username %}"><button>Ver Reseñas</button></a>
-    {% else %}
-        <p>El perfil solicitado no existe.</p>
-    {% endif %}
+    <div class="container mt-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header text-center bg-primary text-white">
+                <h1>Perfil de Usuario</h1>
+            </div>
+            <div class="card-body">
+                {% if user_profile %}
+                    <p><strong>Nombre:</strong> {{ user_profile.first_name }}</p>
+                    <p><strong>Apellido:</strong> {{ user_profile.last_name }}</p>
+                    <p><strong>Puntaje:</strong> {{ user_profile.score }}</p>
+                    <div class="mt-3">
+                        <a href="{% url 'productos_del_usuario' user_profile.username %}" class="btn btn-primary">Ver Productos</a>
+                        <a href="{% url 'resenas_del_usuario' user_profile.username %}" class="btn btn-danger">Ver Reseñas</a>
+                    </div>
+                {% else %}
+                    <p>El perfil solicitado no existe.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
+
