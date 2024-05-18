@@ -22,6 +22,7 @@ from app import views
 from autenticacionIntercambiador import views as autenticacion_views
 from verPerfilPropio import views as perfil_views
 from verOtroUsuario import views as other_profile_views
+from eliminarCuenta import views as eliminar_cuenta_views
 
 
 
@@ -37,5 +38,6 @@ urlpatterns = [
   #path('login/', autenticacion_views.login_view, name='login'),
  #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
   path('verOtroUsuario/', other_profile_views.view_other_profile, name= 'ver_otro_usuario'),
+  path ('eliminarCuenta/', eliminar_cuenta_views, name= 'eliminar_cuenta'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

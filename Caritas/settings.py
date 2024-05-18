@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'app',
     'verPerfilPropio',
     'autenticacionIntercambiador',
+    'verOtroUsuario',
+    'eliminarCuenta',
 ]
 
 MIDDLEWARE = [

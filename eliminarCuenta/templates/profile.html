@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Perfil de Usuario{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Perfil de Usuario</h2>
+        <p class="card-text">Nombre de usuario: {{ user.username }}</p>
+        <p class="card-text">Email: {{ user.email }}</p>
+        <!-- Otros detalles del perfil -->
+
+        <a href="{% url 'delete_account' %}" class="btn btn-danger">Eliminar cuenta</a>
+    </div>
+</div>
+{% endblock %}

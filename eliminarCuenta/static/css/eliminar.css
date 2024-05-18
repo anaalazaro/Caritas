@@ -1,0 +1,69 @@
+/* styles.css */
+
+/* Definición de colores de Cáritas */
+:root {
+    --caritas-red: #e60000;
+    --caritas-dark-red: #990000;
+    --caritas-white: #ffffff;
+    --caritas-grey: #f2f2f2;
+    --caritas-dark-grey: #4d4d4d;
+}
+
+/* Estilos generales */
+body {
+    background-color: var(--caritas-grey);
+    color: var(--caritas-dark-grey);
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: var(--caritas-red);
+}
+
+.navbar-brand,
+.navbar-nav .nav-link {
+    color: var(--caritas-white) !important;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.card {
+    border: 1px solid var(--caritas-dark-grey);
+    background-color: var(--caritas-white);
+}
+
+.card-title {
+    color: var(--caritas-dark-red);
+}
+
+.card-body {
+    color: var(--caritas-dark-grey);
+}
+
+.btn-primary {
+    background-color: var(--caritas-red);
+    border-color: var(--caritas-red);
+}
+
+.btn-primary:hover {
+    background-color: var(--caritas-dark-red);
+    border-color: var(--caritas-dark-red);
+}
+
+.btn-danger {
+    background-color: var(--caritas-dark-red);
+    border-color: var(--caritas-dark-red);
+}
+
+.btn-danger:hover {
+    background-color: var(--caritas-red);
+    border-color: var(--caritas-red);
+}
+
+.alert-info {
+    background-color: var(--caritas-grey);
+    color: var(--caritas-dark-grey);
+    border-color: var(--caritas-dark-grey);
+}
