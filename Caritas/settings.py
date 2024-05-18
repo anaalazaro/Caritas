@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'chngPassRequest',
     'changePassword',
     'registrarAyudante',
-    'editarPerfilAdministrador'
+    'editarPerfilAdministrador',
     'verOtroUsuario',
     'eliminarCuenta',
 ]
