@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'editarPerfilAdministrador',
     'verOtroUsuario',
     'eliminarCuenta',
+    'verDetalleDeArticulo'
 ]
 
 MIDDLEWARE = [
