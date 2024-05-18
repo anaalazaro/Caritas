@@ -55,5 +55,5 @@ urlpatterns = [
   path('detalleArticulo//<int:articulo_id>/', viewsDetalle.mostrarDetalle, name='detalle'),
   path('ordenarAlfabeticamente', viewsInicio.mostrarArticulosOrdenados, name='ordenados'),
   path('verOtroUsuario/', other_profile_views.view_other_profile, name= 'ver_otro_usuario'),
-  path ('eliminarCuenta/', eliminar_cuenta_views, name= 'eliminar_cuenta'),
+  path ('eliminarCuenta/', eliminar_cuenta_views.delete_account, name= 'eliminar_cuenta'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
