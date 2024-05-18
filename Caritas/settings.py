@@ -30,7 +30,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR/"static",
     os.path.join(BASE_DIR, 'app/static'),
-    os.path.join(BASE_DIR, 'cargarArticulo/static')
+    os.path.join(BASE_DIR, 'cargarArticulo/static'),
+    os.path.join(BASE_DIR, 'Caritas/static'),
+
 ]
 
 
@@ -50,10 +52,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app',
-    'cargarArticulo',
-    'verArticulosPendientes', 
-    'controlarPublicacion',
+    'app', 'cargarArticulo',
+    'verArticulosPendientes', 'controlarPublicacion',
+    'verPerfilPropio',
+    'autenticacionIntercambiador',
     'ayudanteAuth',
     'chngPassRequest',
     'changePassword',
@@ -74,7 +76,10 @@ ROOT_URLCONF = 'Caritas.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'Caritas', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'app', 'templates'),
+            os.path.join(BASE_DIR, 'autenticacionIntercambiador', 'templates'),
+            os.path.join(BASE_DIR, 'Caritas', 'templates'),
+            os.path.join(BASE_DIR, 'verPerfilPropio', 'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

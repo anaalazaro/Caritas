@@ -1,0 +1,51 @@
+/* Estilos globales para el sitio */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Fondo claro para contraste */
+    color: #333; /* Color de texto primario */
+}
+
+/* Estilo para encabezados */
+h1 {
+    color: #003366; /* Azul oscuro */
+}
+
+/* Estilos para imágenes */
+img {
+    border: 2px solid #003366; /* Borde azul */
+    border-radius: 50%; /* Imagen redonda */
+}
+
+/* Estilos para botones */
+button {
+    background-color: #0066cc; /* Azul medio */
+    color: white; /* Texto blanco para contraste */
+    border: none;
+    border-radius: 5px; /* Botón ligeramente redondeado */
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0055aa; /* Azul más oscuro al pasar el mouse */
+}
+
+/* Sección para mostrar detalles del perfil */
+.profile-section {
+    background-color: white; /* Fondo blanco para la sección */
+    border: 1px solid #cccccc; /* Borde gris claro */
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px;
+}
+
+/* Estilo para el texto importante */
+strong {
+    color: #cc0000; /* Rojo para resaltar */
+}
+
+/* Sección de botones de acción */
+.action-buttons {
+    display: flex; /* Para alinear horizontalmente los botones */
+    gap: 10px; /* Espacio entre botones */
+}
