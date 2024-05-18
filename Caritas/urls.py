@@ -26,6 +26,7 @@ from verArticulosPendientes.views import mostrar_articulos_pendientes
 from controlarPublicacion.views import controlar_publicacion
 from autenticacionIntercambiador import views as autenticacion_views
 from verPerfilPropio import views as perfil_views
+from verDetalleDeArticulo import views as viewsDetalle
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,6 +42,7 @@ urlpatterns = [
   path('', include('ayudanteAuth.urls')),
   path('', include('chngPassRequest.urls')),
   path('', include('changePassword.urls')),
-  path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal')# Incluye las URLs de verPerfilPropio
-  #path('detalleArticulo/, viewsDetalle.mostrarDetalle, name='detalle')
+  path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal'),# Incluye las URLs de verPerfilPropio
+  path('detalleArticulo//<int:articulo_id>/', viewsDetalle.mostrarDetalle, name='detalle'),
+  path('ordenarAlfabeticamente', viewsInicio.mostrarArticulosOrdenados, name='ordenados')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

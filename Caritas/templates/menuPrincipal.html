@@ -13,6 +13,17 @@
             {% csrf_token %}
             <button type="submit" class="btn btn-primary">Ver perfil propio</button>
         </form>
+        <button type="submit" class="btn btn-primary">
+            <a href="{% url 'ordenados' %}">Ordenar artículos alfabéticamente</a>
+        </button>
+        
+        <h1>Artículos</h1>
+        <ul>
+            {% for articulo in articulos %}
+                <li>{{ articulo.Nombre }} - {{ articulo.Descripcion }} <a href="{% url 'detalle' articulo.id %}"><button>Ver detalle</button></a></li>
+            {% endfor %}
+        </ul>
+    </body>
     </div>
 </body>
 </html>

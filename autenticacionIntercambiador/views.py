@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from app.models import CustomUser
 from .forms import LoginForm
 
+
 def mostrar(request):
     return render (request, 'menuPrincipal.html', {'user': CustomUser})
 

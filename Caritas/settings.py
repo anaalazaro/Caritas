@@ -79,7 +79,8 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'app', 'templates'),
             os.path.join(BASE_DIR, 'autenticacionIntercambiador', 'templates'),
             os.path.join(BASE_DIR, 'Caritas', 'templates'),
-            os.path.join(BASE_DIR, 'verPerfilPropio', 'templates'),],
+            os.path.join(BASE_DIR, 'verPerfilPropio', 'templates'),
+            os.path.join(BASE_DIR, 'verDetalleDeArticulo', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
