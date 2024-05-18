@@ -1,0 +1,33 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+<form  action="" method="POST">
+    {% csrf_token %}
+    <div class="card mx-auto" style="width: 30rem;">
+        <div class="card-body">
+            <h5 class="card-title">Complete todos los campos</h5>
+            {{ form|crispy }}
+            
+        </div>
+        <button  type="submit">
+            Registrar Ayudante
+        </button>
+    </div>
+    <!-- {% if form.errors %}
+    <div class="error-message">
+        <p>Error:</p>
+        <ul>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %} -->
+</form>
+
+{% endblock %}
