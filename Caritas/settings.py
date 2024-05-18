@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     'changePassword',
     'registrarAyudante',
     'editarPerfilAdministrador'
+    'verOtroUsuario',
+    'eliminarCuenta',
 ]
 
 MIDDLEWARE = [

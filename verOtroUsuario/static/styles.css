@@ -1,0 +1,44 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.card-header {
+    background-color: #0056b3; /* Azul de Cáritas */
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: #0056b3; /* Azul de Cáritas */
+    border-color: #0056b3;
+}
+
+.btn-primary:hover {
+    background-color: #003f8a;
+    border-color: #003f8a;
+}
+
+.btn-danger {
+    background-color: #d9534f; /* Rojo de Cáritas */
+    border-color: #d9534f;
+}
+
+.btn-danger:hover {
+    background-color: #c9302c;
+    border-color: #c9302c;
+}
+
+.mt-5 {
+    margin-top: 3rem;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}

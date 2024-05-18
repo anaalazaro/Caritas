@@ -29,6 +29,13 @@ from controlarPublicacion.views import controlar_publicacion
 from autenticacionIntercambiador import views as autenticacion_views
 from verPerfilPropio import views as perfil_views
 from verDetalleDeArticulo import views as viewsDetalle
+from verOtroUsuario import views as other_profile_views
+from eliminarCuenta import views as eliminar_cuenta_views
+
+
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -46,5 +53,7 @@ urlpatterns = [
   path('', include('changePassword.urls')),
   path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal'),# Incluye las URLs de verPerfilPropio
   path('detalleArticulo//<int:articulo_id>/', viewsDetalle.mostrarDetalle, name='detalle'),
-  path('ordenarAlfabeticamente', viewsInicio.mostrarArticulosOrdenados, name='ordenados')
+  path('ordenarAlfabeticamente', viewsInicio.mostrarArticulosOrdenados, name='ordenados'),
+  path('verOtroUsuario/', other_profile_views.view_other_profile, name= 'ver_otro_usuario'),
+  path ('eliminarCuenta/', eliminar_cuenta_views, name= 'eliminar_cuenta'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
