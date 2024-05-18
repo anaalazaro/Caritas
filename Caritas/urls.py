@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.decorators import login_required
 from app import views
 from . import views as viewsInicio
 from cargarArticulo.views import agregar_articulo
@@ -41,6 +42,5 @@ urlpatterns = [
   path('', include('chngPassRequest.urls')),
   path('', include('changePassword.urls')),
   path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal')# Incluye las URLs de verPerfilPropio
-  #path('login/', autenticacion_views.login_view, name='login'),
- #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
+  #path('detalleArticulo/, viewsDetalle.mostrarDetalle, name='detalle')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
