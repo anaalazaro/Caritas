@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from registrarAyudante.views import registro
+from editarPerfilAdministrador.views import editar_perfil
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
@@ -30,13 +32,13 @@ from verDetalleDeArticulo import views as viewsDetalle
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('registrar/', registro,name = 'registro'),
+    path('editar_perfil/<int:usuario_id>/', editar_perfil,name = 'editarPerfilAdmin'),
     path('Inicio/', viewsInicio.hello, name='inicio'),
     path('register/', views.registro, name='register'),
     path('cargarArticulo/', agregar_articulo, name='cargar_articulo'),
     path('articulos_pendientes/', mostrar_articulos_pendientes, name='mostrar_articulos_pendientes'),
      path('controlar_publicacion/<int:articulo_id>/', controlar_publicacion, name='controlar_articulo'),
-
-  path('register/', views.registro, name='register'),
   path('login/', autenticacion_views.login_view, name='login'),  # Incluye las URLs de autenticacionIntercambiador
   path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),  
   path('', include('ayudanteAuth.urls')),
