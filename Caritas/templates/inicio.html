@@ -40,11 +40,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href={% url 'login' %}>Iniciar sesión como intercambiador</a>
                     </li>
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href={% url 'perfil_propio' %}>Ver perfil propio</a>
-                    </li>
-                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href={% url 'login_otp' %}>Iniciar sesión como administrador o ayudante</a>
                     </li>

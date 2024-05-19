@@ -6,11 +6,13 @@ def hello(request):
 
 def mostrar(request):
     user=request.user
-    return render (request, 'menuPrincipal.html', {'user': user, 'articulos': Articulo.objects.filter(aprobado=False)})
+    sugeridos= Articulo.objects.filter(aprobado=False).exclude(usuario=request.user)
+
+    return render (request, 'menuPrincipal.html', {'user': user, 'articulos':sugeridos })
 
 def mostrarArticulosOrdenados(request):
-   ordenados= Articulo.objects.all().order_by('Titulo')
-   return render(request, 'menuPrincipal.html', {'user': CustomUser, 'articulos': ordenados})
+   ordenados= Articulo.objects.filter(aprobado=False).exclude(usuario=request.user).order_by('Titulo')
+   return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': ordenados})
 
 
 from django.contrib import messages

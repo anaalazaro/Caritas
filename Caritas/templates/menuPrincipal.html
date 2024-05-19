@@ -48,7 +48,7 @@
         
         <ul>
             {% for articulo in articulos %}
-                <li>{{ articulo.Nombre }} - {{ articulo.Descripcion }} <a href="{% url 'detalle' articulo.id %}"><button>Ver detalle</button></a></li>
+                <li>{{ articulo.Titulo }} - {{ articulo.Descripcion }} <a href="{% url 'detalle' articulo.id %}"><button>Ver detalle</button></a></li>
             {% endfor %}
         </ul>
     </div>
