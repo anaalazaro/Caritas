@@ -8,9 +8,9 @@
     {% endif %}
 
     {% if custom_user %}
-        <p><strong>Email:</strong> <span style="color: black;">{{ custom_user.email }}</span></p>
+        <p><strong>Email:</strong> <span style="color: black;">{{ custom_user.mail }}</span></p>
         <p><strong>Número de Teléfono:</strong> <span style="color: black;">{{ custom_user.telefono }}</span></p>
-        <p><strong>Puntaje:</strong> <span style="color: black;">{{ custom_user.score }}</span></p>
+        <p><strong>Puntaje:</strong> <span style="color: black;">{{ custom_user.puntaje }}</span></p>
         <!-- Aquí puedes agregar más campos específicos de CustomUser si es necesario -->
     {% else %}
         <p>No se encontró información adicional del usuario.</p>

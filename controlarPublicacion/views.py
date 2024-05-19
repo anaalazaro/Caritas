@@ -1,5 +1,7 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from cargarArticulo.models import Articulo
+from django.contrib import messages
 
 def controlar_publicacion(request, articulo_id):
     articulo = get_object_or_404(Articulo, pk=articulo_id)
@@ -8,11 +10,14 @@ def controlar_publicacion(request, articulo_id):
 def aprobar_articulo(request, articulo_id):
     articulo = get_object_or_404(Articulo, pk=articulo_id)
     articulo.pendiente = False
+    articulo.aprobado = True
     articulo.save()
-    return redirect('controlar_publicacion', articulo_id=articulo_id)
+    messages.success(request, 'La publicación se ha aprobado con éxito.')
+    return redirect('controlar_articulo', articulo_id=articulo_id)
 
 def desaprobar_articulo(request, articulo_id):
     articulo = get_object_or_404(Articulo, pk=articulo_id)
     articulo.pendiente = False
     articulo.save()
-    return redirect('controlar_publicacion', articulo_id=articulo_id)
+    messages.success(request, 'La publicación se ha desaprobado con éxito.')
+    return redirect('controlar_articulo', articulo_id=articulo_id)

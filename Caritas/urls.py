@@ -25,7 +25,7 @@ from app import views
 from . import views as viewsInicio
 from cargarArticulo import views as cargarArticuloViews
 from verArticulosPendientes.views import mostrar_articulos_pendientes
-from controlarPublicacion.views import controlar_publicacion
+from controlarPublicacion import views as controlar_publicacionViews
 from autenticacionIntercambiador import views as autenticacion_views
 from verPerfilPropio import views as perfil_views
 from verDetalleDeArticulo import views as viewsDetalle
@@ -45,7 +45,9 @@ urlpatterns = [
     path('register/', views.registro, name='register'),
     path('cargarArticulo/', cargarArticuloViews.cargar_articulo, name='cargar_articulo'),
     path('articulos_pendientes', mostrar_articulos_pendientes, name='mostrar_articulos_pendientes'),
-     path('controlar_publicacion/<int:articulo_id>/', controlar_publicacion, name='controlar_articulo'),
+    path('controlar_publicacion/<int:articulo_id>/', controlar_publicacionViews.controlar_publicacion, name='controlar_articulo'),
+ path('desaprobar/<int:articulo_id>/', controlar_publicacionViews.desaprobar_articulo, name="desaprobar"),
+   path('aprobar/<int:articulo_id>/', controlar_publicacionViews.aprobar_articulo, name="aprobar"),
   path('login/', autenticacion_views.login_view, name='login'),  # Incluye las URLs de autenticacionIntercambiador
   path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),  
   path('', include('ayudanteAuth.urls')),
