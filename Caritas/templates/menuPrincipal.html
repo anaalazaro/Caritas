@@ -5,52 +5,85 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sesión iniciada</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilos adicionales pueden ir aquí */
+        .container {
+            max-width: 800px;
+        }
+        .post {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .post-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .post-description {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .post-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .post-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        <h2>Se inició sesión exitosamente</h2>
-        <form action="{% url 'perfil_propio' %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Ver perfil propio</button>
-        </form>
-        <button type="submit" class="btn btn-primary">
-            <a href="{% url 'ordenados' %}">Ordenar artículos alfabéticamente</a>
-        </button>
-        <button type="submit" class="btn btn-primary">
-            <a href="{% url 'eliminar_cuenta' user.id %}">Eliminar cuenta</a>
-        </button>
-        <button type="submit" class="btn btn-primary">
-            <a href="{% url 'cargar_articulo' %}">Cargar articulo</a>
-        </button>
-        
+    <div class="container mt-5">
+        <div class="post">
+            <h2 class="post-title">Se inició sesión exitosamente</h2>
+            <form action="{% url 'perfil_propio' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Ver perfil propio</button>
+            </form>
+            <a href="{% url 'eliminar_cuenta' user.id %}" class="btn btn-primary">Eliminar cuenta</a>
+            <a href="{% url 'cargar_articulo' %}" class="btn btn-primary">Cargar artículo</a>
+        </div>
 
-        
-        <h1>Artículos</h1>
-        <form method="GET">
-            {% csrf_token %}
-            <select name="categoria" class="form-select">
-                <option value="" selected disabled>Selecciona una categoría</option>
-                <option value="ropa">Ropa</option>
-                <option value="articulos_escolares">Artículos Escolares</option>
-                <option value="articulos_limpieza">Artículos de Limpieza</option>
-                <option value="alimentos_noperecederos">Alimentos no perecederos</option>
-            </select>
-            <button type="submit" class="btn btn-primary mt-3">Buscar</button>
-        </form>
-        
-        {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                    <p>{{ message }}</p>
+        <div class="post">
+            <h2 class="post-title">Artículos sugeridos</h2>
+            <form method="GET">
+                {% csrf_token %}
+                <select name="categoria" class="form-select mb-3">
+                    <option value="" selected disabled>Selecciona una categoría</option>
+                    <option value="ropa">Ropa</option>
+                    <option value="articulos_escolares">Artículos Escolares</option>
+                    <option value="articulos_limpieza">Artículos de Limpieza</option>
+                    <option value="alimentos_noperecederos">Alimentos no perecederos</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
+            <a href="{% url 'ordenados' %}" class="btn btn-primary">Ordenar artículos alfabéticamente</a>
+            {% if messages %}
+                <div class="alert alert-info mt-3">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <ul class="list-group mt-3">
+                {% for articulo in articulos %}
+                    <li class="list-group-item">
+                        <h3>{{ articulo.Titulo }}</h3>
+                        <p>{{ articulo.Descripcion }}</p>
+                        <a href="{% url 'detalle' articulo.id %}" class="post-link">Ver detalle</a>
+                    </li>
                 {% endfor %}
-            </div>
-        {% endif %}
-        
-        <ul>
-            {% for articulo in articulos %}
-                <li>{{ articulo.Titulo }} - {{ articulo.Descripcion }} <a href="{% url 'detalle' articulo.id %}"><button>Ver detalle</button></a></li>
-            {% endfor %}
-        </ul>
+            </ul>
+        </div>
     </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
