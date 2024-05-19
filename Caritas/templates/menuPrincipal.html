@@ -76,6 +76,7 @@
                     <li class="list-group-item">
                         <h3>{{ articulo.Titulo }}</h3>
                         <p>{{ articulo.Descripcion }}</p>
+                        <p><img src="{{ articulo.Foto.url }}" alt="Foto del artículo"></p>
                         <a href="{% url 'detalle' articulo.id %}" class="post-link">Ver detalle</a>
                     </li>
                 {% endfor %}
