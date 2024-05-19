@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import RedirectView
 from app import views
 from . import views as viewsInicio
 from cargarArticulo.views import agregar_articulo
@@ -32,15 +33,16 @@ urlpatterns = [
     path('register/', views.registro, name='register'),
     path('cargarArticulo/', agregar_articulo, name='cargar_articulo'),
     path('articulos_pendientes/', mostrar_articulos_pendientes, name='mostrar_articulos_pendientes'),
-     path('controlar_publicacion/<int:articulo_id>/', controlar_publicacion, name='controlar_articulo'),
-
-  path('register/', views.registro, name='register'),
-  path('login/', autenticacion_views.login_view, name='login'),  # Incluye las URLs de autenticacionIntercambiador
-  path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),  
-  path('', include('ayudanteAuth.urls')),
-  path('', include('chngPassRequest.urls')),
-  path('', include('changePassword.urls')),
-  path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal')# Incluye las URLs de verPerfilPropio
+    path('controlar_publicacion/<int:articulo_id>/', controlar_publicacion, name='controlar_articulo'),
+    path('', RedirectView.as_view(url='/Inicio/', permanent=True)),
+    path('register/', views.registro, name='register'),
+    path('login/', autenticacion_views.login_view, name='login'),  # Incluye las URLs de autenticacionIntercambiador
+     path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),  
+    path('', include('ayudanteAuth.urls')),
+    path('', include('chngPassRequest.urls')),
+    path('', include('changePassword.urls')),
+    path('', include('logout.urls')),
+    path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal')# Incluye las URLs de verPerfilPropio
   #path('login/', autenticacion_views.login_view, name='login'),
  #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

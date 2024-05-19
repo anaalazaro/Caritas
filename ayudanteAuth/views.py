@@ -14,15 +14,20 @@ def login_otp(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            send_otp(request)
+            send_otp(request, user)
             request.session['username'] = username
             return redirect('otp')
         else:
-            error_message = 'Usuario o contraseña inválidos'
+            error_message = 'El usuario y/o la contraseña que ingresó son incorrectos'
     return render(request, 'login_otp.html', {'error_message': error_message})
 
 def otp(request):
     error_message=None
+    if 'resend_otp' in request.POST:
+            # Si se presionó el botón "Reenviar OTP", enviar el OTP nuevamente
+            user = request.user  # Suponiendo que ya haya un usuario autenticado
+            send_otp(request, user)
+            return redirect('otp')
     if request.method == 'POST':
         otp = request.POST['otp']
         username = request.session['username']
@@ -37,13 +42,12 @@ def otp(request):
                 if totp.verify(otp):
                     user = get_object_or_404(CustomUser, username=username)
                     login(request, user)
-
+                
                     del request.session['otp_secret_key']
                     del request.session['otp_valid_date']
-
-                    return redirect('main') #VA AL MAIN INVENTADO COMO PLACEHOLDER - UNA VEZ QUE ESTÉ TODO, DEBERÍA IR A LA PÁGINA QUE CORRESPONDA
+                    return redirect('menuPrincipal') 
                 else:
-                    error_message = 'OTP inválido'
+                    error_message = 'El código OTP es inválido'
             else:
                 error_message = 'El OTP ha expirado'
         else:

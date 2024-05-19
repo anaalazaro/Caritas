@@ -22,6 +22,8 @@ def login_view(request):
             # Escenario 1: Inicio de sesión exitoso
             if user is not None:
                 login(request, user)
+                if user.passChange:
+                    return redirect('change_desired_password')
                 return redirect('menuPrincipal')
 
             # Escenario 2 y 3: Fallos por usuario inexistente o contraseña incorrecta

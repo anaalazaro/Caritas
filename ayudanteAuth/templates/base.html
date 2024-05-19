@@ -22,11 +22,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href={% url 'inicio' %}>Inicio</a>
                         </li>
-                        {% if request.user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href={% url 'logout' %}>Cerrar sesión</a>
-                            </li>
-                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="#">Acerca de</a>
                         </li>
@@ -40,8 +35,19 @@
     </header>
 
     <main class="container mt-4">
-        <!-- Este bloque será reemplazado por el contenido específico de cada página -->
-        {% block content %}{% endblock %}
+        <!-- Formulario de inicio de sesión -->
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_dni" class="form-label">DNI</label>
+                {{ form.dni }}
+            </div>
+            <div class="mb-3">
+                <label for="id_password" class="form-label">Contraseña</label>
+                {{ form.password }}
+            </div>
+            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        </form>
     </main>
 
     <footer class="footer mt-auto py-3 bg-light">
