@@ -44,17 +44,23 @@ urlpatterns = [
     path('editar_perfil/<int:usuario_id>/', editar_perfil,name = 'editarPerfilAdmin'),
     path('Inicio/', viewsInicio.hello, name='inicio'),
     path('register/', views.registro, name='register'),
-    path('cargarArticulo/', agregar_articulo, name='cargar_articulo'),
-    path('articulos_pendientes/', mostrar_articulos_pendientes, name='mostrar_articulos_pendientes'),
-     path('controlar_publicacion/<int:articulo_id>/', controlar_publicacion, name='controlar_articulo'),
-
+    path('cargarArticulo/', cargarArticuloViews.cargar_articulo, name='cargar_articulo'),
+    path('articulos_pendientes', mostrar_articulos_pendientes, name='mostrar_articulos_pendientes'),
+    path('controlar_publicacion/<int:articulo_id>/', controlar_publicacionViews.controlar_publicacion, name='controlar_articulo'),
+ path('desaprobar/<int:articulo_id>/', controlar_publicacionViews.desaprobar_articulo, name="desaprobar"),
+   path('aprobar/<int:articulo_id>/', controlar_publicacionViews.aprobar_articulo, name="aprobar"),
   path('register/', views.registro, name='register'),
   path('login/', autenticacion_views.login_view, name='login'),  # Incluye las URLs de autenticacionIntercambiador
   path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),  
   path('', include('ayudanteAuth.urls')),
   path('', include('chngPassRequest.urls')),
   path('', include('changePassword.urls')),
-  path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal')# Incluye las URLs de verPerfilPropio
+  path('', include('logout.urls')),
+  path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal'),# Incluye las URLs de verPerfilPropio
+  path('detalleArticulo//<int:articulo_id>/', viewsDetalle.mostrarDetalle, name='detalle'),
+  path('ordenarAlfabeticamente', viewsInicio.mostrarArticulosOrdenados, name='ordenados'),
+  path('verOtroUsuario/', other_profile_views.view_other_profile, name= 'ver_otro_usuario'),
+  path('eliminarCuenta/<int:user_id>/', eliminar_cuenta_views.delete_account, name='eliminar_cuenta'),
   #path('login/', autenticacion_views.login_view, name='login'),
  #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
