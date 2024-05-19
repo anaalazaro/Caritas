@@ -25,7 +25,6 @@ def change_desired_password(request):
                 request.user.passChange = False
                 request.user.save()
                 update_session_auth_hash(request, request.user)
-                messages.success(request, '¡Tu contraseña ha sido cambiada correctamente!')
                 # Eliminar la contraseña actual de la sesión después de cambiar la contraseña deseada
                 del request.session['current_password']
                 custom_user = CustomUser.objects.get(pk=request.user.pk)
@@ -35,4 +34,6 @@ def change_desired_password(request):
     return render(request, 'change_desired_password.html', {'form': form})
 
 def mostrar(request, custom_user):
+    storage = messages.get_messages(request)
+    storage.used = True
     return render (request, 'cambio_exitoso.html', {'user': custom_user})

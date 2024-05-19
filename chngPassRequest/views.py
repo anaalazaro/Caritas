@@ -27,6 +27,9 @@ def change_password_request(request):
             email = form.cleaned_data.get('email')
             try:
                 user = CustomUser.objects.get(email=email)
+                if request.user.is_authenticated:
+                    messages.error(request, "Para solicitar el cambio de contraseña, primero debes cerrar sesión.")
+                    return render(request, 'change_password.html', {'form': form})
                 current_password = user.password
                 # Almacenar la contraseña actual en la sesión antes de generar la nueva contraseña temporal
                 request.session['current_password'] = current_password
@@ -42,6 +45,10 @@ def change_password_request(request):
             except CustomUser.DoesNotExist:
                 messages.error(request, 'El correo electrónico no está asociado a ninguna cuenta.')
     else:
+        # Clear messages
+        storage = messages.get_messages(request)
+        storage.used = True
+
         form = ChangePasswordForm()
     return render(request, 'change_password.html', {'form': form})
 
