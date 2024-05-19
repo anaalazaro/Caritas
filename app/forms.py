@@ -9,13 +9,23 @@ from django.utils.translation import gettext, gettext_lazy as _
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ['dni', 'password1', 'telefono', 'fechaNacimiento']
+        fields = ['nombre', 'apellido', 'mail', 'dni', 'password1', 'telefono', 'fechaNacimiento']
         labels = {
-            'dni': _('DNI'),
-            'password1': _('Contraseña'),
+            'nombre':_('Nombre'),
+            'apellido':_('Apellido'),
+            'mail':_('Mail'),
             'telefono': _('Teléfono'),
+            'dni': _('DNI'),
             'fechaNacimiento': _('Fecha de nacimiento'),
+            'password1': _('Contraseña'),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombre'].required = True
+        self.fields['apellido'].required = True
+        self.fields['mail'].required=True
+
 
     fechaNacimiento = forms.DateField(
         label=_('Fecha de nacimiento'),
@@ -25,7 +35,7 @@ class CustomUserCreationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Modificar los mensajes de validación de la contraseña
-        self.fields['password1'].help_text = _("La contraseña debe tener al menos 6 caracteres y ser alfanumérica.")
+        self.fields['password1'].help_text = _("La contraseña debe poseer 6 o más caracteres")
         # Agregar clases CSS al formulario
         self.fields['dni'].widget.attrs.update({'class': 'form-control'})
         self.fields['password1'].widget.attrs.update({'class': 'form-control'})
