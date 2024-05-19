@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
 from app import views
 from . import views as viewsInicio
-from cargarArticulo.views import agregar_articulo
+from cargarArticulo import views as cargarArticuloViews
 from verArticulosPendientes.views import mostrar_articulos_pendientes
 from controlarPublicacion.views import controlar_publicacion
 from autenticacionIntercambiador import views as autenticacion_views
@@ -43,8 +43,8 @@ urlpatterns = [
     path('editar_perfil/<int:usuario_id>/', editar_perfil,name = 'editarPerfilAdmin'),
     path('Inicio/', viewsInicio.hello, name='inicio'),
     path('register/', views.registro, name='register'),
-    path('cargarArticulo/', agregar_articulo, name='cargar_articulo'),
-    path('articulos_pendientes/', mostrar_articulos_pendientes, name='mostrar_articulos_pendientes'),
+    path('cargarArticulo/', cargarArticuloViews.cargar_articulo, name='cargar_articulo'),
+    path('articulos_pendientes', mostrar_articulos_pendientes, name='mostrar_articulos_pendientes'),
      path('controlar_publicacion/<int:articulo_id>/', controlar_publicacion, name='controlar_articulo'),
   path('login/', autenticacion_views.login_view, name='login'),  # Incluye las URLs de autenticacionIntercambiador
   path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),  
@@ -55,5 +55,5 @@ urlpatterns = [
   path('detalleArticulo//<int:articulo_id>/', viewsDetalle.mostrarDetalle, name='detalle'),
   path('ordenarAlfabeticamente', viewsInicio.mostrarArticulosOrdenados, name='ordenados'),
   path('verOtroUsuario/', other_profile_views.view_other_profile, name= 'ver_otro_usuario'),
-  path ('eliminarCuenta//<int:usuario_dni>/', eliminar_cuenta_views.delete_account, name= 'eliminar_cuenta'),
+  path('eliminarCuenta/<int:user_id>/', eliminar_cuenta_views.delete_account, name='eliminar_cuenta'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

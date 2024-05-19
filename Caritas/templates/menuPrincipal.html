@@ -17,16 +17,40 @@
             <a href="{% url 'ordenados' %}">Ordenar artículos alfabéticamente</a>
         </button>
         <button type="submit" class="btn btn-primary">
-            <a href="{% url 'eliminar_cuenta' user.dni %}">Eliminar cuenta</a>
+            <a href="{% url 'eliminar_cuenta' user.id %}">Eliminar cuenta</a>
+        </button>
+        <button type="submit" class="btn btn-primary">
+            <a href="{% url 'cargar_articulo' %}">Cargar articulo</a>
         </button>
         
+
+        
         <h1>Artículos</h1>
+        <form method="GET">
+            {% csrf_token %}
+            <select name="categoria" class="form-select">
+                <option value="" selected disabled>Selecciona una categoría</option>
+                <option value="ropa">Ropa</option>
+                <option value="articulos_escolares">Artículos Escolares</option>
+                <option value="articulos_limpieza">Artículos de Limpieza</option>
+                <option value="alimentos_noperecederos">Alimentos no perecederos</option>
+            </select>
+            <button type="submit" class="btn btn-primary mt-3">Buscar</button>
+        </form>
+        
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
         <ul>
             {% for articulo in articulos %}
                 <li>{{ articulo.Nombre }} - {{ articulo.Descripcion }} <a href="{% url 'detalle' articulo.id %}"><button>Ver detalle</button></a></li>
             {% endfor %}
         </ul>
-    </body>
     </div>
 </body>
 </html>
