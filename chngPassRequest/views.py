@@ -27,22 +27,28 @@ def change_password_request(request):
             email = form.cleaned_data.get('email')
             try:
                 user = CustomUser.objects.get(email=email)
-                current_password = form.cleaned_data.get('current_password')
-                if user.check_password(current_password):
-                    # Almacenar la contraseña actual en la sesión antes de generar la nueva contraseña temporal
-                    request.session['current_password'] = current_password
+                if request.user.is_authenticated:
+                    messages.error(request, "Para solicitar el cambio de contraseña, primero debes cerrar sesión.")
+                    return render(request, 'change_password.html', {'form': form})
+                current_password = user.password
+                # Almacenar la contraseña actual en la sesión antes de generar la nueva contraseña temporal
+                request.session['current_password'] = current_password
                     
-                    temp_password = generate_random_password()
-                    user.set_password(temp_password)
-                    user.save()
-                    #send_temp_password_email(user, temp_password)
-                    print(f"Su contraseña autogenerada es {temp_password}")
-                    return redirect('change_desired_password')
-                else:
-                    messages.error(request, 'La contraseña actual es incorrecta.')
-            except User.DoesNotExist:
+                temp_password = 'temp'#generate_random_password()
+                user.set_password(temp_password)
+                user.passChange = True
+                user.save()
+                #send_temp_password_email(user, temp_password)
+                print(f"Su contraseña autogenerada es {temp_password}")
+                print(f"La contraseña anterior era {current_password}")
+                return redirect('change_desired_password')
+            except CustomUser.DoesNotExist:
                 messages.error(request, 'El correo electrónico no está asociado a ninguna cuenta.')
     else:
+        # Clear messages
+        storage = messages.get_messages(request)
+        storage.used = True
+
         form = ChangePasswordForm()
     return render(request, 'change_password.html', {'form': form})
 

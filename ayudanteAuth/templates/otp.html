@@ -1,13 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Inicio de Sesión de Ayudante
+{% endblock %}
 {% block content %}
 {% if error_message %}
     <p>{{ error_message }}</p>
 {% endif %}
+<p>Ingrese la contraseña de uso único (OTP) enviada a su correo electrónico</p>
 
-<br>
 <form action="" method="post">
     {% csrf_token %}
     <input type="text" name="otp" id="" placeholder="OTP">
     <br>
     <button type="submit">Confirmar</button>
+    <button type="submit" name="resend_otp">Reenviar OTP</button>
 </form>
 {% endblock %}

@@ -9,5 +9,8 @@ class CustomUser(AbstractUser):
     dni = models.IntegerField(max_length=20, unique=True)
     fechaNacimiento = models.DateField()
     puntaje= models.IntegerField(default=0)
+    passChange = models.BooleanField(default=False)
+   # mail= models.EmailField()
+    #puntaje= models.IntegerField(default=0)
     class Meta:
         app_label = 'app'

@@ -1,10 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Inicio de Sesión de Ayudante
+{% endblock %}
 
 {% block content%}
 {% if error_message %}
     <p>{{ error_message }}</p>
 {% endif %}
 
-<h3>LOGIN</h3>
+<h3>LOGIN AYUDANTE</h3>
 <br>
 <form action="" method="post">
     {% csrf_token %}
