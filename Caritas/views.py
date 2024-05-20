@@ -1,12 +1,9 @@
 from django.contrib import messages
 from django.shortcuts import render
 from app.models import CustomUser
-<<<<<<< HEAD
 from cargarArticulo.models import Articulo
-=======
 from django.contrib.auth.decorators import login_required, user_passes_test
 
->>>>>>> ana
 def hello(request):
     return render(request, 'inicio.html')
 
@@ -15,7 +12,6 @@ def mostrar(request):
     sugeridos= Articulo.objects.filter(aprobado=True).exclude(usuario=request.user)
     return render (request, 'menuPrincipal.html', {'user': user, 'articulos':sugeridos })
 
-<<<<<<< HEAD
 def mostrarArticulosOrdenados(request):
    ordenados= Articulo.objects.filter(aprobado=True).exclude(usuario=request.user).order_by('Titulo')
    return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': ordenados})
@@ -36,7 +32,6 @@ def mostrarPorCategoria(request):
     else:
         # Si no se ha seleccionado ninguna categoría, puedes manejarlo de acuerdo a tu lógica
         pass
-=======
 def es_admin(user):
     return user.is_superuser
 
@@ -45,4 +40,3 @@ def es_admin(user):
 def inicioAdmin(request):
     return render (request, 'inicioAdmin.html')
 
->>>>>>> ana
