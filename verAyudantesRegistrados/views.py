@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from registrarAyudante.models  import CustomUser
+from app.models  import CustomUser
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 def es_admin(user):

@@ -42,21 +42,21 @@
             <tbody>
                 {% for ayudante in ayudantes %}
                     <tr>
-                        <td>{{ ayudante.first_name }} {{ ayudante.last_name }}</td>
-                        <td>{{ ayudante.fecha_nacimiento }}</td>
+                        <td>{{ ayudante.nombre }} {{ ayudante.apellido }}</td>
+                        <td>{{ ayudante.fechaNacimiento }}</td>
                         <td>{{ ayudante.dni }}</td>
                         <td>{{ ayudante.telefono }}</td>
                         <td>{{ ayudante.filial }}</td>
                         <td>
                             <!-- <a href="" class="btn btn-primary btn-sm">Ver Detalle</a> -->
-                            <a href="" class="btn btn-danger btn-sm">Eliminar</a>
+                            <a href="{% url 'eliminar_cuenta' ayudante.id %}" class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% else %}
-        <p>No has publicado ningún artículo.</p>
+        <p>No existen ayudantes registrados.</p>
     {% endif %}
 </div>
 {% endblock %}

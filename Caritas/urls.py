@@ -33,7 +33,7 @@ from verPerfilPropio import views as perfil_views
 from verDetalleDeArticulo import views as viewsDetalle
 from verOtroUsuario import views as other_profile_views
 from eliminarCuenta import views as eliminar_cuenta_views
-from verArticulosPropios.views import verArticulos
+from verArticulosPropios.views import ver_articulos
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -60,10 +60,9 @@ urlpatterns = [
   path('verOtroUsuario/<int:user_id>/', other_profile_views.view_other_profile, name= 'ver_otro_usuario'),
   path('eliminarCuenta/<int:user_id>/', eliminar_cuenta_views.delete_account, name='eliminar_cuenta'),
   path('verArticulos/<int:user_profile_id>/', other_profile_views.verProductos, name='productos_del_usuario'),
-  path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal'),# Incluye las URLs de verPerfilPropio
     path('verAyudantes/', ver_ayudantes,name = 'verAyudantes'),
-    path('inicioAdmin/', viewsInicio.inicioAdmin ,name = 'verAyudates'),
-    path('misArticulos/', verArticulos, name='verArticulos'),
+    path('inicioAdmin/', viewsInicio.inicioAdmin ,name = 'inicioAdmin'),
+    path('misArticulos/', ver_articulos, name='verArticulos'),
   #path('login/', autenticacion_views.login_view, name='login'),
  #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

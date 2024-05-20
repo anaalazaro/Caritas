@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect,reverse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import UsuarioIntercambiadorForm
-from registrarAyudante.models import CustomUser
+from app.models import CustomUser
 from django.contrib import messages
 
 

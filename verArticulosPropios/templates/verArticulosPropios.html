@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'baseCaritas.html' %}
 
 {% block content %}
 <div class="container">
@@ -24,7 +24,7 @@
                         <td>{{ articulo.Descripcion }}</td>
                         <td>{{ articulo.Estado }}</td>
                         <td>
-                            <a href="" class="btn btn-primary btn-sm">Ver Detalle</a>
+                            <a href="{%url 'detalle' articulo.id%}" class="btn btn-primary btn-sm">Ver Detalle</a>
                         </td>
                     </tr>
                 {% endfor %}

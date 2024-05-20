@@ -10,6 +10,14 @@ class CustomUser(AbstractUser):
     fechaNacimiento = models.DateField()
     puntaje= models.IntegerField(default=0)
     passChange = models.BooleanField(default=False)
+    filial = models.CharField(max_length=20, default='')
+    # Campos con opciones
+    OPCIONES_ROL = [
+        ('usuario', 'Usuario intercambiador'),
+        ('admin', 'Administrador'),
+        ('ayudante', 'Usuario ayudante'),
+    ]
+    roles = models.CharField(max_length=8, choices=OPCIONES_ROL, default='usuario')
    # mail= models.EmailField()
     #puntaje= models.IntegerField(default=0)
     class Meta:

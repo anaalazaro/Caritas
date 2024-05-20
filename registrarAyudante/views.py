@@ -21,7 +21,7 @@ def registro(request):
             # password = formulario.cleaned_data['password1']
             # # user = authenticate(request, username=username, password=password)
             # # login(request, user)
-            return redirect('verAyudates')
+            return redirect('verAyudantes')
     else:
          formulario = CustomUserCreationForm()
     return render(request, 'singup.html', {'form': formulario})
