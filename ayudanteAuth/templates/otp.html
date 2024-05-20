@@ -1,0 +1,13 @@
+{% block content %}
+{% if error_message %}
+    <p>{{ error_message }}</p>
+{% endif %}
+
+<br>
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="text" name="otp" id="" placeholder="OTP">
+    <br>
+    <button type="submit">Confirmar</button>
+</form>
+{% endblock %}

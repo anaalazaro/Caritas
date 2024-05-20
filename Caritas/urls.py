@@ -15,12 +15,41 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from registrarAyudante import views
+from django.urls import path, include
+from registrarAyudante.views import registro
+from verAyudantesRegistrados.views import ver_ayudantes
 from editarPerfilAdministrador.views import editar_perfil
+from django.conf import settings
+from django.conf.urls.static import static
+from app import views
+from . import views as viewsInicio
+from cargarArticulo.views import agregar_articulo
+from verArticulosPendientes.views import mostrar_articulos_pendientes
+from controlarPublicacion.views import controlar_publicacion
+from autenticacionIntercambiador import views as autenticacion_views
+from verPerfilPropio import views as perfil_views
+from verArticulosPropios.views import verArticulos
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('registrar/', views.registro,name = 'registro'),
-    path('editar_perfil/<int:usuario_id>/', editar_perfil,name = 'editarPerfilAdmin')
-]
+    path('registrar/', registro,name = 'registro'),
+    path('editarPerfil/<int:usuario_id>/', editar_perfil,name = 'editarPerfilAdmin'),
+    path('Inicio/', viewsInicio.hello, name='inicio'),
+    path('register/', views.registro, name='register'),
+    path('cargarArticulo/', agregar_articulo, name='cargar_articulo'),
+    path('articulos_pendientes/', mostrar_articulos_pendientes, name='mostrar_articulos_pendientes'),
+    path('controlar_publicacion/<int:articulo_id>/', controlar_publicacion, name='controlar_articulo'),
+    path('register/', views.registro, name='register'),
+    path('login/', autenticacion_views.login_view, name='login'),  # Incluye las URLs de autenticacionIntercambiador
+    path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),  
+    path('', include('ayudanteAuth.urls')),
+    path('', include('chngPassRequest.urls')),
+    path('', include('changePassword.urls')),
+    path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal'),# Incluye las URLs de verPerfilPropio
+    path('verAyudantes/', ver_ayudantes,name = 'verAyudantes'),
+    path('inicioAdmin/', viewsInicio.inicioAdmin ,name = 'verAyudates'),
+    path('misArticulos/', verArticulos, name='verArticulos'),
+    # path('buscarArticulo/', verArticulos, name='verArticulos'),
+  #path('login/', autenticacion_views.login_view, name='login'),
+ #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

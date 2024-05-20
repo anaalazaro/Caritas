@@ -1,0 +1,18 @@
+
+{% block content%}
+{% if error_message %}
+    <p>{{ error_message }}</p>
+{% endif %}
+
+<h3>LOGIN</h3>
+<br>
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="text" name="username" id="" placeholder="Nombre de usuario">
+    <br>
+    <input type="password" name="password" id="" placeholder="Contraseña">
+    <br>
+    <button type="submit">Iniciar sesión</button>
+</form>
+
+{% endblock %}

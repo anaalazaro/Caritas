@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Inicio de Sesión
+{% endblock %}
+
+{% block content %}
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_dni" class="form-label">DNI</label>
+                {{ form.dni }}
+            </div>
+            <div class="mb-3">
+                <label for="id_password" class="form-label">Contraseña</label>
+                {{ form.password }}
+            </div>
+            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        </form>
+        <!-- Ejemplo de mensaje de error -->
+        {% if error_message %}
+            <div class="error-message">{{ error_message }}</div>
+        {% endif %}
+    </div>
+{% endblock %}

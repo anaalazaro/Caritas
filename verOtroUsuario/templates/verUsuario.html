@@ -1,0 +1,22 @@
+<!-- profile.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario</title>
+</head>
+<body>
+    <h1>Perfil de Usuario</h1>
+    {% if user_profile %}
+        <p><strong>Nombre:</strong> {{ user_profile.first_name }}</p>
+        <p><strong>Apellido:</strong> {{ user_profile.last_name }}</p>
+        <p><strong>Puntaje:</strong> {{ user_profile.score }}</p>
+        <a href="{% url 'productos_del_usuario' user_profile.username %}"><button>Ver Productos</button></a>
+        <a href="{% url 'resenas_del_usuario' user_profile.username %}"><button>Ver Reseñas</button></a>
+    {% else %}
+        <p>El perfil solicitado no existe.</p>
+    {% endif %}
+</body>
+</html>
