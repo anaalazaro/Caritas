@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from registrarAyudante.views import registro
+from verAyudantesRegistrados.views import ver_ayudantes
 from editarPerfilAdministrador.views import editar_perfil
 from django.conf import settings
 from django.conf.urls.static import static
@@ -32,17 +33,12 @@ from verPerfilPropio import views as perfil_views
 from verDetalleDeArticulo import views as viewsDetalle
 from verOtroUsuario import views as other_profile_views
 from eliminarCuenta import views as eliminar_cuenta_views
-
-
-
-
-
-
+from verArticulosPropios.views import verArticulos
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('registrar/', registro,name = 'registro'),
-    path('editar_perfil/<int:usuario_id>/', editar_perfil,name = 'editarPerfilAdmin'),
+    path('editarPerfil/<int:usuario_id>/', editar_perfil,name = 'editarPerfilAdmin'),
     path('Inicio/', viewsInicio.hello, name='inicio'),
     path('register/', views.registro, name='register'),
     path('cargarArticulo/', cargarArticuloViews.cargar_articulo, name='cargar_articulo'),
@@ -64,6 +60,10 @@ urlpatterns = [
   path('verOtroUsuario/<int:user_id>/', other_profile_views.view_other_profile, name= 'ver_otro_usuario'),
   path('eliminarCuenta/<int:user_id>/', eliminar_cuenta_views.delete_account, name='eliminar_cuenta'),
   path('verArticulos/<int:user_profile_id>/', other_profile_views.verProductos, name='productos_del_usuario'),
+  path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal'),# Incluye las URLs de verPerfilPropio
+    path('verAyudantes/', ver_ayudantes,name = 'verAyudantes'),
+    path('inicioAdmin/', viewsInicio.inicioAdmin ,name = 'verAyudates'),
+    path('misArticulos/', verArticulos, name='verArticulos'),
   #path('login/', autenticacion_views.login_view, name='login'),
  #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

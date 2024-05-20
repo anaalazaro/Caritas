@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractUser,Group, Permission
 
 class CustomUser(AbstractUser):
     # Agrega campos adicionales si es necesario
-    fecha_nacimiento = models.DateField()
+    fecha_nacimiento = models.DateField(default='2000-01-01')
     dni = models.CharField(max_length=10, unique=True)
     telefono = models.CharField(max_length=15)
     filial = models.CharField(max_length=20)

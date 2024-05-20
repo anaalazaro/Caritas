@@ -11,14 +11,14 @@
 <body>
     <header>
         <!-- Barra de navegación de Bootstrap 5 -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light ">
             <div class="container">
                 <a class="navbar-brand" href="#">Caritas</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="#">Inicio</a>
                         </li>
@@ -27,6 +27,28 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contacto</a>
+                        </li>
+                        <!-- <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="notificacionesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Notificaciones <span class="badge bg-danger">{{ notificaciones.count }}</span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="notificacionesDropdown">
+                                {% for notificacion in notificaciones %}
+                                    <li><a class="dropdown-item" href="#">{{ notificacion.mensaje }}</a></li>
+                                {% empty %}
+                                    <li><a class="dropdown-item" href="#">No hay nuevas notificaciones</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li> -->
+                        <!-- Datos del usuario -->
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle" href="#" id="usuarioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="usuarioDropdown">
+                                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                <li><a class="dropdown-item" href="">Cerrar sesión</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
