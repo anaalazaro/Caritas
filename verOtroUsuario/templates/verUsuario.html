@@ -16,12 +16,16 @@
             </div>
             <div class="card-body">
                 {% if user_profile %}
-                    <p><strong>Nombre:</strong> {{ user_profile.first_name }}</p>
-                    <p><strong>Apellido:</strong> {{ user_profile.last_name }}</p>
-                    <p><strong>Puntaje:</strong> {{ user_profile.score }}</p>
+                    <p><strong>Nombre:</strong> {{ user_profile.nombre }}</p>
+                    <p><strong>Apellido:</strong> {{ user_profile.apellido }}</p>
+                    <p><strong>Puntaje:</strong> {{ user_profile.puntaje }}</p>
                     <div class="mt-3">
-                        <a href="{% url 'productos_del_usuario' user_profile.username %}" class="btn btn-primary">Ver Productos</a>
-                        <a href="{% url 'resenas_del_usuario' user_profile.username %}" class="btn btn-danger">Ver Reseñas</a>
+                        <form action="{% url 'productos_del_usuario' user_profile.id %}" method="get">
+                            <button type="submit" class="btn btn-primary">Ver Productos</button>
+                        </form>
+                        <form action="" method="get">
+                            <button type="submit" class="btn btn-danger">Ver Reseñas</button>
+                        </form>
                     </div>
                 {% else %}
                     <p>El perfil solicitado no existe.</p>
