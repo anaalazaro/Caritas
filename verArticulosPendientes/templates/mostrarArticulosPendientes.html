@@ -7,7 +7,7 @@
     <h1>Artículos Pendientes</h1>
     <ul>
         {% for articulo in articulos_pendientes %}
-            <li>{{ articulo.Nombre }} - {{ articulo.Descripcion }} <a href="{% url 'controlar_articulo' articulo.id %}"><button>Controlar</button></a></li>
+            <li>{{ articulo.Titulo }} - {{ articulo.Descripcion }} <a href="{% url 'controlar_articulo' articulo.id %}"><button>Controlar</button></a></li>
         {% endfor %}
     </ul>
 </body>

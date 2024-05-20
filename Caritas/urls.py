@@ -37,6 +37,7 @@ from eliminarCuenta import views as eliminar_cuenta_views
 
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('registrar/', registro,name = 'registro'),
@@ -48,6 +49,7 @@ urlpatterns = [
     path('controlar_publicacion/<int:articulo_id>/', controlar_publicacionViews.controlar_publicacion, name='controlar_articulo'),
  path('desaprobar/<int:articulo_id>/', controlar_publicacionViews.desaprobar_articulo, name="desaprobar"),
    path('aprobar/<int:articulo_id>/', controlar_publicacionViews.aprobar_articulo, name="aprobar"),
+   path('mostrar_por_categoria/', viewsInicio.mostrarPorCategoria, name='mostrar_por_categoria'),
   path('login/', autenticacion_views.login_view, name='login'),  # Incluye las URLs de autenticacionIntercambiador
   path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),  
   path('', include('ayudanteAuth.urls')),
@@ -56,6 +58,7 @@ urlpatterns = [
   path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal'),# Incluye las URLs de verPerfilPropio
   path('detalleArticulo//<int:articulo_id>/', viewsDetalle.mostrarDetalle, name='detalle'),
   path('ordenarAlfabeticamente', viewsInicio.mostrarArticulosOrdenados, name='ordenados'),
-  path('verOtroUsuario/', other_profile_views.view_other_profile, name= 'ver_otro_usuario'),
+  path('verOtroUsuario/<int:user_id>/', other_profile_views.view_other_profile, name= 'ver_otro_usuario'),
   path('eliminarCuenta/<int:user_id>/', eliminar_cuenta_views.delete_account, name='eliminar_cuenta'),
+  path('verArticulos/<int:user_profile_id>/', other_profile_views.verProductos, name='productos_del_usuario'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
