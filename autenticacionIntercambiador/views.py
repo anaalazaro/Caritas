@@ -22,6 +22,9 @@ def login_view(request):
 
             # Escenario 1: Inicio de sesión exitoso
             if user is not None:
+                if user.roles != 'usuario':
+                    error_message = 'No se encuentra habilitado para iniciar sesión por este medio. Elija la opción "Iniciar sesión como administrador o ayudante"'
+                    return render(request, 'autenticacionIntercambiador/login.html', {'form': form, 'error_message': error_message})
                 login(request, user)
                 if user.passChange:
                     return redirect('change_desired_password')

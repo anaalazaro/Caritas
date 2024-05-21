@@ -35,7 +35,7 @@
         <!-- Barra de navegación de Bootstrap 5 -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
             <div class="container">
-                <a class="navbar-brand" href="{% url 'menuPrincipal' %}">Caritas</a>
+                <a class="navbar-brand" href="{% url 'inicio' %}">Caritas</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -78,7 +78,9 @@
                                 {{ user.username }}
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="usuarioDropdown">
-                                <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a></li>
+                                {% if user.is_authenticated %}
+                                    <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a></li>
+                                {% endif %}
                             </ul>
                         </li>
                     </ul>
