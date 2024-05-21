@@ -19,6 +19,7 @@ from django.urls import path, include
 from registrarAyudante.views import registro
 from verAyudantesRegistrados.views import ver_ayudantes
 from editarPerfilAdministrador.views import editar_perfil
+from buscarArticulo.views import buscar_articulos
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
@@ -63,6 +64,7 @@ urlpatterns = [
     path('verAyudantes/', ver_ayudantes,name = 'verAyudantes'),
     path('inicioAdmin/', viewsInicio.inicioAdmin ,name = 'inicioAdmin'),
     path('misArticulos/', ver_articulos, name='verArticulos'),
+    path('articulos/', buscar_articulos, name='articulos'),
   #path('login/', autenticacion_views.login_view, name='login'),
  #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
