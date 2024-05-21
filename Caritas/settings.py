@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'verDetalleDeArticulo',
     'verAyudantesRegistrados',
     'verArticulosPropios',
+    'buscarArticulo'
 ]
 
 MIDDLEWARE = [

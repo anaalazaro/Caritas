@@ -10,6 +10,7 @@ def mostrar(request):
     return render (request, 'menuPrincipal.html', {'user': CustomUser})
 
 
+
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)

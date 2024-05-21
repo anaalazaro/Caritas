@@ -1,0 +1,43 @@
+{% extends 'baseCaritas.html' %}
+
+{% block content %}
+<div class="container">
+    <h1> Artículos</h1>
+    {% if resultados %}
+        <h3>Resultados de la búsqueda para "{{ request.GET.q }}":</h3>
+        <div class="list-group">
+            {% for articulo in resultados %}
+                <!-- <div class="list-group-item">
+                    <h5>{{ articulo.Titulo }}</h5>
+                    <img src="{{ articulo.Foto.url }}" class="img-fluid" alt="..." style="max-width: 100px;">
+                    <p>{{ articulo.Descripcion }}</p>
+                </div> -->
+                <!-- <div class="list-group-item"> -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                        <div class="row g-0">
+                            <div class="col-md-3 d-flex align-items-center justify-content-center">
+                                <img src="{{ articulo.Foto.url }}" class="img-fluid" alt="..." style="max-width: 100px;">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ articulo.Titulo }}</h5>
+                                    <small class="text-muted">{{ articulo.Categoria }}</small>
+                                    <!-- <p class="card-text">{{ articulo.Estado }}</p> -->
+                                    <span class="badge bg-primary position-absolute top-0 end-0 m-2">{{ articulo.Estado }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                <!-- </div> -->
+            {% endfor %}
+        </div>
+    {% else %}
+        {% if request.GET.q %}
+            <p>No se encontraron artículos con el término "{{ request.GET.q }}".</p>
+        {% endif %}
+    {% endif %}
+</div>
+
+{% endblock %}
