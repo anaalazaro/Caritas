@@ -37,6 +37,7 @@ from eliminarCuenta import views as eliminar_cuenta_views
 from verArticulosPropios.views import ver_articulos
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='Inicio/', permanent=True)),
     path('admin/', admin.site.urls),
     path('registrar/', registro,name = 'registro'),
     path('editarPerfil/<int:usuario_id>/', editar_perfil,name = 'editarPerfilAdmin'),
@@ -67,4 +68,5 @@ urlpatterns = [
     path('articulos/', buscar_articulos, name='articulos'),
   #path('login/', autenticacion_views.login_view, name='login'),
  #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
+ path('inicioAyudante/', viewsInicio.inicioAyudante, name='inicioAyudante'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

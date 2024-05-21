@@ -1,3 +1,4 @@
+from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
@@ -21,15 +22,16 @@ def send_temp_password_email(user, temp_password):
     )
 
 def change_password_request(request):
+    if request.user.is_authenticated:
+        # Si el usuario ya está autenticado, cerrar la sesión antes de proceder
+        logout(request)
+
     if request.method == 'POST':
         form = ChangePasswordForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data.get('email')
             try:
-                user = CustomUser.objects.get(email=email)
-                if request.user.is_authenticated:
-                    messages.error(request, "Para solicitar el cambio de contraseña, primero debes cerrar sesión.")
-                    return render(request, 'change_password.html', {'form': form})
+                user = CustomUser.objects.get(mail=email)
                 current_password = user.password
                 # Almacenar la contraseña actual en la sesión antes de generar la nueva contraseña temporal
                 request.session['current_password'] = current_password
