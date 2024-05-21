@@ -31,7 +31,7 @@ def login_view(request):
             else:
                 # Intento de usuario inexistente
                 if not CustomUser.objects.filter(dni=dni).exists() :
-                    error_message = "El usuario no existe"
+                    error_message = "El usuario y/o la contraseña son incorrectos"
                 else:
                     error_message = "El usuario y/o la contraseña son incorrectos"
                     

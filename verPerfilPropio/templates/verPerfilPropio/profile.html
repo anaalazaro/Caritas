@@ -1,25 +1,28 @@
-{% extends 'base.html' %}
+{% extends 'baseCaritas.html' %}
 
 {% block content %}
     <h1>Perfil de {{ user.nombre}} {{user.apellido}}</h1>
-
+    
     {% if user.profile_picture %}
-        <img src="{{ user.profile_picture.url }}" alt="Foto de perfil" width="100" height="100">
+    <img src="{{ user.profile_picture.url }}" alt="Foto de perfil" width="100" height="100">
     {% endif %}
-
+    
     {% if custom_user %}
-        <p><strong>Email:</strong> <span style="color: black;">{{ custom_user.mail }}</span></p>
-        <p><strong>Número de Teléfono:</strong> <span style="color: black;">{{ custom_user.telefono }}</span></p>
-        <p><strong>Puntaje:</strong> <span style="color: black;">{{ custom_user.puntaje }}</span></p>
-        <!-- Aquí puedes agregar más campos específicos de CustomUser si es necesario -->
+    <p><strong>Email:</strong> <span style="color: black;">{{ custom_user.mail }}</span></p>
+    <p><strong>Número de Teléfono:</strong> <span style="color: black;">{{ custom_user.telefono }}</span></p>
+    <p><strong>Puntaje:</strong> <span style="color: black;">{{ custom_user.puntaje }}</span></p>
+    <!-- Aquí puedes agregar más campos específicos de CustomUser si es necesario -->
     {% else %}
-        <p>No se encontró información adicional del usuario.</p>
+    <p>No se encontró información adicional del usuario.</p>
     {% endif %}
-
+    
     <div class="action-buttons">
-        <button onclick="window.location.href='/users/products/'">Ver Productos</button>
+        <form action="{% url 'verArticulos' %}" method="get">
+            <button type="submit" class="btn btn-primary">Ver Productos</button>
+        </form>        
         <button onclick="window.location.href='/users/reviews/'">Ver Reseñas</button>
         <button onclick="window.location.href='/users/ratings/'">Ver Calificaciones</button>
+        <h4> Si desea editar su perfil, envie un correo al siguiente mail: ingecaritas@gmail.com</h4>
     </div>
 {% endblock %}
 

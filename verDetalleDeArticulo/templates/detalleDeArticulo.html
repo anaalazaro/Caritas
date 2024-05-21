@@ -1,8 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Detalle del artículo</title>
-</head>
+{% extends 'baseCaritas.html' %}
+{% block content %}
 <body>
     <h1>{{ articulo.Nombre }}</h1>
     <p><strong>Descripción:</strong> {{ articulo.Descripcion }}</p>
@@ -11,4 +8,4 @@
     <p><strong>Título:</strong> {{ articulo.Titulo }}</p>
     <p><strong>Estado:</strong> {{ articulo.Estado }}</p>
 </body>
-</html>
+{% endblock %}

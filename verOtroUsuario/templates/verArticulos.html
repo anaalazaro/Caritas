@@ -1,20 +1,14 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Artículos</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
-</head>
+{% extends 'baseCaritas.html' %}
+{% block content %}
 <body>
     <div class="container mt-5">
-        <h2>Lista de Artículos</h2>
+        <h2>Lista de Artículos publicados</h2>
         <ul class="list-group mt-3">
             {% for articulo in articulos %}
             <li class="list-group-item">
                 <h4>{{ articulo.Titulo }}</h4>
+                <h4>Propietario: {{articulo.usuario.nombre}} {{articulo.usuario.apellido}}</h4>
+
                 <a href="{% url 'detalle' articulo.id %}" class="btn btn-primary">Ver detalle</a>
             </li>
             {% endfor %}
@@ -24,4 +18,4 @@
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+{% endblock %}

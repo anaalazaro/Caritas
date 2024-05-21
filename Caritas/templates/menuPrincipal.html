@@ -1,104 +1,61 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sesión iniciada</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Estilos adicionales pueden ir aquí */
-        .container {
-            max-width: 800px;
-        }
-        .post {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #fff;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .post-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .post-description {
-            color: #555;
-            margin-bottom: 15px;
-        }
-        .post-link {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .post-link:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <div class="container mt-5">
-        <div class="post">
-            <h2 class="post-title">Se inició sesión exitosamente</h2>
-            <form action="{% url 'perfil_propio' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary">Ver perfil propio</button>
-            </form>
-            <form action="{% url 'eliminar_cuenta' user.id %}" method="get">
-                <button type="submit" class="btn btn-primary">Eliminar cuenta</button>
-            </form>
-            <form action="{% url 'cargar_articulo' %}" method="get">
-                <button type="submit" class="btn btn-primary">Cargar artículo</button>
-            </form>
-        </div>
+{% extends "baseCaritas.html" %}
+{% block title %}Sesión iniciada{% endblock %}
 
-        <div class="post">
-            <h2 class="post-title">Artículos sugeridos</h2>
-            <form method="GET" action="{% url 'mostrar_por_categoria' %}">
-                {% csrf_token %}
-                <select name="categoria" class="form-select mb-3">
-                    <option value="" selected disabled>Selecciona una categoría</option>
-                    <option value="Ropa">Ropa</option>
-                    <option value="Articulos Escolares">Artículos Escolares</option>
-                    <option value="Articulos De Limpieza">Artículos de Limpieza</option>
-                    <option value="Alimentos No Perecederos">Alimentos no perecederos</option>
-                </select>
-                <button type="submit" class="btn btn-primary">Buscar</button>
-            </form>
-            
-            <form action="{% url 'ordenados' %}" method="get">
-                <button type="submit" class="btn btn-primary">Ordenar artículos alfabéticamente</button>
-            </form>
-
-            {% if messages %}
-                <div class="alert alert-info mt-3">
-                    {% for message in messages %}
-                        <p>{{ message }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            <ul class="list-group mt-3">
-                {% for articulo in articulos %}
-                    <li class="list-group-item">
-                        <h3>{{ articulo.Titulo }}</h3>
-                        <p>{{ articulo.Descripcion }}</p>
-                        <p>Articulo de {{ articulo.usuario.nombre }} {{ articulo.usuario.apellido }}</p>  
-                        <a href="{% url 'ver_otro_usuario' articulo.usuario.id %}" class="btn btn-primary">
-                            Ver perfil de la publicación
-                        </a>
-                        <p><img src="{{ articulo.Foto.url }}" alt="Foto del artículo"></p>
-                        <form action="{% url 'detalle' articulo.id %}" method="get">
-                            <button type="submit" class="btn btn-primary">Ver detalle</button>
-                        </form>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+{% block content %}
+    <div class="post">
+        <h2 class="post-title">Se inició sesión exitosamente</h2>
+        <form action="{% url 'perfil_propio' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Ver perfil propio</button>
+        </form>
+        <form action="{% url 'eliminar_cuenta' user.id %}" method="get">
+            <button type="submit" class="btn btn-primary">Eliminar cuenta</button>
+        </form>
+        <form action="{% url 'cargar_articulo' %}" method="get">
+            <button type="submit" class="btn btn-primary">Cargar artículo</button>
+        </form>
     </div>
 
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <div class="post">
+        <h2 class="post-title">Artículos sugeridos</h2>
+        <form method="GET" action="{% url 'mostrar_por_categoria' %}">
+            {% csrf_token %}
+            <select name="categoria" class="form-select mb-3">
+                <option value="" selected disabled>Selecciona una categoría</option>
+                <option value="Ropa">Ropa</option>
+                <option value="Articulos Escolares">Artículos Escolares</option>
+                <option value="Articulos De Limpieza">Artículos de Limpieza</option>
+                <option value="Alimentos No Perecederos">Alimentos no perecederos</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+        
+        <form action="{% url 'ordenados' %}" method="get">
+            <button type="submit" class="btn btn-primary">Ordenar artículos alfabéticamente</button>
+        </form>
+
+        {% if messages %}
+            <div class="alert alert-info mt-3">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <ul class="list-group mt-3">
+            {% for articulo in articulos %}
+                <li class="list-group-item">
+                    <h3>{{ articulo.Titulo }}</h3>
+                    <p>{{ articulo.Descripcion }}</p>
+                    <p>Articulo de {{ articulo.usuario.nombre }} {{ articulo.usuario.apellido }}</p>  
+                    <a href="{% url 'ver_otro_usuario' articulo.usuario.id %}" class="btn btn-primary">
+                        Ver perfil del usuario publicador
+                    </a>
+                    <p><img src="{{ articulo.Foto.url }}" alt="Foto del artículo"></p>
+                    <form action="{% url 'detalle' articulo.id %}" method="get">
+                        <button type="submit" class="btn btn-primary">Ver detalle</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

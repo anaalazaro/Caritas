@@ -88,10 +88,21 @@ class CustomUserCreationForm(UserCreationForm):
 
     def clean_password1(self):
         password1 = self.cleaned_data.get('password1')
+        
         if len(password1) < 6:
-            raise forms.ValidationError(_("La contraseña debe tener al menos 6 caracteres."))
-        if not password1.isalnum():
-            raise forms.ValidationError(_("La contraseña debe ser alfanumérica."))
+            raise forms.ValidationError(_("La contraseña debe poseer 6 o más caracteres"))
+        
+        if password1.isalnum():
+            # Alphanumeric passwords consist only of letters and numbers.
+            # We'll ensure the password contains at least one letter and one number.
+            has_letter = any(char.isalpha() for char in password1)
+            has_number = any(char.isdigit() for char in password1)
+            
+            if not (has_letter and has_number):
+                raise forms.ValidationError(_("La contraseña debe ser alfanumerica"))
+        else:
+            raise forms.ValidationError(_("La contraseña debe ser alfanumerica"))
+        
         return password1
     
     def clean_password2(self):
