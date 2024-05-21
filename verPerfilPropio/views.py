@@ -10,8 +10,7 @@ def view_profile(request):
         # Si el usuario no tiene el rol de usuario normal, redirigir a alguna otra página o mostrar un mensaje de error
         return HttpResponse("No tienes permiso para acceder a esta página")
     # Obtiene el usuario autenticado
-    user = request.user
-    
+    user = request.user 
     # Verifica si el usuario autenticado está asociado a un CustomUser
     if CustomUser.objects.filter(dni=user.username).exists():
         # Obtiene el objeto CustomUser asociado al usuario autenticado
