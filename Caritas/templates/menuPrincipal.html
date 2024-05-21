@@ -8,12 +8,13 @@
             {% csrf_token %}
             <button type="submit" class="btn btn-primary">Ver perfil propio</button>
         </form>
-        <form action="{% url 'eliminar_cuenta' user.id %}" method="get">
+        <form action="{% url 'confirmar_eliminar_cuenta' %}" method="get">
             <button type="submit" class="btn btn-primary">Eliminar cuenta</button>
         </form>
         <form action="{% url 'cargar_articulo' %}" method="get">
             <button type="submit" class="btn btn-primary">Cargar artículo</button>
         </form>
+        
     </div>
 
     <div class="post">

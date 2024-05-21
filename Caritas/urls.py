@@ -56,6 +56,7 @@ urlpatterns = [
   path('', include('chngPassRequest.urls')),
   path('', include('changePassword.urls')),
   path('', include('logout.urls')),
+  path('confirmar_eliminar_cuenta/', viewsInicio.confirmar_eliminar_cuenta, name='confirmar_eliminar_cuenta'), 
   path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal'),# Incluye las URLs de verPerfilPropio
   path('detalleArticulo//<int:articulo_id>/', viewsDetalle.mostrarDetalle, name='detalle'),
   path('ordenarAlfabeticamente', viewsInicio.mostrarArticulosOrdenados, name='ordenados'),

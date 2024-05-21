@@ -11,6 +11,9 @@ def hello(request):
     return render(request, 'inicio.html')
 
 @login_required
+def confirmar_eliminar_cuenta(request):
+    return render(request, 'confirmar_eliminar_cuenta.html')
+@login_required
 def mostrar(request):
     usuario_actual = request.user
     if usuario_actual.roles != 'usuario':
