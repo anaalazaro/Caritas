@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.http import HttpResponse
 from django.shortcuts import render
 from app.models import CustomUser
 from cargarArticulo.models import Articulo
@@ -7,18 +8,31 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 def hello(request):
     return render(request, 'inicio.html')
 
+@login_required
 def mostrar(request):
+    usuario_actual = request.user
+    if usuario_actual.roles != 'usuario':
+        # Si el usuario no tiene el rol de usuario normal, redirigir a alguna otra página o mostrar un mensaje de error
+        return HttpResponse("No tienes permiso para acceder a esta página")
     user=request.user
     sugeridos= Articulo.objects.filter(aprobado=True).exclude(usuario=request.user)
     return render (request, 'menuPrincipal.html', {'user': user, 'articulos':sugeridos })
 
+@login_required
 def mostrarArticulosOrdenados(request):
-   ordenados= Articulo.objects.filter(aprobado=True).exclude(usuario=request.user).order_by('Titulo')
-   return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': ordenados})
+    usuario_actual = request.user
+    if usuario_actual.roles != 'usuario':
+       return HttpResponse("No tienes permiso para acceder a esta página")
+    ordenados= Articulo.objects.filter(aprobado=True).exclude(usuario=request.user).order_by('Titulo')
+    return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': ordenados})
 
 
-
+@login_required
 def mostrarPorCategoria(request):
+    usuario_actual = request.user
+    if usuario_actual.roles != 'usuario':
+        # Si el usuario no tiene el rol de usuario normal, redirigir a alguna otra página o mostrar un mensaje de error
+        return HttpResponse("No tienes permiso para acceder a esta página")
     if 'categoria' in request.GET:
         categoria_seleccionada = request.GET['categoria']
         articulos_filtrados = Articulo.objects.filter(aprobado=True, Categoria=categoria_seleccionada).exclude(usuario=request.user)

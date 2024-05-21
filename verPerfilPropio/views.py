@@ -1,9 +1,14 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render
 from app.models import CustomUser  # Importa tu modelo personalizado
 
 @login_required  # Asegura que solo usuarios autenticados puedan acceder
 def view_profile(request):
+    usuario_actual = request.user
+    if usuario_actual.roles != 'usuario':
+        # Si el usuario no tiene el rol de usuario normal, redirigir a alguna otra página o mostrar un mensaje de error
+        return HttpResponse("No tienes permiso para acceder a esta página")
     # Obtiene el usuario autenticado
     user = request.user
     
