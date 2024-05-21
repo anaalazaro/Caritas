@@ -19,6 +19,9 @@
             </div>
             <button type="submit" class="btn btn-primary">Iniciar sesión</button>
         </form>
+        <form action="{% url 'change_password' %}" method="get">
+            <button type="submit" class="btn btn-primary">Solicitar cambio de contraseña</button>
+        </form>
         <!-- Ejemplo de mensaje de error -->
         {% if error_message %}
             <div class="error-message">{{ error_message }}</div>

@@ -29,8 +29,8 @@ def registro(request):
                 username = user_creation_form.cleaned_data['dni']
                 password = user_creation_form.cleaned_data['password1']
                 user = authenticate(request, username=username, password=password)
-              #  login(request, user)
-                return redirect('inicio')  # Redirigir al usuario a la página de inicio
+                login(request, user)
+                return redirect('menuPrincipal')  # Redirigir al usuario a la página de inicio
 
         # Si el formulario no es válido, actualizar los datos con el formulario y sus errores
         data['form'] = user_creation_form

@@ -129,7 +129,7 @@ class CustomUserCreationForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.username = self.cleaned_data['dni']  # Establecer el nombre de usuario como el DNI
-        user.roles = 'ayudante' 
+        user.roles = 'usuario' 
         if commit:
             user.save()
         return user
