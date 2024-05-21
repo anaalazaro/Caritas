@@ -66,4 +66,5 @@ urlpatterns = [
     path('misArticulos/', ver_articulos, name='verArticulos'),
   #path('login/', autenticacion_views.login_view, name='login'),
  #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
+ path('inicioAyudante/', viewsInicio.inicioAyudante, name='inicioAyudante'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

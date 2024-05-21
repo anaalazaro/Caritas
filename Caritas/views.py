@@ -1,4 +1,6 @@
+from functools import wraps
 from django.contrib import messages
+from django.http import HttpResponseForbidden
 from django.shortcuts import render
 from app.models import CustomUser
 from cargarArticulo.models import Articulo
@@ -35,8 +37,26 @@ def mostrarPorCategoria(request):
 def es_admin(user):
     return user.is_superuser
 
+def es_ayudante(user):
+    return user.roles == 'ayudante'
+
+def custom_user_passes_test(test_func, message):
+    def decorator(view_func):
+        @wraps(view_func)
+        def _wrapped_view(request, *args, **kwargs):
+            if test_func(request.user):
+                return view_func(request, *args, **kwargs)
+            else:
+                return HttpResponseForbidden(message)
+        return _wrapped_view
+    return decorator
+
 @login_required
-@user_passes_test(es_admin)
+@custom_user_passes_test(es_admin, message="No está habilitado para acceder a esta página.")
 def inicioAdmin(request):
     return render (request, 'inicioAdmin.html')
 
+@login_required
+@custom_user_passes_test(es_ayudante, message="No está habilitado para acceder a esta página.")
+def inicioAyudante(request):
+    return render(request, 'inicioAyudante.html')

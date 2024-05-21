@@ -25,7 +25,7 @@ def otp(request):
     error_message=None
     if 'resend_otp' in request.POST:
             # Si se presionó el botón "Reenviar OTP", enviar el OTP nuevamente
-            user = request.user  # Suponiendo que ya haya un usuario autenticado
+            user = request.user  
             send_otp(request, user)
             return redirect('otp')
     if request.method == 'POST':
@@ -45,7 +45,10 @@ def otp(request):
                 
                     del request.session['otp_secret_key']
                     del request.session['otp_valid_date']
-                    return redirect('menuPrincipal') 
+                    if user.roles == 'admin':
+                        return redirect('inicioAdmin')
+                    elif user.roles == 'ayudante':
+                        return redirect('inicioAyudante') 
                 else:
                     error_message = 'El código OTP es inválido'
             else:
