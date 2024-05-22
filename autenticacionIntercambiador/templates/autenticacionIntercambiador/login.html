@@ -5,22 +5,23 @@
 {% endblock %}
 
 {% block content %}
-    <div class="login-container">
+    <div class="login-container ">
         <h2>Iniciar Sesión</h2>
-        <form method="post">
+        <form method="post" class="d-inline">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="id_dni" class="form-label">DNI</label>
+                <label for="id_dni" class="form-label">Usuario</label>
                 {{ form.dni }}
             </div>
             <div class="mb-3">
                 <label for="id_password" class="form-label">Contraseña</label>
                 {{ form.password }}
             </div>
-            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            <button type="submit" class="btn btn-primary d-inline">Iniciar sesión</button>
         </form>
-        <form action="{% url 'change_password' %}" method="get">
-            <button type="submit" class="btn btn-primary">Solicitar cambio de contraseña</button>
+        <form action="{% url 'change_password' %}" method="get" class="d-inline">
+            <button type="submit" class="btn btn-primary d-inline">Solicitar cambio de contraseña</button>
+            <a href="{% url 'inicio' %}" class="btn btn-primary">Cancelar</a>
         </form>
         <!-- Ejemplo de mensaje de error -->
         {% if error_message %}

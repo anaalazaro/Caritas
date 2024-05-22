@@ -2,37 +2,54 @@
 {% block title %}Sesión iniciada{% endblock %}
 
 {% block content %}
-    <div class="post">
-        <h2 class="post-title">Se inició sesión exitosamente</h2>
-        <form action="{% url 'perfil_propio' %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Ver perfil propio</button>
-        </form>
-        <form action="{% url 'confirmar_eliminar_cuenta' %}" method="get">
-            <button type="submit" class="btn btn-primary">Eliminar cuenta</button>
-        </form>
-        <form action="{% url 'cargar_articulo' %}" method="get">
-            <button type="submit" class="btn btn-primary">Cargar artículo</button>
-        </form>
-        
+    <div class="post col-md-6 mb-4">
+        <div class="row g-0 ">
+            <div class="col-md-3 mb-4">
+                <!-- <h2 class="post-title">Se inició sesión exitosamente</h2> -->
+                <form action="{% url 'perfil_propio' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Ver perfil propio</button>
+                </form>
+            </div>
+            <div class="col-md-3 mb-4">
+                <form action="{% url 'confirmar_eliminar_cuenta' %}" method="get">
+                    <button type="submit" class="btn btn-primary">Eliminar cuenta</button>
+                </form>
+            </div>
+            <div class="col-md-3 mb-4">
+                <form action="{% url 'cargar_articulo' %}" method="get">
+                    <button type="submit" class="btn btn-primary">Cargar artículo</button>
+                </form>
+            </div>
+            <div class="col-md-3 mb-4">
+                <form action="{% url 'verArticulos' %}" method="get">
+                    <button type="submit" class="btn btn-primary">Mis artículos</button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <div class="post">
         <h2 class="post-title">Artículos sugeridos</h2>
-        <form method="GET" action="{% url 'mostrar_por_categoria' %}">
-            {% csrf_token %}
-            <select name="categoria" class="form-select mb-3">
-                <option value="" selected disabled>Selecciona una categoría</option>
-                <option value="Ropa">Ropa</option>
-                <option value="Articulos Escolares">Artículos Escolares</option>
-                <option value="Articulos De Limpieza">Artículos de Limpieza</option>
-                <option value="Alimentos No Perecederos">Alimentos no perecederos</option>
-            </select>
-            <button type="submit" class="btn btn-primary">Buscar</button>
-        </form>
-        
+        <div class="mb-3">
+            <form method="GET" action="{% url 'mostrar_por_categoria' %}" class="d-flex align-items-end">
+                {% csrf_token %}
+                <select name="categoria" class="form-select me-3 mb-3">
+                    <option value="" selected disabled>Selecciona una categoría</option>
+                    <option value="Ropa">Ropa</option>
+                    <option value="Articulos Escolares">Artículos Escolares</option>
+                    <option value="Articulos De Limpieza">Artículos de Limpieza</option>
+                    <option value="Alimentos No Perecederos">Alimentos no perecederos</option>
+                </select>
+                <button type="submit" class="btn btn-primary mb-3">Buscar</button>
+            </form>
+            
+        </div>
         <form action="{% url 'ordenados' %}" method="get">
-            <button type="submit" class="btn btn-primary">Ordenar artículos alfabéticamente</button>
+            <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar artículos alfabéticamente">
+                <i class="bi bi-sort-alpha-down"></i> 
+                <span class="btn-text">Ordenar artículos alfabéticamente</span>
+            </button>
         </form>
 
         {% if messages %}
@@ -44,18 +61,43 @@
         {% endif %}
         <ul class="list-group mt-3">
             {% for articulo in articulos %}
-                <li class="list-group-item">
+                <!-- <li class="list-group-item">
                     <h3>{{ articulo.Titulo }}</h3>
                     <p>{{ articulo.Descripcion }}</p>
-                    <p>Articulo de {{ articulo.usuario.nombre }} {{ articulo.usuario.apellido }}</p>  
-                    <a href="{% url 'ver_otro_usuario' articulo.usuario.id %}" class="btn btn-primary">
+                    <p>Articulo de {{ articulo.usuario_id.nombre }} {{ articulo.usuario.apellido }}</p>  
+                    <a href="{% url 'ver_otro_usuario' articulo.usuario_id %}" class="btn btn-primary">
                         Ver perfil del usuario publicador
                     </a>
                     <p><img src="{{ articulo.Foto.url }}" alt="Foto del artículo"></p>
                     <form action="{% url 'detalle' articulo.id %}" method="get">
                         <button type="submit" class="btn btn-primary">Ver detalle</button>
                     </form>
-                </li>
+                </li> -->
+                <div class="col-md-10 mb-4">
+                    <div class="card">
+                    <div class="row g-0">
+                        <div class="col-md-4 d-flex align-items-center justify-content-center">
+                            <a href="{% url 'detalle' articulo.id %}">
+                                <img src="{{ articulo.Foto.url }}" class="img-fluid" alt="..." style="max-width: 200px;">
+                            </a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">{{ articulo.Titulo }}</h3>
+                                <small class="text-muted">{{ articulo.Categoria }}</small>
+                                <p>Articulo de {{ articulo.usuario.nombre }} {{ articulo.usuario.apellido }}</p>
+                                <a href="{% url 'ver_otro_usuario' articulo.usuario_id %}" class="btn btn-primary">
+                                    Ver perfil del usuario publicador
+                                </a>
+                                <a href="{% url 'detalle' articulo.id %}" class="btn btn-primary">
+                                    Ver detalle
+                                </a>
+                                <span class="badge bg-dark position-absolute top-0 end-0 m-2">{{ articulo.Estado }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
             {% endfor %}
         </ul>
     </div>
