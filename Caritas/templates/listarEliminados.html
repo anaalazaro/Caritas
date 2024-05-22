@@ -1,14 +1,14 @@
 {% extends 'baseCaritas.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2>Lista de Artículos Publicados</h2>
+<div class="container">
+    <h1>Articulos a eliminar </h1>
     {% if articulos %}
-        <table class="table mt-3">
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col">Título</th>
-                    <th scope="col">Propietario</th>
+                    <th scope="col">Descripción</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -16,19 +16,24 @@
                 {% for articulo in articulos %}
                     <tr>
                         <td>{{ articulo.Titulo }}</td>
-                        <td>{{ articulo.usuario.nombre }} {{ articulo.usuario.apellido }}</td>
+                        <td>{{ articulo.Descripcion }}</td>
                         <td>
-                            <a href="{% url 'detalle' articulo.id %}" class="btn btn-primary btn-sm">Ver detalle</a>
+                            <a href="{% url 'eliminarArticulo' articulo.id %}" class="btn btn-primary btn-sm">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% else %}
-        <p>No hay artículos publicados.</p>
+        <p>No hay artículos a elimininar</p>
+    {% endif %}
+
+    {% if messages %}
+        <div class="alert alert-info mt-3">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
     {% endif %}
 </div>
-
-<!-- Bootstrap Bundle with Popper -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
 {% endblock %}

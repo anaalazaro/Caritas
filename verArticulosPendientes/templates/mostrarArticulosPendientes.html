@@ -1,14 +1,37 @@
-{% extends "baseCaritas.html" %}
+{% extends 'baseCaritas.html' %}
+
 {% block content %}
-<body>
+<div class="container">
     <h1>Artículos Pendientes</h1>
-    <ul>
-        {% for articulo in articulos_pendientes %}
-        <li>{{ articulo.Titulo }} - {{ articulo.Descripcion }} <a href="{% url 'controlar_articulo' articulo.id %}"><button>Controlar</button></a></li>
-        {% endfor %}
-    </ul>
+    {% if articulos_pendientes %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Título</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for articulo in articulos_pendientes %}
+                    <tr>
+                        <td>{{ articulo.Titulo }}</td>
+                        <td>{{ articulo.Descripcion }}</td>
+                        <td>
+                            <a href="{% url 'controlar_articulo' articulo.id %}" class="btn btn-primary btn-sm">Controlar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay artículos pendientes.</p>
+    {% endif %}
+
     {% if success_message %}
-    <p>{{ success_message }}</p>
-{% endif %}
-</body>
+        <div class="alert alert-info mt-3">
+            <p>{{ success_message }}</p>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
