@@ -58,6 +58,7 @@ urlpatterns = [
   path('', include('logout.urls')),
   path('', include('crearFilial.urls')),
   path('', include('listarFiliales.urls')),
+  path('', include('eliminarFilial.urls')),
   path('confirmar_eliminar_cuenta/', viewsInicio.confirmar_eliminar_cuenta, name='confirmar_eliminar_cuenta'), 
   path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal'),# Incluye las URLs de verPerfilPropio
   path('detalleArticulo//<int:articulo_id>/', viewsDetalle.mostrarDetalle, name='detalle'),

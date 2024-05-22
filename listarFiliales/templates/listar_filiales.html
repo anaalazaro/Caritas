@@ -1,15 +1,33 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Listado de Filiales</title>
-</head>
-<body>
-    <h2>Listado de Filiales</h2>
-    <ul>
-        {% for filial in filiales %}
-            <li>{{ filial.nombre }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'baseCaritas.html' %}
+
+
+{% block content %}
+
+<div class="container">
+    <h1>Filiales registradas</h1>
+    {% if filiales %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for filial in filiales %}
+                    <tr>
+                        <td>{{ filial.nombre }} 
+                        <td>
+                            <!-- <a href="" class="btn btn-primary btn-sm">Ver Detalle</a> -->
+                           <a href="{% url 'eliminarFilial' %}" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay filiales registradas.</p>
+    {% endif %}
+    <a href="{% url 'inicioAdmin' %}" class="btn btn-primary btn-sm">Volver</a>
+</div>
+{% endblock %}
+

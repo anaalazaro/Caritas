@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from .forms import CustomUserCreationForm
-from .models import Filial
+from .models import Filial, CustomUser
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -23,6 +23,10 @@ def registro(request):
                 # Asigna la filial al usuario
                 filial = Filial.objects.get(pk=filial_id)
                 user.filial = filial
+                print(CustomUser.objects.filter(filial=filial).exists())
+                if CustomUser.objects.filter(filial=filial).exists():
+                    messages.error(request, 'Esta filial ya tiene un ayudante asignado.')
+                    return redirect('registro')
             user.save()
             messages.success(request, 'Se ha creado al usuario ayudante exitosamente.')
             # username = formulario.cleaned_data['dni']

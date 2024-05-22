@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'buscarArticulo', 
     'crearFilial',
     'listarFiliales',
+    'eliminarFilial',
 ]
 
 MIDDLEWARE = [
