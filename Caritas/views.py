@@ -45,6 +45,7 @@ def mostrarArticulosOrdenados(request):
     return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': ordenados})
 
 
+
 @login_required
 def mostrarPorCategoria(request):
     usuario_actual = request.user
@@ -97,3 +98,17 @@ def marcar_leida(request, notification_id):
     notification.is_read = True
     notification.save()
     return JsonResponse({'status': 'success'})
+
+@login_required
+@custom_user_passes_test(es_admin, message="No está habilitado para acceder a esta página.")
+def eliminarArticulo(request, articulo_id):
+     articulo= Articulo.objects.get(pk= articulo_id)
+     articulo.delete()
+     HttpResponse("Se eliminó con éxito")
+
+@login_required
+@custom_user_passes_test(es_admin, message="No está habilitado para acceder a esta página.")
+def mostrarArticulosAEliminar(request):
+    eliminar= Articulo.objects.filter(aprobado=False, pendiente=False)
+    return render(request, 'listarEliminados.html', {'articulos': eliminar})
+                  

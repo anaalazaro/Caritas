@@ -1,4 +1,5 @@
 from django.db import models
+from crearFilial.models import Filial
 
 # Create your models here.
 # accounts/models.py
@@ -10,7 +11,7 @@ class CustomUser(AbstractUser):
     fecha_nacimiento = models.DateField(default='2000-01-01')
     dni = models.CharField(max_length=10, unique=True)
     telefono = models.CharField(max_length=15)
-    filial = models.CharField(max_length=20)
+    filial = models.OneToOneField(Filial, on_delete=models.SET_NULL, null=True, blank=True)
     
     # Campos con opciones
     OPCIONES_ROL = [

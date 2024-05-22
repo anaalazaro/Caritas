@@ -60,7 +60,25 @@
                 <div class="card-body">
                     <h5 class="card-title">Ver artículos a eliminar</h5>
                     <p class="card-text">Ver los artículos pendientes de eliminación</p>
-                    <a href="" class="btn btn-primary">Ver artículos pendientes</a>
+                    <a href="{% url 'listarAEliminar' %}" class="btn btn-primary">Ver artículos pendientes</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Crear nueva filial</h5>
+                    <p class="card-text">Crear una nueva filial de Caritas</p>
+                    <a href="{% url 'agregarFilial' %}" class="btn btn-primary">Crear filial</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Ver filiales</h5>
+                    <p class="card-text">Ver el listado de las filiales de Caritas en La Plata</p>
+                    <a href="{% url 'listarAEliminar' %}" class="btn btn-primary">Ver filiales</a>
                 </div>
             </div>
         </div>

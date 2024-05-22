@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from app.models import CustomUser
 from .utils import send_otp
@@ -8,12 +8,17 @@ import pyotp
 
 # Create your views here.
 def login_otp(request):
+    if request.user.is_authenticated:
+        logout(request)
     error_message=None
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
+            if user.roles == 'usuario':
+                error_message = 'No se encuentra habilitado para iniciar sesión por este medio. Elija la opción "Iniciar sesión como intercambiador"'
+                return render(request, 'login_otp.html', {'error_message': error_message})
             send_otp(request, user)
             request.session['username'] = username
             return redirect('otp')
