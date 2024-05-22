@@ -18,7 +18,7 @@
                         <td>{{ articulo.Titulo }}</td>
                         <td>{{ articulo.Descripcion }}</td>
                         <td>
-                            <a href="{% url 'eliminarArticulo' articulo.id %}" class="btn btn-primary btn-sm">Eliminar</a>
+                            <a href="{% url 'eliminarArticulo' articulo.id %}" class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -35,5 +35,6 @@
             {% endfor %}
         </div>
     {% endif %}
+    <a href="{% url 'inicioAdmin' %}" class="btn btn-primary btn-sm">Volver</a>
 </div>
 {% endblock %}

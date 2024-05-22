@@ -3,7 +3,7 @@
 <body>
     <h1>{{ articulo.Nombre }}</h1>
     <p><strong>Descripción:</strong> {{ articulo.Descripcion }}</p>
-    <p><strong>Foto:</strong> <img src="{{ articulo.Foto.url }}" alt="Foto del artículo"></p>
+    <p><strong>Foto:</strong> <img src="{{ articulo.Foto.url }}" alt="Foto del artículo" style="max-width: 300px;"></p>
     <p><strong>Categoría:</strong> {{ articulo.Categoria }}</p>
     <p><strong>Título:</strong> {{ articulo.Titulo }}</p>
     <p><strong>Estado:</strong> {{ articulo.Estado }}</p>
@@ -16,8 +16,8 @@
         </ul>
     {% endif %}
 
-    <a href="{% url 'aprobar' articulo.id %}">Aprobar</a>
-    <a href="{% url 'desaprobar' articulo.id %}">Desaprobar</a>
+    <a href="{% url 'aprobar' articulo.id %}" class="btn btn-primary">Aprobar</a>
+    <a href="{% url 'desaprobar' articulo.id %}" class="btn btn-danger">Desaprobar</a>
 
 </body>
 
