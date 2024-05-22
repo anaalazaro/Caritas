@@ -1,21 +1,34 @@
 {% extends 'baseCaritas.html' %}
+
 {% block content %}
-<body>
-    <div class="container mt-5">
-        <h2>Lista de Artículos publicados</h2>
-        <ul class="list-group mt-3">
-            {% for articulo in articulos %}
-            <li class="list-group-item">
-                <h4>{{ articulo.Titulo }}</h4>
-                <h4>Propietario: {{articulo.usuario.nombre}} {{articulo.usuario.apellido}}</h4>
+<div class="container mt-5">
+    <h2>Lista de Artículos Publicados</h2>
+    {% if articulos %}
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Título</th>
+                    <th scope="col">Propietario</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for articulo in articulos %}
+                    <tr>
+                        <td>{{ articulo.Titulo }}</td>
+                        <td>{{ articulo.usuario.nombre }} {{ articulo.usuario.apellido }}</td>
+                        <td>
+                            <a href="{% url 'detalle' articulo.id %}" class="btn btn-primary btn-sm">Ver detalle</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay artículos publicados.</p>
+    {% endif %}
+</div>
 
-                <a href="{% url 'detalle' articulo.id %}" class="btn btn-primary">Ver detalle</a>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
-</body>
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
 {% endblock %}
