@@ -1,5 +1,6 @@
 from django import forms
 from app.models import CustomUser
+from crearFilial.models import Filial
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext, gettext_lazy as _
 from datetime import datetime
@@ -16,6 +17,8 @@ class CustomUserCreationForm(UserCreationForm):
         widget=forms.DateInput(attrs={'type': 'date'})
     )
 
+    filial = forms.ModelChoiceField(queryset=Filial.objects.all(), empty_label=None)
+    
     # email = forms.EmailField(
     #     validators=[EmailValidator()],
     #     error_messages={

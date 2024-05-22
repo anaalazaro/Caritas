@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Filiales</title>
+</head>
+<body>
+    <h2>Listado de Filiales</h2>
+    <ul>
+        {% for filial in filiales %}
+            <li>{{ filial.nombre }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

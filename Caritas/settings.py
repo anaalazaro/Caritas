@@ -72,7 +72,9 @@ INSTALLED_APPS = [
     'verDetalleDeArticulo',
     'verAyudantesRegistrados',
     'verArticulosPropios',
-    'buscarArticulo'
+    'buscarArticulo', 
+    'crearFilial',
+    'listarFiliales',
 ]
 
 MIDDLEWARE = [
