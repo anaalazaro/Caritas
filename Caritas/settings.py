@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'crearFilial',
     'listarFiliales',
     'eliminarFilial',
+    'verIntercambiadores',
 ]
 
 MIDDLEWARE = [

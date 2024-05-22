@@ -22,8 +22,6 @@ def registro(request):
             if filial_id:
                 # Asigna la filial al usuario
                 filial = Filial.objects.get(pk=filial_id)
-                user.filial = filial
-                print(CustomUser.objects.filter(filial=filial).exists())
                 if CustomUser.objects.filter(filial=filial).exists():
                     messages.error(request, 'Esta filial ya tiene un ayudante asignado.')
                     return redirect('registro')

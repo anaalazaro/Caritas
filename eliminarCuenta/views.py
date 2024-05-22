@@ -10,8 +10,8 @@ from django.contrib import messages
 @login_required
 def delete_account(request, user_id):
     usuario_actual = request.user
-    if usuario_actual.roles != 'usuario':
-        # Si el usuario no tiene el rol de usuario normal, redirigir a alguna otra página o mostrar un mensaje de error
+    if usuario_actual.roles == 'ayudante':
+        # Si el usuario no tiene el rol de usuario normal (o de administrador para borrar ayudantes), redirigir a alguna otra página o mostrar un mensaje de error
         return HttpResponse("No tienes permiso para acceder a esta página")
     try:
         usuario = CustomUser.objects.get(pk=user_id)

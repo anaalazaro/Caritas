@@ -1,0 +1,62 @@
+{% extends 'baseCaritas.html' %}
+<!-- {% load crispy_forms_tags %}
+
+    <h1>Ayudantes Registrados</h1>
+    {% if ayudantes %}
+        <ul class="list-group">
+            {% for ayudante in ayudantes %}
+                <li class="list-group-item">
+                    Nombre: {{ ayudante.first_name }} {{ ayudante.last_name }}<br>
+                    Fecha de Nacimiento: {{ ayudante.fecha_nacimiento }}<br>
+                    DNI: {{ ayudante.dni }}<br>
+                    Teléfono: {{ ayudante.telefono }}<br>
+                    Filial: {{ ayudante.filial }}<br>
+                    <!-- Agrega más campos si es necesario -->
+                    <!-- <form action="" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm">Eliminar</button>
+                    </form> 
+                <!-- </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No existen ayudantes registrados.</p>
+    {% endif %}-->
+
+
+{% block content %}
+<div class="container">
+    <h1>Usuarios Registrados</h1>
+    {% if usuarios %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Fecha de Nacimiento</th>
+                    <th scope="col">DNI</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario.nombre }} {{ ayudante.apellido }}</td>
+                        <td>{{ usuario.fechaNacimiento }}</td>
+                        <td>{{ usuario.dni }}</td>
+                        <td>{{ usuario.telefono }}</td>
+                        <td>{{ usuario.filial }}</td>
+                        <td>
+                            <!-- <a href="" class="btn btn-primary btn-sm">Ver Detalle</a> -->
+                            <a href="{% url 'editarPerfilAdmin' usuario.id %}" class="btn btn-danger btn-sm">Editar perfil</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No existen ayudantes registrados.</p>
+    {% endif %}
+    <a href="{% url 'inicioAdmin' %}" class="btn btn-primary btn-sm">Volver</a>
+</div>
+{% endblock %}
