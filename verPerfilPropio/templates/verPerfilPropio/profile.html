@@ -2,7 +2,8 @@
 
 {% block content %}
     <h1>Perfil de {{ user.nombre}} {{user.apellido}}</h1>
-    
+    <i class="bi bi-info-circle"><small class="text-muted p-2 bg-light shadow-sm"> Si desea editar su perfil, envie un correo al siguiente mail: ingecaritas@gmail.com</small></i>
+    <!--  -->
     {% if user.profile_picture %}
     <img src="{{ user.profile_picture.url }}" alt="Foto de perfil" width="100" height="100">
     {% endif %}
@@ -16,13 +17,13 @@
     <p>No se encontró información adicional del usuario.</p>
     {% endif %}
     
-    <div class="action-buttons">
-        <form action="{% url 'verArticulos' %}" method="get">
-            <button type="submit" class="btn btn-primary">Ver Productos</button>
+    <div class="action-buttons position-relative">
+        <form action="{% url 'verArticulos' %}" method="get" class="d-inline">
+            <button type="submit" class="btn btn-primary">Ver Articulos</button>
         </form>        
-        <button onclick="window.location.href='/users/reviews/'">Ver Reseñas</button>
-        <button onclick="window.location.href='/users/ratings/'">Ver Calificaciones</button>
-        <h4> Si desea editar su perfil, envie un correo al siguiente mail: ingecaritas@gmail.com</h4>
+        <button  class="btn btn-primary d-inline">Ver Reseñas</button>
+        <button  class="btn btn-primary d-inline">Ver Calificaciones</button>
+        
     </div>
 {% endblock %}
 

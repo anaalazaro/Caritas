@@ -70,4 +70,5 @@ urlpatterns = [
   #path('login/', autenticacion_views.login_view, name='login'),
  #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
  path('inicioAyudante/', viewsInicio.inicioAyudante, name='inicioAyudante'),
+ path('marcar_leida/<int:notification_id>/', viewsInicio.marcar_leida, name='marcar_leida')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

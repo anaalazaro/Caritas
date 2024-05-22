@@ -7,6 +7,6 @@ def buscar_articulos(request):
     query = request.GET.get('q')
     resultados = None
     if query:
-        resultados = Articulo.objects.filter(Titulo__icontains=query)
+        resultados = Articulo.objects.filter(Titulo__icontains=query,aprobado=True)
     return render(request, 'buscarArticulo.html', {'resultados': resultados})
 

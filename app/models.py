@@ -17,7 +17,7 @@ class CustomUser(AbstractUser):
         ('admin', 'Administrador'),
         ('ayudante', 'Usuario ayudante'),
     ]
-    roles = models.CharField(max_length=8, choices=OPCIONES_ROL, default='usuario')
+    roles = models.CharField(max_length=8, choices=OPCIONES_ROL, default='admin')
    # mail= models.EmailField()
     #puntaje= models.IntegerField(default=0)
     class Meta:

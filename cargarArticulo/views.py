@@ -6,7 +6,7 @@ from .forms import ArticuloForm
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from app.models import CustomUser
-
+from notificaciones.models import Notification
 
 from django.shortcuts import redirect, render
 from django.contrib import messages
@@ -38,6 +38,12 @@ def cargar_articulo(request):
             #         [ayudante.email],
             #         fail_silently=True,
             #     )
+            ayudante = CustomUser.objects.get(roles='ayudante')
+            Notification.objects.create(
+            sender=request.user,
+            user=ayudante,
+            message=f'Hola "{ayudante.username}" hay un nuevo artículo pendiente de revisión.',
+            )
             return redirect(reverse('menuPrincipal') + '?mensaje=El+artículo+quedó+pendiente+de+aprobación+por+el+ayudante')
     else:
         form = ArticuloForm()

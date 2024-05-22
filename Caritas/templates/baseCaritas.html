@@ -27,6 +27,10 @@
             padding-top: 1rem;
             padding-bottom: 1rem;
         }
+        .logo-img {
+            height: 50px; /* Ajusta la altura según tu preferencia */
+            width: auto;
+        }
     </style>
     {% endblock %}
 </head>
@@ -35,12 +39,36 @@
         <!-- Barra de navegación de Bootstrap 5 -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
             <div class="container">
-                <a class="navbar-brand" href="{% url 'menuPrincipal' %}">Caritas</a>
+                {% if user.is_authenticated and user.roles == 'usuario' %}
+                <a class="navbar-brand" href="{% url 'menuPrincipal' %}">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRptGgaQ6oM-vSWTNIanXjpkToMqy94TCscUpAyspKJnawSysT7b0fL3IE0hnQqiB0NVKE&usqp=CAU" alt="Logo" class="logo-img ms-2">
+                    Caritas
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                {% elif user.is_authenticated and user.roles == 'admin' %}
+                <a class="navbar-brand" href="{% url 'inicioAdmin' %}">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRptGgaQ6oM-vSWTNIanXjpkToMqy94TCscUpAyspKJnawSysT7b0fL3IE0hnQqiB0NVKE&usqp=CAU" alt="Logo" class="logo-img ms-2">
+                    Caritas
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                {% elif user.is_authenticated and user.roles == 'ayudante'  %}
+                <a class="navbar-brand" href="{% url 'inicioAyudante' %}">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRptGgaQ6oM-vSWTNIanXjpkToMqy94TCscUpAyspKJnawSysT7b0fL3IE0hnQqiB0NVKE&usqp=CAU" alt="Logo" class="logo-img ms-2">
+                    Caritas
+                </a>
+                {% else %}
+                <a class="navbar-brand" href="{% url 'inicio' %}">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRptGgaQ6oM-vSWTNIanXjpkToMqy94TCscUpAyspKJnawSysT7b0fL3IE0hnQqiB0NVKE&usqp=CAU" alt="Logo" class="logo-img ms-2">
+                    Caritas
+                </a>
+                {% endif %}
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
+                        {% if user.is_authenticated and user.roles == 'usuario' %}
                         <form class="d-flex" method="GET" action="{% url 'articulos' %}">
                             <div class="input-group">
                                 <input class="form-control me-2" type="search" placeholder="Buscar articulos..." aria-label="Buscar" name="q"
@@ -51,6 +79,7 @@
                                 </button>
                             </div>
                         </form>
+                        {% endif %}
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="#">Inicio</a>
                         </li> -->
@@ -60,13 +89,17 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contacto</a>
                         </li> -->
+                        {% if user.is_authenticated %}
                         <li class="nav-item dropdown">
+                            <!-- <a class="nav-link dropdown-toggle" href="#" id="notificacionesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Notificaciones <span class="badge bg-danger">{{ notificaciones.count }}</span>
+                            </a> -->
                             <a class="nav-link dropdown-toggle" href="#" id="notificacionesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Notificaciones <span class="badge bg-danger">{{ notificaciones.count }}</span>
+                                <i class="bi bi-bell"></i><span class="badge bg-danger">{{ unread_count }}</span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="notificacionesDropdown">
-                                {% for notificacion in notificaciones %}
-                                    <li><a class="dropdown-item" href="#">{{ notificacion.mensaje }}</a></li>
+                                {% for notification in notifications %}
+                                    <li><a class="dropdown-item" href="#" onclick="marcarLeida('{{ notification.id }}')">{{ notification.message }}</a></li>
                                 {% empty %}
                                     <li><a class="dropdown-item" href="#">No hay nuevas notificaciones</a></li>
                                 {% endfor %}
@@ -81,6 +114,7 @@
                                 <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a></li>
                             </ul>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -101,6 +135,26 @@
 
     <!-- Enlace a los archivos JavaScript de Bootstrap 5 (al final del cuerpo) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    {% block scripts %}{% endblock %}
+    {% block scripts %}
+    <script>
+        function marcarLeida(notificationId) {
+            fetch(`/marcar_leida/${notificationId}/`)
+                .then(response => {
+                    if (response.ok) {
+                        // Actualizar la interfaz de usuario para indicar que la notificación ha sido marcada como leída
+                        const notificationElement = document.getElementById(`notification_${notificationId}`);
+                        if (notificationElement) {
+                            notificationElement.classList.add('leida');  // Agregar una clase CSS para indicar que la notificación ha sido leída
+                        }
+                    } else {
+                        console.error('Error al marcar como leída la notificación');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error de red:', error);
+                });
+        }
+    </script>
+    {% endblock %}
 </body>
 </html>

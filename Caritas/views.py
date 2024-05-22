@@ -2,12 +2,24 @@ from functools import wraps
 from django.contrib import messages
 from django.http import HttpResponseForbidden
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect,get_object_or_404
 from app.models import CustomUser
 from cargarArticulo.models import Articulo
 from django.contrib.auth.decorators import login_required, user_passes_test
+from notificaciones.models import Notification
+from django.http import JsonResponse
+
 
 def hello(request):
+    if request.user.is_authenticated:
+        if request.user.roles == 'usuario':
+            user=request.user
+            sugeridos= Articulo.objects.filter(aprobado=True).exclude(usuario=request.user)
+            return render (request, 'menuPrincipal.html', {'user': user, 'articulos':sugeridos })
+        elif request.user.roles == 'ayudante':
+            return redirect('inicioAyudante')
+        else:
+            return redirect('inicioAdmin')
     return render(request, 'inicio.html')
 
 @login_required
@@ -21,6 +33,7 @@ def mostrar(request):
         return HttpResponse("No tienes permiso para acceder a esta página")
     user=request.user
     sugeridos= Articulo.objects.filter(aprobado=True).exclude(usuario=request.user)
+    print(sugeridos)
     return render (request, 'menuPrincipal.html', {'user': user, 'articulos':sugeridos })
 
 @login_required
@@ -77,3 +90,10 @@ def inicioAdmin(request):
 @custom_user_passes_test(es_ayudante, message="No está habilitado para acceder a esta página.")
 def inicioAyudante(request):
     return render(request, 'inicioAyudante.html')
+
+
+def marcar_leida(request, notification_id):
+    notification = get_object_or_404(Notification, pk=notification_id)
+    notification.is_read = True
+    notification.save()
+    return JsonResponse({'status': 'success'})
