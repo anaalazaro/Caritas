@@ -1,7 +1,14 @@
 {% extends 'baseCaritas.html' %}
 
 {% block content %}
-    <h1>Perfil de {{ user.nombre}} {{user.apellido}}</h1>
+<body>
+    <div class="container mt-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header text-center bg-primary text-white">
+                <h1>Mi Perfil </h1>
+            </div>
+            <div class="card-body">
+    <!-- <h1>Perfil de {{ user.nombre}} {{user.apellido}}</h1> -->
     <i class="bi bi-info-circle"><small class="text-muted p-2 bg-light shadow-sm"> Si desea editar su perfil, envie un correo al siguiente mail: ingecaritas@gmail.com</small></i>
     <!--  -->
     {% if user.profile_picture %}
@@ -9,6 +16,8 @@
     {% endif %}
     
     {% if custom_user %}
+    <p><strong>Nombre:</strong> {{ custom_user.nombre }}</p>
+    <p><strong>Apellido:</strong> {{ custom_user.apellido }}</p>
     <p><strong>Email:</strong> <span style="color: black;">{{ custom_user.mail }}</span></p>
     <p><strong>Número de Teléfono:</strong> <span style="color: black;">{{ custom_user.telefono }}</span></p>
     <p><strong>Puntaje:</strong> <span style="color: black;">{{ custom_user.puntaje }}</span></p>
@@ -25,6 +34,11 @@
         <button  class="btn btn-primary d-inline">Ver Calificaciones</button>
         
     </div>
+</div>
+</div>
+</div>
+</div>
+</div>
 {% endblock %}
 
 {% block scripts %}

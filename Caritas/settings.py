@@ -73,7 +73,7 @@ INSTALLED_APPS = [
     'verAyudantesRegistrados',
     'verArticulosPropios',
     'buscarArticulo',
-    'notificaciones' 
+    'notificaciones',
     'crearFilial',
     'listarFiliales',
     'eliminarFilial',

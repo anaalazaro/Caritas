@@ -7,7 +7,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Foto</th> 
+                    <!-- <th scope="col">Foto</th>  -->
                     <th scope="col">Título</th>
                     <th scope="col">Categoría</th>
                     <th scope="col">Descripción</th>
@@ -18,7 +18,7 @@
             <tbody>
                 {% for articulo in articulos %}
                     <tr>
-                        <td><img src="{{ articulo.Foto.url }}" class="img-fluid" alt="..." style="max-width: 100px;"></td>
+                        <!-- <td><img src="{{ articulo.Foto.url }}" class="img-fluid" alt="..." style="max-width: 100px;"></td> -->
                         <td>{{ articulo.Titulo }}</td>
                         <td>{{ articulo.Categoria }}</td>
                         <td>{{ articulo.Descripcion }}</td>

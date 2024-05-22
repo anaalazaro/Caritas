@@ -63,8 +63,10 @@ def mostrarPorCategoria(request):
             messages.info(request, 'No hay artículos para la categoría seleccionada.')
             return render(request, 'menuPrincipal.html', {'user': request.user})
     else:
+        articulos = Articulo.objects.filter(aprobado=True).exclude(usuario=request.user)
         # Si no se ha seleccionado ninguna categoría, puedes manejarlo de acuerdo a tu lógica
-        pass
+        return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': articulos})
+    
 def es_admin(user):
     return user.is_superuser
 
