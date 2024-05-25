@@ -36,7 +36,7 @@ def change_password_request(request):
                 # Almacenar la contraseña actual en la sesión antes de generar la nueva contraseña temporal
                 request.session['current_password'] = current_password
                     
-                temp_password = 'temp'#generate_random_password()
+                temp_password = generate_random_password()
                 user.set_password(temp_password)
                 user.passChange = True
                 user.save()
