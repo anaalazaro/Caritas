@@ -1,0 +1,20 @@
+{% extends 'baseCaritas.html' %}
+
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Filial</title>
+</head>
+<body>
+    <h2>Agregar Filial</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{% url 'inicioAdmin' %}" class="btn btn-primary">Cancelar</a>
+    </form>
+</body>
+<a href="{% url 'inicioAdmin' %}" class="btn btn-primary btn-sm">Volver</a>
+{% endblock %}

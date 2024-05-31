@@ -1,0 +1,22 @@
+
+{% extends 'baseCaritas.html' %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+<form  action="" method="POST">
+    {% csrf_token %}
+    <div class="card mx-auto" style="width: 30rem;">
+        <div class="card-body">
+            <h5 class="card-title">Editar Perfil</h5>
+            {{ form|crispy }}
+            
+        </div>
+        <button  type="submit">
+            Guardar Cambios
+        </button>
+    </div>
+</form>
+<a href="{% url 'inicioAdmin' %}" class="btn btn-primary btn-sm">Volver</a>
+
+{% endblock %}

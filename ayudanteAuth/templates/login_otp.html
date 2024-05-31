@@ -1,0 +1,28 @@
+{% extends "baseCaritas.html" %}
+
+{% block title %}
+    Inicio de Sesión de Ayudante
+{% endblock %}
+
+{% block content%}
+{% if error_message %}
+    <p>{{ error_message }}</p>
+{% endif %}
+
+<h3>LOGIN AYUDANTE/ADMINISTRADOR</h3>
+<br>
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="id_dni" class="form-label">Usuario</label>
+        <input type="text" name="username" id="" placeholder="Nombre de usuario">
+        <br>
+        <label for="id_dni" class="form-label">Contraseña</label>
+        <input type="password" name="password" id="" placeholder="Contraseña">
+        <br>
+    </div>
+    <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+    <a href="{% url 'inicio' %}" class="btn btn-primary">Cancelar</a>
+</form>
+
+{% endblock %}

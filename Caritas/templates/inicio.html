@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #003DA5; /* Fondo azul de Fundación Cáritas */
+            color: white; /* Texto en blanco para mayor contraste */
+            margin-top: 50px;
+        }
+        .nav-link {
+            color: #fff; /* Color de texto para enlaces */
+        }
+        .nav-link:hover {
+            color: #ccc; /* Color de texto al pasar el mouse sobre los enlaces */
+            text-decoration: none;
+        }
+        .container {
+            padding-top: 20px; /* Ajuste de espacio en la parte superior */
+        }
+        h2 {
+            color: #fff; /* Color de texto para títulos */
+            text-align: center; /* Centrar el título */
+            margin-top: 40px; /* Ajuste de espacio superior para el título */
+        }
+    </style>
+    <title>Aplicación</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href={% url 'register' %}>Registrarse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href={% url 'login' %}>Iniciar sesión como intercambiador</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href={% url 'login_otp' %}>Iniciar sesión como administrador o ayudante</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <h2>Inicio</h2>
+        <div class="text-center mb-4">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRptGgaQ6oM-vSWTNIanXjpkToMqy94TCscUpAyspKJnawSysT7b0fL3IE0hnQqiB0NVKE&usqp=CAU" alt="Logo de Fundación Cáritas">
+        </div>
+        {% if messages %}
+        <div class="container">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

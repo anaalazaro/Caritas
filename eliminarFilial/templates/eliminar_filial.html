@@ -1,0 +1,21 @@
+{% extends 'baseCaritas.html' %}
+
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Filial</title>
+</head>
+<body>
+    <h1>Eliminar Filial</h1>
+    <p>¿Estás seguro que deseas eliminar la filial "{{ filial.nombre }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Eliminar">
+    </form>
+    <a href="{% url 'listarFiliales' %}">Cancelar</a>
+</body>
+{% endblock %}

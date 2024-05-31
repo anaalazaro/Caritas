@@ -1,27 +1,27 @@
+{% extends "baseCaritas.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil de Usuario</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
+{% block content %}
 <body>
     <div class="container mt-5">
         <div class="card border-0 shadow-sm">
             <div class="card-header text-center bg-primary text-white">
-                <h1>Perfil de Usuario</h1>
+                <h1>Perfil de {{ user_profile.nombre}} {{user_profile.apellido}}</h1>
             </div>
             <div class="card-body">
                 {% if user_profile %}
-                    <p><strong>Nombre:</strong> {{ user_profile.first_name }}</p>
-                    <p><strong>Apellido:</strong> {{ user_profile.last_name }}</p>
-                    <p><strong>Puntaje:</strong> {{ user_profile.score }}</p>
-                    <div class="mt-3">
-                        <a href="{% url 'productos_del_usuario' user_profile.username %}" class="btn btn-primary">Ver Productos</a>
-                        <a href="{% url 'resenas_del_usuario' user_profile.username %}" class="btn btn-danger">Ver Reseñas</a>
+                    <p><strong>Nombre:</strong> {{ user_profile.nombre }}</p>
+                    <p><strong>Apellido:</strong> {{ user_profile.apellido }}</p>
+                    <p><strong>Puntaje:</strong> {{ user_profile.puntaje }}</p>
+                    <div class="mt-3 d-flex">
+                        <form action="{% url 'productos_del_usuario' user_profile.id %}" method="get" class="me-3">
+                            <button type="submit" class="btn btn-primary ">Ver Articulos</button>
+                        </form>
+                        <form action="" method="get" class="me-3">
+                            <button type="submit" class="btn btn-primary">Ver Reseñas</button>
+                        </form>
+                        <form action="{% url 'menuPrincipal' %}" method="get" class="me-3">
+                            <button type="submit" class="btn btn-primary ">Volver</button>
+                        </form>
                     </div>
                 {% else %}
                     <p>El perfil solicitado no existe.</p>
@@ -31,5 +31,5 @@
     </div>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
-</html>
+{% endblock %}
 

@@ -1,23 +1,31 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Inicio de Sesión</title>
-    <!-- Enlace al archivo CSS -->
+{% extends 'baseCaritas.html' %}
 
-</head>
-<body>
-    <div class="login-container">
+{% block title %}
+    Inicio de Sesión
+{% endblock %}
+
+{% block content %}
+    <div class="login-container ">
         <h2>Iniciar Sesión</h2>
-        <form method="post">
+        <form method="post" class="d-inline">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Iniciar Sesión</button>
+            <div class="mb-3">
+                <label for="id_dni" class="form-label">Usuario</label>
+                {{ form.dni }}
+            </div>
+            <div class="mb-3">
+                <label for="id_password" class="form-label">Contraseña</label>
+                {{ form.password }}
+            </div>
+            <button type="submit" class="btn btn-primary d-inline">Iniciar sesión</button>
+        </form>
+        <form action="{% url 'change_password' %}" method="get" class="d-inline">
+            <button type="submit" class="btn btn-primary d-inline">Solicitar cambio de contraseña</button>
+            <a href="{% url 'inicio' %}" class="btn btn-primary">Cancelar</a>
         </form>
         <!-- Ejemplo de mensaje de error -->
         {% if error_message %}
             <div class="error-message">{{ error_message }}</div>
         {% endif %}
     </div>
-</body>
-</html>
+{% endblock %}

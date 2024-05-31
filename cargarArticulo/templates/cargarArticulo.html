@@ -1,0 +1,14 @@
+{% extends 'baseCaritas.html' %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<body>
+    <h2>Publicar artículo</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy}}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{% url 'menuPrincipal' %}" class="btn btn-primary">Cancelar</a>
+    </form>
+</body>
+{% endblock %}>

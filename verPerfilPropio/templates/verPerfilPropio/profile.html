@@ -1,41 +1,48 @@
-{% extends 'base.html' %}  <!-- Extiende de una plantilla base si tienes -->
+{% extends 'baseCaritas.html' %}
 
 {% block content %}
-<h1>Perfil de {{ user.username }}</h1>
-
-{% if user.profile_picture %}
-    <img src="{{ user.profile_picture.url }}" alt="Foto de perfil" width="100" height="100">
-{% endif %}
-
-<p><strong>Email:</strong> {{ user.email }}</p>
-<p><strong>Número de Teléfono:</strong> {{ user.phone_number }}</p>
-<p><strong>Puntaje:</strong> {{ user.score }}</p>
-
-{% endblock %}
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Perfil de Usuario</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">  <!-- Carga el CSS -->
-</head>
 <body>
-    <div class="profile-section">
-        <h1>Perfil de {{ user.username }}</h1>
-
-        <img src="{{ user.profile_picture.url }}" alt="Foto de perfil" width="100" height="100">
-
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Número de Teléfono:</strong> {{ user.phone_number }}</p>
-        <p><strong>Puntaje:</strong> {{ user.score }}</p>
-
-        <div class="action-buttons">
-            <button onclick="window.location.href='/users/products/'">Ver Productos</button>
-            <button onclick="window.location.href='/users/reviews/'">Ver Reseñas</button>
-            <button onclick="window.location.href='/users/ratings/'">Ver Calificaciones</button>
-        </div>
+    <div class="container mt-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header text-center bg-primary text-white">
+                <h1>Mi Perfil </h1>
+            </div>
+            <div class="card-body">
+    <!-- <h1>Perfil de {{ user.nombre}} {{user.apellido}}</h1> -->
+    <i class="bi bi-info-circle"><small class="text-muted p-2 bg-light shadow-sm"> Si desea editar su perfil, envie un correo al siguiente mail: ingecaritas@gmail.com</small></i>
+    <!--  -->
+    {% if user.profile_picture %}
+    <img src="{{ user.profile_picture.url }}" alt="Foto de perfil" width="100" height="100">
+    {% endif %}
+    
+    {% if custom_user %}
+    <p><strong>Nombre:</strong> {{ custom_user.nombre }}</p>
+    <p><strong>Apellido:</strong> {{ custom_user.apellido }}</p>
+    <p><strong>Email:</strong> <span style="color: black;">{{ custom_user.mail }}</span></p>
+    <p><strong>Número de Teléfono:</strong> <span style="color: black;">{{ custom_user.telefono }}</span></p>
+    <p><strong>Puntaje:</strong> <span style="color: black;">{{ custom_user.puntaje }}</span></p>
+    <!-- Aquí puedes agregar más campos específicos de CustomUser si es necesario -->
+    {% else %}
+    <p>No se encontró información adicional del usuario.</p>
+    {% endif %}
+    
+    <div class="action-buttons position-relative">
+        <form action="{% url 'verArticulos' %}" method="get" class="d-inline">
+            <button type="submit" class="btn btn-primary">Ver Articulos</button>
+        </form>        
+        <button  class="btn btn-primary d-inline">Ver Reseñas</button>
+        <button  class="btn btn-primary d-inline">Ver Calificaciones</button>
+        <form action="{% url 'menuPrincipal' %}" method="get" class="d-inline">
+            <button type="submit" class="btn btn-primary">Volver</button>
+        
     </div>
-</body>
-</html>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- Cualquier script adicional que necesites -->
+{% endblock %}

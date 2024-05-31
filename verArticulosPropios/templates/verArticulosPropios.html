@@ -1,0 +1,59 @@
+{% extends 'baseCaritas.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Mis Artículos Publicados</h1>
+    {% if articulos %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <!-- <th scope="col">Foto</th>  -->
+                    <th scope="col">Título</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for articulo in articulos %}
+                    <tr>
+                        <!-- <td><img src="{{ articulo.Foto.url }}" class="img-fluid" alt="..." style="max-width: 100px;"></td> -->
+                        <td>{{ articulo.Titulo }}</td>
+                        <td>{{ articulo.Categoria }}</td>
+                        <td>{{ articulo.Descripcion }}</td>
+                        <td>{{ articulo.Estado }}</td>
+                        <td>
+                            <a href="{%url 'detalle' articulo.id%}" class="btn btn-primary btn-sm">Ver Detalle</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No has publicado ningún artículo.</p>
+    {% endif %}
+<!-- </div> 
+ <!-- {% load crispy_forms_tags %}
+
+ <h1>Mis Artículos Publicados</h1>
+    {% if articulos %}
+        <ul class="list-group">
+            {% for articulo in articulos %}
+                <li class="list-group-item">
+                    Titulo: {{ articulo.Titulo }}<br>
+                    Categoria: {{ ayudante.fecha_nacimiento }}<br>
+                    DNI: {{ ayudante.dni }}<br>
+                    Teléfono: {{ ayudante.telefono }}<br>
+                    Filial: {{ ayudante.filial }}<br>
+                     Agrega más campos si es necesario 
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm">Eliminar</button>
+                    </form> 
+                 </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No has publicado ningún artículo.</p>
+    {% endif %} -->
+{% endblock %}
