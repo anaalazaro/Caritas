@@ -35,7 +35,8 @@ from verDetalleDeArticulo import views as viewsDetalle
 from verOtroUsuario import views as other_profile_views
 from eliminarCuenta import views as eliminar_cuenta_views
 from verArticulosPropios.views import ver_articulos
-
+from bloquearUsuario.views import bloquear_usuario 
+from bloquearUsuario.views import lista_usuarios
 urlpatterns = [
     path('', RedirectView.as_view(url='Inicio/', permanent=True)),
     path('admin/', admin.site.urls),
@@ -51,9 +52,6 @@ urlpatterns = [
    path('mostrar_por_categoria/', viewsInicio.mostrarPorCategoria, name='mostrar_por_categoria'),
   path('register/', views.registro, name='register'),
   path('login/', autenticacion_views.login_view, name='login'),  # Incluye las URLs de autenticacionIntercambiador
-  path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),  # Incluye las URLs de verPerfilPropio
-  path('verOtroUsuario/', other_profile_views.view_other_profile, name= 'ver_otro_usuario'),
-  path ('eliminarCuenta/', eliminar_cuenta_views, name= 'eliminar_cuenta'),
   path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),  
   path('', include('ayudanteAuth.urls')),
   path('', include('chngPassRequest.urls')),
@@ -79,5 +77,7 @@ urlpatterns = [
   #path('login/', autenticacion_views.login_view, name='login'),
  #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
  path('inicioAyudante/', viewsInicio.inicioAyudante, name='inicioAyudante'),
- path('marcar_leida/<int:notification_id>/', viewsInicio.marcar_leida, name='marcar_leida')
+ path('marcar_leida/<int:notification_id>/', viewsInicio.marcar_leida, name='marcar_leida'),
+ path('bloquear_usuario/<int:user_id>/', bloquear_usuario, name='bloquear_usuario'),
+ path('usuarios/', lista_usuarios, name='lista_usuarios')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

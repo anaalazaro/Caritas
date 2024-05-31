@@ -1,0 +1,28 @@
+
+{% extends "baseCaritas.html" %}
+
+{% block content %}
+<h2>Lista de Usuarios Pendientes de Bloqueo</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.nombre }} {{ user.apellido }}</td>
+            <td>{{ user.mail }}</td>
+            <td>
+                <form action="{% url 'bloquear_usuario' user.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Bloquear</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
