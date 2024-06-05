@@ -23,5 +23,7 @@ class CustomUser(AbstractUser):
      # Nuevo campo
     is_blocked = models.BooleanField(default=False)
     pendiente_bloqueo= models.BooleanField (default=False)
+    motivo_bloqueo = models.CharField(max_length=255, blank=True, null=True)
+    failed_login_attempts= models.IntegerField(default=0)
     class Meta:
         app_label = 'app'

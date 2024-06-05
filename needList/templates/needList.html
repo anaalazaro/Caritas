@@ -2,14 +2,13 @@
 
 {% block content %}
 <div class="container">
-    <h1>Articulos a eliminar </h1>
+    <h1>NeedList</h1>
     {% if articulos %}
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col">Título</th>
                     <th scope="col">Descripción</th>
-                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -18,24 +17,22 @@
                         <td>{{ articulo.Titulo }}</td>
                         <td>{{ articulo.Descripcion }}</td>
                         <td>
-                            <a href="{% url 'eliminarArticulo' articulo.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                            <a href="{% url 'detalle' articulo.id %}" class="btn btn-primary btn-sm">Ver detalle</a>
+                            <a href="{% url 'confirmar_eliminar_articulo' articulo.id %}" class="btn btn-primary btn-sm">Borrar</a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% else %}
-        <p>No hay artículos a elimininar</p>
+        <p>NeedList vacía</p>
     {% endif %}
 
-    {% if messages %}
+    {% if success_message %}
         <div class="alert alert-info mt-3">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
+            <p>{{ success_message }}</p>
         </div>
     {% endif %}
-    <a href="{% url 'inicioAdmin' %}" class="btn btn-primary btn-sm">Volver</a>
 </div>
-<a href="{% url 'inicioAdmin' %}" class="btn btn-primary btn-sm">Volver</a>
+<a href="{% url 'menuPrincipal' %}" class="btn btn-primary btn-sm">Volver</a>
 {% endblock %}
