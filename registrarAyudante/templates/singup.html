@@ -1,33 +1,32 @@
-
 {% extends 'baseCaritas.html' %}
 
 {% block content %}
 
 {% load crispy_forms_tags %}
-<form  action="" method="POST">
-    {% csrf_token %}
-    <div class="card mx-auto" style="width: 30rem;">
-        <div class="card-body">
-            <h5 class="card-title">Complete todos los campos</h5>
-            {{ form|crispy }}
-            
+<div class="container">
+    {% if form %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="card mx-auto" style="width: 30rem;">
+            <div class="card-body">
+                <h5 class="card-title">Complete todos los campos</h5>
+                {{ form|crispy }}
+
+            </div>
+            <button type="submit">
+                Registrar Ayudante
+            </button>
         </div>
-        <button  type="submit">
-            Registrar Ayudante
-        </button>
+    </form>
+    {% endif %}
+    {% if messages %}
+    <div class="alert alert-info mt-3">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
     </div>
-    <!-- {% if form.errors %}
-    <div class="error-message">
-        <p>Error:</p>
-        <ul>
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %} -->
-</form>
+    <a href="{% url 'inicioAdmin' %}" class="btn btn-primary btn-sm">Volver</a> 
+    {% endif %}
+</div>
 
 {% endblock %}

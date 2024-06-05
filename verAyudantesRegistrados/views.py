@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from app.models  import CustomUser
+from crearFilial.models import Filial
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 def es_admin(user):
@@ -11,4 +12,8 @@ def es_admin(user):
 def ver_ayudantes(request):
     # Filtra los usuarios por el rol de "ayudante"
     ayudantes = CustomUser.objects.filter(roles='ayudante')
-    return render(request, 'verAyudantes.html', {'ayudantes': ayudantes})
+    ayudantesF = []
+    for ayudante in ayudantes:
+        filial = ayudante.filial_set.first()  # Obtiene la filial asociada al ayudante (si existe)
+        ayudantesF.append({'ayudante': ayudante, 'filial': filial})
+    return render(request, 'verAyudantes.html', {'ayudantes': ayudantesF})
