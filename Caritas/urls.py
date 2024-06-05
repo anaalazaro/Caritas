@@ -35,13 +35,10 @@ from verDetalleDeArticulo import views as viewsDetalle
 from verOtroUsuario import views as other_profile_views
 from eliminarCuenta import views as eliminar_cuenta_views
 from verArticulosPropios.views import ver_articulos
-<<<<<<< HEAD
 from bloquearUsuario.views import bloquear_usuario 
 from bloquearUsuario.views import lista_usuarios
-=======
 from needList import views as needListViews
 
->>>>>>> zapettini
 urlpatterns = [
     path('', RedirectView.as_view(url='Inicio/', permanent=True)),
     path('admin/', admin.site.urls),
