@@ -19,7 +19,7 @@ def login_view(request):
             # Escenario 1: Inicio de sesión exitoso
             if user is not None and not user.is_blocked:
                 login(request, user)
-                return HttpResponse("Inicio de sesión exitoso")
+                return redirect('menuPrincipal')
 
             # Escenario 2 y 3: Fallos por usuario inexistente o contraseña incorrecta
             else:
