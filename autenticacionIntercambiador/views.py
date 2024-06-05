@@ -17,7 +17,7 @@ def login_view(request):
             user = authenticate(request, username=dni, password=password)
 
             # Escenario 1: Inicio de sesión exitoso
-            if user is not None and not user.is_locked:
+            if user is not None and not user.is_blocked:
                 login(request, user)
                 return HttpResponse("Inicio de sesión exitoso")
 
