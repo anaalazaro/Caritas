@@ -1,0 +1,11 @@
+{% extends "baseCaritas.html" %}
+
+{% block content %}
+<h2>Eliminar artículo de la NeedList</h2>
+<p>¿Estás seguro de que deseas eliminar el artículo de la NeedList? Esta acción no se puede deshacer.</p>
+<form method="post" action="{% url 'borrarDeNeedList' articulo %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Eliminar articulo</button>
+    <a href="{% url 'menuPrincipal' %}" class="btn btn-primary">Cancelar</a>
+</form>
+{% endblock %}
