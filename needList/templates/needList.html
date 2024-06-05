@@ -1,0 +1,38 @@
+{% extends 'baseCaritas.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>NeedList</h1>
+    {% if articulos %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Título</th>
+                    <th scope="col">Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for articulo in articulos %}
+                    <tr>
+                        <td>{{ articulo.Titulo }}</td>
+                        <td>{{ articulo.Descripcion }}</td>
+                        <td>
+                            <a href="{% url 'detalle' articulo.id %}" class="btn btn-primary btn-sm">Ver detalle</a>
+                            <a href="{% url 'confirmar_eliminar_articulo' articulo.id %}" class="btn btn-primary btn-sm">Borrar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>NeedList vacía</p>
+    {% endif %}
+
+    {% if success_message %}
+        <div class="alert alert-info mt-3">
+            <p>{{ success_message }}</p>
+        </div>
+    {% endif %}
+</div>
+<a href="{% url 'menuPrincipal' %}" class="btn btn-primary btn-sm">Volver</a>
+{% endblock %}
