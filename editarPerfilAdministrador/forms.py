@@ -7,10 +7,10 @@ from django.utils.translation import gettext, gettext_lazy as _
 class UsuarioIntercambiadorForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['first_name','last_name']
+        fields = ['nombre','apellido']
         labels = {
-            'first_name': _('Nombre'),
-            'last_name': _('Apellido'),
+            'nombre': _('Nombre'),
+            'apellido': _('Apellido'),
         }
     
     def __init__(self, *args, **kwargs):

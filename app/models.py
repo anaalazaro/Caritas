@@ -20,5 +20,8 @@ class CustomUser(AbstractUser):
     roles = models.CharField(max_length=8, choices=OPCIONES_ROL, default='admin')
    # mail= models.EmailField()
     #puntaje= models.IntegerField(default=0)
+     # Nuevo campo
+    is_blocked = models.BooleanField(default=False)
+    pendiente_bloqueo= models.BooleanField (default=False)
     class Meta:
         app_label = 'app'

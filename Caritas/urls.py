@@ -35,7 +35,8 @@ from verDetalleDeArticulo import views as viewsDetalle
 from verOtroUsuario import views as other_profile_views
 from eliminarCuenta import views as eliminar_cuenta_views
 from verArticulosPropios.views import ver_articulos
-
+from bloquearUsuario.views import bloquear_usuario 
+from bloquearUsuario.views import lista_usuarios
 urlpatterns = [
     path('', RedirectView.as_view(url='Inicio/', permanent=True)),
     path('admin/', admin.site.urls),
@@ -59,6 +60,7 @@ urlpatterns = [
   path('', include('crearFilial.urls')),
   path('', include('listarFiliales.urls')),
   path('', include('eliminarFilial.urls')),
+  path('', include('verIntercambiadores.urls')),
   path('confirmar_eliminar_cuenta/', viewsInicio.confirmar_eliminar_cuenta, name='confirmar_eliminar_cuenta'), 
   path('menuPrincipal/', viewsInicio.mostrar, name='menuPrincipal'),# Incluye las URLs de verPerfilPropio
   path('detalleArticulo//<int:articulo_id>/', viewsDetalle.mostrarDetalle, name='detalle'),
@@ -75,5 +77,7 @@ urlpatterns = [
   #path('login/', autenticacion_views.login_view, name='login'),
  #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
  path('inicioAyudante/', viewsInicio.inicioAyudante, name='inicioAyudante'),
- path('marcar_leida/<int:notification_id>/', viewsInicio.marcar_leida, name='marcar_leida')
+ path('marcar_leida/<int:notification_id>/', viewsInicio.marcar_leida, name='marcar_leida'),
+ path('bloquear_usuario/<int:user_id>/', bloquear_usuario, name='bloquear_usuario'),
+ path('usuarios/', lista_usuarios, name='lista_usuarios')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

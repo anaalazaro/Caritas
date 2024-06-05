@@ -9,10 +9,10 @@ def send_otp(request, custom_user):
     valid_date = datetime.now() + timedelta(minutes=2)
     request.session['otp_valid_date'] = str(valid_date)
     print(f"Su clave de uso único es {otp}")
-    # send_mail(
-    #     'Tu OTP',
-    #     f'Tu contraseña de uso único es: {otp}',
-    #     'ingecaritas@gmail.com',
-    #     [custom_user.email],
-    #     fail_silently=False,
-    # )
+    send_mail(
+        'Tu OTP',
+        f'Tu contraseña de uso único es: {otp}',
+        'ingecaritas@gmail.com',
+        [custom_user.email],
+        fail_silently=False,
+    )

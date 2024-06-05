@@ -18,7 +18,7 @@
                         <td>{{ filial.nombre }} 
                         <td>
                             <!-- <a href="" class="btn btn-primary btn-sm">Ver Detalle</a> -->
-                           <a href="{% url 'eliminarFilial' %}" class="btn btn-danger btn-sm">Eliminar</a>
+                           <a href="{% url 'eliminarFilial' filial.id %}" class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}

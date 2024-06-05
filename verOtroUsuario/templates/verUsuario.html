@@ -19,6 +19,9 @@
                         <form action="" method="get" class="me-3">
                             <button type="submit" class="btn btn-primary">Ver Reseñas</button>
                         </form>
+                        <form action="{% url 'menuPrincipal' %}" method="get" class="me-3">
+                            <button type="submit" class="btn btn-primary ">Volver</button>
+                        </form>
                     </div>
                 {% else %}
                     <p>El perfil solicitado no existe.</p>

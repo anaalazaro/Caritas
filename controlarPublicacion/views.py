@@ -42,4 +42,5 @@ def desaprobar_articulo(request, articulo_id):
             message=f'Hola "{administrador.username}" hay un nuevo artículo a eliminar',
             )
     message= 'La publicación se ha desaprobado con éxito.'
-    return render(request, 'mostrarArticulosPendientes.html', {'success_message': message })
+    pendientes= Articulo.objects.filter(pendiente=True)
+    return render(request, 'mostrarArticulosPendientes.html', {'success_message': message, 'articulos_pendientes': pendientes })

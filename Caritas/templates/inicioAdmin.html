@@ -34,7 +34,7 @@
     </div> -->
 
 <div class="container mt-4">
-    <h1>Bienvenido, {{ user.username }}</h1>
+    <h1>Bienvenido, {{ user.nombre }}</h1>
 
     <div class="row">
         <div class="col-md-4">
@@ -52,6 +52,15 @@
                     <h5 class="card-title">Ver Ayudantes</h5>
                     <p class="card-text">Gestionar los ayudantes registrados en el sistema.</p>
                     <a href="{% url 'verAyudantes' %}" class="btn btn-primary">Ver Ayudantes Registrados</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Editar perfil de intercambiadores</h5>
+                    <p class="card-text">Ver los artículos pendientes de eliminación</p>
+                    <a href="{% url 'verIntercambiadores' %}" class="btn btn-primary">Ver intercambiadores</a>
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@
     {% csrf_token %}
     <div class="card mx-auto" style="width: 30rem;">
         <div class="card-body">
-            <h5 class="card-title">Editar Perfil</h5>
+            <h5 class="card-title">Editar Perfil de: {{user.nombre}} {{user.apellido}}</h5>
             {{ form|crispy }}
             
         </div>
@@ -17,5 +17,6 @@
         </button>
     </div>
 </form>
+<a href="{% url 'inicioAdmin' %}" class="btn btn-primary btn-sm">Volver</a>
 
 {% endblock %}

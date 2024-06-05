@@ -21,4 +21,4 @@ def editar_perfil(request, usuario_id):
             return redirect('inicio')
     else:
         form = UsuarioIntercambiadorForm(instance=usuario)
-    return render(request, 'editarPerfil.html', {'form': form})
+    return render(request, 'editarPerfil.html', {'form': form, 'user': usuario})
