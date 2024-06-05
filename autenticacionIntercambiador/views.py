@@ -33,7 +33,7 @@ def login_view(request):
 
                 # Escenario 4: Bloqueo por múltiples intentos fallidos
                 if user_instance.failed_login_attempts >= 3:
-                    user_instance.is_locked = True
+                    user_instance.is_blocked = True
                     user_instance.failed_login_attempts = 0
 
                     # Generar una contraseña temporal y enviar correo
