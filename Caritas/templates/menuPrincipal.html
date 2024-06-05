@@ -22,6 +22,11 @@
                 </form>
             </div>
             <div class="col-md-3 mb-4">
+                <form action="{% url 'verNeedList' %}" method="get">
+                    <button type="submit" class="btn btn-primary">Ver NeedList</button>
+                </form>
+            </div>
+            <div class="col-md-3 mb-4">
                 <form action="{% url 'verArticulos' %}" method="get">
                     <button type="submit" class="btn btn-primary">Mis artículos</button>
                 </form>
@@ -91,6 +96,9 @@
                                 </a>
                                 <a href="{% url 'detalle' articulo.id %}" class="btn btn-primary">
                                     Ver detalle
+                                </a>
+                                <a href="{% url 'agregarANeedList' articulo.id %}" class="btn btn-primary">
+                                    Agregar a NeedList
                                 </a>
                                 <span class="badge bg-dark position-absolute top-0 end-0 m-2">{{ articulo.Estado }}</span>
                             </div>

@@ -35,6 +35,7 @@ from verDetalleDeArticulo import views as viewsDetalle
 from verOtroUsuario import views as other_profile_views
 from eliminarCuenta import views as eliminar_cuenta_views
 from verArticulosPropios.views import ver_articulos
+from needList import views as needListViews
 
 urlpatterns = [
     path('', RedirectView.as_view(url='Inicio/', permanent=True)),
@@ -76,5 +77,9 @@ urlpatterns = [
   #path('login/', autenticacion_views.login_view, name='login'),
  #path('perfil_propio/', perfil_views.view_profile, name='perfil_propio'),
  path('inicioAyudante/', viewsInicio.inicioAyudante, name='inicioAyudante'),
- path('marcar_leida/<int:notification_id>/', viewsInicio.marcar_leida, name='marcar_leida')
+ path('marcar_leida/<int:notification_id>/', viewsInicio.marcar_leida, name='marcar_leida'),
+ path('agregarANeedList/<int:articulo_id>/', needListViews.agregarArticuloANeedList, name= 'agregarANeedList'),
+ path('verNeedList', needListViews.verArticulosEnLaNeedList, name='verNeedList'),
+ path('borrarDeNeedList/<int:articulo_id>/', needListViews.borrarArticuloDeNeedList, name='borrarDeNeedList'),
+ path('confirmar_eliminar_articulo/<int:articulo_id>/', needListViews.confirmar_eliminar_articulo, name='confirmar_eliminar_articulo')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
