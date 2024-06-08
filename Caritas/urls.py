@@ -85,7 +85,8 @@ urlpatterns = [
   path('agregarANeedList/<int:articulo_id>/', needListViews.agregarArticuloANeedList, name= 'agregarANeedList'),
  path('verNeedList', needListViews.verArticulosEnLaNeedList, name='verNeedList'),
  path('borrarDeNeedList/<int:articulo_id>/', needListViews.borrarArticuloDeNeedList, name='borrarDeNeedList'),
- path('confirmar_eliminar_articulo/<int:articulo_id>/', needListViews.confirmar_eliminar_articulo, name='confirmar_eliminar_articulo')
+ path('confirmar_eliminar_articulo/<int:articulo_id>/', needListViews.confirmar_eliminar_articulo, name='confirmar_eliminar_articulo'),
+  path('', include('eliminarArticulo.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
