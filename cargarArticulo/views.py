@@ -28,16 +28,6 @@ def cargar_articulo(request):
             articulo.save()
             messages.success(request, 'La publicación del artículo ha quedado pendiente a la aprobación del ayudante.')
           
-            # Enviar notificación al ayudante
-            # ayudante = User.objects.filter(groups__name='Ayudantes').first()  # Suponiendo que los ayudantes estén en un grupo llamado 'Ayudantes'
-            # if ayudante:
-            #     send_mail(
-            #         'Nuevo artículo pendiente',
-            #         f'Hola {ayudante.username}, hay un nuevo artículo pendiente de revisión.',
-            #         'from@example.com',
-            #         [ayudante.email],
-            #         fail_silently=True,
-            #     )
             ayudante = CustomUser.objects.get(roles='ayudante')
             Notification.objects.create(
             sender=request.user,

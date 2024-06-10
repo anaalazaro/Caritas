@@ -30,7 +30,8 @@ def otp(request):
     error_message=None
     if 'resend_otp' in request.POST:
             # Si se presionó el botón "Reenviar OTP", enviar el OTP nuevamente
-            user = request.user  
+            username = request.session['username']
+            user = get_object_or_404(CustomUser, username=username)
             send_otp(request, user)
             return redirect('otp')
     if request.method == 'POST':

@@ -17,7 +17,7 @@ class CustomUserCreationForm(UserCreationForm):
         widget=forms.DateInput(attrs={'type': 'date'})
     )
 
-    filial = forms.ModelChoiceField(queryset=Filial.objects.all(), empty_label=None)
+    filial = forms.ModelChoiceField(Filial.objects.filter(ayudante__isnull=True))
     
     # email = forms.EmailField(
     #     validators=[EmailValidator()],
@@ -46,7 +46,7 @@ class CustomUserCreationForm(UserCreationForm):
             'dni',
             'nombre',
             'apellido',
-            'email',
+            'mail',
             'password1',
             'password2',
             'telefono',
@@ -58,7 +58,7 @@ class CustomUserCreationForm(UserCreationForm):
             'dni': _('DNI'),
             'nombre':_('Nombre'),
             'apellido':_('Apellido'),
-            'email': _('Email'),
+            'mail': _('Email'),
             'password1': _('Contraseña'),
             'password2': _('Repetir contraseña'),
             'telefono': _('Teléfono'),
@@ -123,13 +123,13 @@ class CustomUserCreationForm(UserCreationForm):
             raise ValidationError('El teléfono debe corresponder a La Plata')
         return telefono
 
-    # def clean_email(self):
-    #     email = self.cleaned_data.get('email')
-    #     # if CustomUser.objects.filter(email=email).exists():
-    #     #     raise ValidationError('Ya existe un usuario con este correo electrónico.')
-    #     if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
-    #         raise ValidationError(_('El formato del correo electrónico es incorrecto.'))
-    #     return email
+    def clean_mail(self):
+        email = self.cleaned_data.get('mail')
+        if CustomUser.objects.filter(mail=email).exists():
+            raise ValidationError('Ya existe un usuario con este correo electrónico.')
+        # if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
+        #     raise ValidationError(_('El formato del correo electrónico es incorrecto.'))
+        return email
     
     def save(self, commit=True):
         user = super().save(commit=False)

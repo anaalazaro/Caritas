@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
     fechaNacimiento = models.DateField(default='2000-01-01')
     puntaje= models.IntegerField(default=0)
     passChange = models.BooleanField(default=False)
-    filial = models.CharField(max_length=20, default='')
+  
     # Campos con opciones
     OPCIONES_ROL = [
         ('usuario', 'Usuario intercambiador'),

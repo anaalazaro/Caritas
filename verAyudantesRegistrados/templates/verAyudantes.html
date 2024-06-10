@@ -1,28 +1,4 @@
 {% extends 'baseCaritas.html' %}
-<!-- {% load crispy_forms_tags %}
-
-    <h1>Ayudantes Registrados</h1>
-    {% if ayudantes %}
-        <ul class="list-group">
-            {% for ayudante in ayudantes %}
-                <li class="list-group-item">
-                    Nombre: {{ ayudante.first_name }} {{ ayudante.last_name }}<br>
-                    Fecha de Nacimiento: {{ ayudante.fecha_nacimiento }}<br>
-                    DNI: {{ ayudante.dni }}<br>
-                    Teléfono: {{ ayudante.telefono }}<br>
-                    Filial: {{ ayudante.filial }}<br>
-                    <!-- Agrega más campos si es necesario -->
-                    <!-- <form action="" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm">Eliminar</button>
-                    </form> 
-                <!-- </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No existen ayudantes registrados.</p>
-    {% endif %}-->
-
 
 {% block content %}
 <div class="container">
@@ -42,14 +18,14 @@
             <tbody>
                 {% for ayudante in ayudantes %}
                     <tr>
-                        <td>{{ ayudante.nombre }} {{ ayudante.apellido }}</td>
-                        <td>{{ ayudante.fechaNacimiento }}</td>
-                        <td>{{ ayudante.dni }}</td>
-                        <td>{{ ayudante.telefono }}</td>
+                        <td>{{ ayudante.ayudante.nombre }} {{ ayudante.apellido }}</td>
+                        <td>{{ ayudante.ayudante.fechaNacimiento }}</td>
+                        <td>{{ ayudante.ayudante.dni }}</td>
+                        <td>{{ ayudante.ayudante.telefono }}</td>
                         <td>{{ ayudante.filial }}</td>
                         <td>
                             <!-- <a href="" class="btn btn-primary btn-sm">Ver Detalle</a> -->
-                            <a href="{% url 'eliminar_cuenta' ayudante.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                            <a href="{% url 'eliminar_cuenta' ayudante.ayudante.id %}" class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -57,6 +33,13 @@
         </table>
     {% else %}
         <p>No existen ayudantes registrados.</p>
+    {% endif %}
+    {% if messages %}
+    <div class="alert alert-info mt-3">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    </div>
     {% endif %}
     <a href="{% url 'inicioAdmin' %}" class="btn btn-primary btn-sm">Volver</a>
 </div>
