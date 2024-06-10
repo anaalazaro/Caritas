@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from registrarAyudante.views import registro
-from verAyudantesRegistrados.views import ver_ayudantes
+from verAyudantesRegistrados.views import ver_ayudantes, confirmar_eliminar_ayudante
 from editarPerfilAdministrador.views import editar_perfil
 from buscarArticulo.views import buscar_articulos
 from django.conf import settings
@@ -91,7 +91,8 @@ urlpatterns = [
  path('listadoABloquear', pendienteBloqueo.verUsuariosParaBloquear, name='verABloquear' ),
  path('listadoBloqueados', pendienteBloqueo.verUsuariosBloqueados, name='verBloqueados' ),
  path('bloquearPorPublicacion/<int:articulo_id>/<int:user_id>/', controlar_publicacionViews.bloquearUsuarioPorPublicacion, name='bloquearUsuarioPorInadecuado'),
- path('confirmarBloqueo/<int:articulo_id>/<int:user_id>/', controlar_publicacionViews.confirmar_bloquear, name='confirmar')
+ path('confirmarBloqueo/<int:articulo_id>/<int:user_id>/', controlar_publicacionViews.confirmar_bloquear, name='confirmar'),
+ path('confirmar_eliminar_ayudante/<int:user_id>', confirmar_eliminar_ayudante, name='confirmar_eliminar_ayudante'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
