@@ -38,6 +38,7 @@ from verArticulosPropios.views import ver_articulos
 from bloquearUsuario.views import bloquear_usuario 
 from bloquearUsuario.views import lista_usuarios
 from needList import views as needListViews
+from . import pendienteBloqueo
 
 urlpatterns = [
     path('', RedirectView.as_view(url='Inicio/', permanent=True)),
@@ -85,7 +86,11 @@ urlpatterns = [
   path('agregarANeedList/<int:articulo_id>/', needListViews.agregarArticuloANeedList, name= 'agregarANeedList'),
  path('verNeedList', needListViews.verArticulosEnLaNeedList, name='verNeedList'),
  path('borrarDeNeedList/<int:articulo_id>/', needListViews.borrarArticuloDeNeedList, name='borrarDeNeedList'),
- path('confirmar_eliminar_articulo/<int:articulo_id>/', needListViews.confirmar_eliminar_articulo, name='confirmar_eliminar_articulo')
+ path('confirmar_eliminar_articulo/<int:articulo_id>/', needListViews.confirmar_eliminar_articulo, name='confirmar_eliminar_articulo'),
+ path('listadoABloquear', pendienteBloqueo.verUsuariosParaBloquear, name='verABloquear' ),
+ path('listadoBloqueados', pendienteBloqueo.verUsuariosBloqueados, name='verBloqueados' ),
+ path('bloquearPorPublicacion/<int:articulo_id>/<int:user_id>/', controlar_publicacionViews.bloquearUsuarioPorPublicacion, name='bloquearUsuarioPorInadecuado'),
+ path('confirmarBloqueo/<int:articulo_id>/<int:user_id>/', controlar_publicacionViews.confirmar_bloquear, name='confirmar')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

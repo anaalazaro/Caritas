@@ -1,0 +1,38 @@
+{% extends 'baseCaritas.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Usuarios Pendientes de Bloqueo</h1>
+    {% if usuarios_a_bloquear %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios_a_bloquear %}
+                    <tr>
+                        <td>{{ usuario.nombre }}</td>
+                        <td>{{ usuario.apellido }}</td>
+                        <td>
+                            <a href="{% url 'bloquear_usuario' usuario.id %}" class="btn btn-danger btn-sm">Bloquear</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay usuarios pendientes de bloqueo.</p>
+    {% endif %}
+
+    {% if success_message %}
+        <div class="alert alert-info mt-3">
+            <p>{{ success_message }}</p>
+        </div>
+    {% endif %}
+</div>
+<a href="{% url 'inicioAyudante' %}" class="btn btn-primary btn-sm">Volver</a>
+{% endblock %}
