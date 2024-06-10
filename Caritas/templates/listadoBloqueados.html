@@ -3,19 +3,19 @@
 {% block content %}
 <div class="container">
     <h1>Usuarios Bloqueados</h1>
-    {% if usuarios_a_bloquear %}
+    {% if usuarios_bloq %}
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col">Nombre de Usuario</th>
-                    <th scope="col">Correo Electrónico</th>
+                    <th scope="col">Motivo de bloqueo</th>
                 </tr>
             </thead>
             <tbody>
                 {% for usuario in usuarios_bloq %}
                     <tr>
                         <td>{{ usuario.username }}</td>
-                        <td>{{ usuario.email }}</td>
+                        <td>{{ usuario.motivo_bloqueo}}</td>
                     </tr>
                 {% endfor %}
             </tbody>
