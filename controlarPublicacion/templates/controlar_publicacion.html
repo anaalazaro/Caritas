@@ -18,6 +18,7 @@
 
     <a href="{% url 'aprobar' articulo.id %}" class="btn btn-primary">Aprobar</a>
     <a href="{% url 'desaprobar' articulo.id %}" class="btn btn-danger">Desaprobar</a>
+    <a href="{% url 'confirmar' articulo.id articulo.usuario_id %}" class= "btn btn-danger">Bloquear usuario</a>
 
 </body>
 
