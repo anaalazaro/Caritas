@@ -1,0 +1,11 @@
+{% extends "baseCaritas.html" %}
+
+{% block content %}
+<h2>Bloquear usuario</h2>
+<p>¿Estás seguro de que desea solicitar el bloqueo del usuario? Esta acción no se puede deshacer.</p>
+<form method="post" action="{% url 'bloquearUsuarioPorInadecuado' articulo user_id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Bloquear usuario</button>
+    <a href="{% url 'menuPrincipal' %}" class="btn btn-primary">Cancelar</a>
+</form>
+{% endblock %}

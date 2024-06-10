@@ -1,38 +1,6 @@
 {% extends 'baseCaritas.html' %}
 
-
 {% block content %}
-    <!-- <div class="container mt-4">
-        <h1>Panel de Administrador</h1>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="card-title">Resumen</h5>
-                    </div>
-                    <div class="card-body">
-                        <p>¡Bienvenido al panel de administrador!</p>
-                        <p>Este es un resumen de las actividades recientes.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="card-title">Acciones</h5>
-                    </div>
-                    <div class="card-body">
-                        <ul>
-                            <li><a href="">Editar perfil para usuario administrador</a></li>
-                            <li><a href="{% url 'verAyudantes' %}">Ver lista de ayudantes</a></li>
-                            <!-- Agrega más acciones según sea necesario -->
-                        <!-- </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
 <div class="container mt-4">
     <h1>Bienvenido, {{ user.nombre }}</h1>
 
@@ -88,6 +56,24 @@
                     <h5 class="card-title">Ver filiales</h5>
                     <p class="card-text">Ver el listado de las filiales de Caritas en La Plata</p>
                     <a href="{% url 'listarFiliales' %}" class="btn btn-primary">Ver filiales</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Ver usuarios bloqueados</h5>
+                    <p class="card-text">Ver el listado de usuarios bloqueados en el sistema</p>
+                    <a href="{% url 'verBloqueados' %}" class="btn btn-primary">Ver usuarios bloqueados</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Ver usuarios pendientes de bloquear</h5>
+                    <p class="card-text">Ver el listado de usuarios pendientes de bloquear en el sistema</p>
+                    <a href="{% url 'verABloquear' %}" class="btn btn-primary">Ver usuarios pendientes</a>
                 </div>
             </div>
         </div>

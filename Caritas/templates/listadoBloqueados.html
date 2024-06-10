@@ -1,0 +1,36 @@
+{% extends 'baseCaritas.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Usuarios Bloqueados</h1>
+    {% if usuarios_a_bloquear %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre de Usuario</th>
+                    <th scope="col">Correo Electrónico</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios_bloq %}
+                    <tr>
+                        <td>{{ usuario.username }}</td>
+                        <td>{{ usuario.email }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay usuarios bloqueados</p>
+    {% endif %}
+
+    {% if messages %}
+        <div class="alert alert-info mt-3">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <a href="{% url 'inicioAdmin' %}" class="btn btn-primary btn-sm">Volver</a>
+</div>
+{% endblock %}

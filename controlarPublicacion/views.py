@@ -44,3 +44,20 @@ def desaprobar_articulo(request, articulo_id):
     message= 'La publicación se ha desaprobado con éxito.'
     pendientes= Articulo.objects.filter(pendiente=True)
     return render(request, 'mostrarArticulosPendientes.html', {'success_message': message, 'articulos_pendientes': pendientes })
+
+@login_required
+@custom_user_passes_test(es_ayudante, message="No está habilitado para acceder a esta página.")
+def bloquearUsuarioPorPublicacion(request, articulo_id,  user_id):
+    usuario= CustomUser.objects.get(id=user_id)
+    articulo = get_object_or_404(Articulo, pk=articulo_id)
+    articulo.pendiente= False
+    usuario.motivo_bloqueo= "Publicacion inadecuada"
+    usuario.pendiente_bloqueo= True
+    articulo.save()
+    usuario.save()
+    messages= "Se notificó al administrador exitosamente para bloquear al usuario"
+    pendientes= Articulo.objects.filter(pendiente=True)
+    return render(request, 'mostrarArticulosPendientes.html',{'success_message': messages, 'articulos_pendientes': pendientes} )
+
+def confirmar_bloquear(request, articulo_id, user_id):
+    return render(request, 'confirmarBloqueo.html', {'articulo': articulo_id, 'user_id': user_id})
