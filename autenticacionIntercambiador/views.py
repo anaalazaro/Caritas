@@ -23,7 +23,7 @@ def login_view(request):
                 user_instance = CustomUser.objects.get(dni=dni)
                 
                 # Verificar si el usuario está bloqueado
-                if user_instance.is_blocked:
+                if user_instance.is_blocked and user_instance.failed_login_attempts < 3:
                     error_message = f"Su cuenta está bloqueada. Motivo: {user_instance.motivo_bloqueo}"
                     return render(request, 'autenticacionIntercambiador/login.html', {'form': form, 'error_message': error_message})
 
