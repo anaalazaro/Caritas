@@ -39,12 +39,12 @@ def desaprobar_articulo(request, articulo_id):
     articulo.pendiente = False
     usuario= articulo.usuario
     usuario.cantidad_rechazos_publicacion+=1
-    if(usuario.cantidad_rechazos_publicacion == 5):
-        usuario.pendiente_bloqueo= True
+    if(usuario.cantidad_rechazos_publicacion >= 5):
+        usuario.is_blocked= True
         usuario.motivo_bloqueo= '5 publicaciones seguidas rechazadas'
     usuario.save()
     articulo.save()
-    administrador = CustomUser.objects.get(roles='admin')
+    administrador = CustomUser.objects.filter(roles='admin').first()
     Notification.objects.create(
             sender=request.user,
             user=administrador,
