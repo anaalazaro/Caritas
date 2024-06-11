@@ -37,26 +37,31 @@
     <div class="post">
         <h2 class="post-title">Artículos sugeridos</h2>
         <div class="mb-3">
-            <form method="GET" action="{% url 'mostrar_por_categoria' %}" class="d-flex align-items-end">
-                {% csrf_token %}
-                <select name="categoria" class="form-select me-3 mb-3">
-                    <option value="" selected disabled>Selecciona una categoría</option>
-                    <option value="Ropa">Ropa</option>
-                    <option value="Articulos Escolares">Artículos Escolares</option>
-                    <option value="Articulos De Limpieza">Artículos de Limpieza</option>
-                    <option value="Alimentos No Perecederos">Alimentos no perecederos</option>
-                </select>
-                <button type="submit" class="btn btn-primary mb-3">Buscar</button>
-            </form>
-            
+            {% if articulos %}
+                <form method="GET" action="{% url 'mostrar_por_categoria' %}" class="d-flex align-items-end">
+                    {% csrf_token %}
+                    <select name="categoria" class="form-select me-3 mb-3">
+                        <option value="" selected disabled>Selecciona una categoría</option>
+                        <option value="Ropa">Ropa</option>
+                        <option value="Articulos Escolares">Artículos Escolares</option>
+                        <option value="Articulos De Limpieza">Artículos de Limpieza</option>
+                        <option value="Alimentos No Perecederos">Alimentos no perecederos</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary mb-3">Buscar</button>
+                </form>
+                <form action="{% url 'ordenados' %}" method="get">
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar artículos alfabéticamente">
+                        <i class="bi bi-sort-alpha-down"></i> 
+                        <span class="btn-text">Ordenar artículos alfabéticamente</span>
+                    </button>
+                </form>
+            {% else %}
+                <p>No hay artículos para mostrar</p>
+            {% endif %}
         </div>
-        <form action="{% url 'ordenados' %}" method="get">
-            <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar artículos alfabéticamente">
-                <i class="bi bi-sort-alpha-down"></i> 
-                <span class="btn-text">Ordenar artículos alfabéticamente</span>
-            </button>
-        </form>
-
+    </div>
+    
+    </div>
         {% if messages %}
             <div class="alert alert-info mt-3">
                 {% for message in messages %}
