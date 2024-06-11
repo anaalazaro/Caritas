@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from app.models import CustomUser
 from .forms import LoginForm
 import random
+from django.contrib import messages
 
 def mostrar(request):
     return render(request, 'menuPrincipal.html', {'user': CustomUser})
@@ -43,20 +44,21 @@ def login_view(request):
                     user_instance.failed_login_attempts += 1
                     user_instance.save()
 
-                    if user_instance.failed_login_attempts == 3:
+                    if user_instance.failed_login_attempts >= 3:
                         user_instance.is_blocked = True
-                        temp_password = str(random.randint(100000, 999999))
-                        user_instance.set_password(temp_password)
+                        # temp_password = str(random.randint(100000, 999999))
+                        # user_instance.set_password(temp_password)
                         user_instance.motivo_bloqueo = "Demasiados intentos de inicio de sesión fallidos."
                         user_instance.save()
-                        send_mail(
-                            'Cuenta Bloqueada',
-                            f'Su cuenta ha sido bloqueada. Use esta contraseña temporal para iniciar sesión: {temp_password}. Siga las instrucciones enviadas por correo para desbloquear su cuenta.',
-                            'ingecaritas@gmail.com',
-                            [user_instance.email],
-                            fail_silently=False,
-                        )
-                        error_message = f"Su cuenta está bloqueada. Motivo: {user_instance.motivo_bloqueo}"
+                        # send_mail(
+                        #     'Cuenta Bloqueada',
+                        #     f'Su cuenta ha sido bloqueada. Use esta contraseña temporal para iniciar sesión: {temp_password}. Siga las instrucciones enviadas por correo para desbloquear su cuenta.',
+                        #     'ingecaritas@gmail.com',
+                        #     [user_instance.email],
+                        #     fail_silently=False,
+                        # )
+                        messages.error(request, f"Su cuenta está bloqueada. Motivo: {user_instance.motivo_bloqueo}")
+                        return redirect('change_password')
                     else:
                         error_message = "El usuario y/o la contraseña son incorrectos"
                     
