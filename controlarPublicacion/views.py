@@ -24,6 +24,9 @@ def aprobar_articulo(request, articulo_id):
     articulo = get_object_or_404(Articulo, pk=articulo_id)
     articulo.pendiente = False
     articulo.aprobado = True
+    usuario= articulo.usuario
+    usuario.cantidad_rechazos_publicacion=0
+    usuario.save()
     articulo.save()
     message= 'La publicación se ha aprobado con éxito.'
     pendientes= Articulo.objects.filter(pendiente=True)
@@ -34,6 +37,12 @@ def aprobar_articulo(request, articulo_id):
 def desaprobar_articulo(request, articulo_id):
     articulo = get_object_or_404(Articulo, pk=articulo_id)
     articulo.pendiente = False
+    usuario= articulo.usuario
+    usuario.cantidad_rechazos_publicacion+=1
+    if(usuario.cantidad_rechazos_publicacion == 5):
+        usuario.pendiente_bloqueo= True
+        usuario.motivo_bloqueo= '5 publicaciones seguidas rechazadas'
+    usuario.save()
     articulo.save()
     administrador = CustomUser.objects.get(roles='admin')
     Notification.objects.create(
