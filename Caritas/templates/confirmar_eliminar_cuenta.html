@@ -9,3 +9,14 @@
     <a href="{% url 'menuPrincipal' %}" class="btn btn-primary">Cancelar</a>
 </form>
 {% endblock %}
+
+
+{% block extra_scripts %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}

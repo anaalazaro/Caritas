@@ -2,6 +2,13 @@
 
 {% block content %}
 <div class="container">
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
     <h1>Mis Artículos Publicados</h1>
     {% if articulos %}
         <table class="table">
@@ -25,6 +32,7 @@
                         <td>{{ articulo.Estado }}</td>
                         <td>
                             <a href="{%url 'detalle' articulo.id%}" class="btn btn-primary btn-sm">Ver Detalle</a>
+                            <a href="{%url 'eliminarArticulo' articulo.id%}" class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -56,4 +64,5 @@
     {% else %}
         <p>No has publicado ningún artículo.</p>
     {% endif %} -->
+    <a href="{% url 'menuPrincipal' %}" class="btn btn-primary btn-sm">Volver</a>
 {% endblock %}

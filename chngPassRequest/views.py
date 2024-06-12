@@ -39,6 +39,10 @@ def change_password_request(request):
                 temp_password = generate_random_password()
                 user.set_password(temp_password)
                 user.passChange = True
+                if user.is_blocked and user.motivo_bloqueo=='Demasiados intentos de inicio de sesión fallidos.':
+                    user.is_blocked=False
+                    user.failed_login_attempts = 0
+                    user.motivo_bloqueo=''
                 user.save()
                 send_temp_password_email(user, temp_password)
                 print(f"Su contraseña autogenerada es {temp_password}")

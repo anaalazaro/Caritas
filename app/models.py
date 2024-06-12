@@ -34,5 +34,6 @@ class CustomUser(AbstractUser):
         self.solicitudes_pendientes_recibidas = self.solicitudes_recibidas.filter(estado='pendiente').count()
         self.save()
 
+    cantidad_rechazos_publicacion=models.IntegerField(default=0)
     class Meta:
         app_label = 'app'
