@@ -79,6 +79,8 @@ INSTALLED_APPS = [
     'eliminarFilial',
     'verIntercambiadores',
     'needList',
+    'solicitarIntercambio',
+    'controlarIntercambio'
     'eliminarArticulo',
 ]
 

@@ -8,6 +8,8 @@ from cargarArticulo.models import Articulo
 from django.contrib.auth.decorators import login_required, user_passes_test
 from notificaciones.models import Notification
 from django.http import JsonResponse
+from solicitarIntercambio.models import Intercambio
+
 
 
 def hello(request):
@@ -114,3 +116,8 @@ def mostrarArticulosAEliminar(request):
     eliminar= Articulo.objects.filter(aprobado=False, pendiente=False)
     return render(request, 'listarEliminados.html', {'articulos': eliminar})
                   
+@login_required
+def mostrarIntercambios(request):
+    intercambios= Intercambio.objects.filter(destinatario=request.user,estado='Pendiente')
+    print(intercambios)
+    return render(request, 'listaIntercambios.html', {'intercambios': intercambios})

@@ -31,7 +31,7 @@ def change_password_request(request):
         if form.is_valid():
             email = form.cleaned_data.get('email')
             try:
-                user = CustomUser.objects.get(email=email)
+                user = CustomUser.objects.get(mail=email)
                 current_password = user.password
                 # Almacenar la contraseña actual en la sesión antes de generar la nueva contraseña temporal
                 request.session['current_password'] = current_password

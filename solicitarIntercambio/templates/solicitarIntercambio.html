@@ -1,0 +1,36 @@
+{% extends 'baseCaritas.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Solicitar Intercambio</h2>
+    <div class="card">
+        <div class="card-body">
+            <!-- <h5 class="card-title">{{ articulo_solicitado.Descripcion }}</h5> -->
+            <!-- <p class="card-text">{{ articulo_solicitado.descripcion }}</p> -->
+            {% if articulos_propios %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="articulo_ofrecido" class="form-label">Elige uno de tus artículos para el intercambio:</label>
+                    <select class="form-select" name="articulo_ofrecido" required>
+                        {% for articulo in articulos_propios %}
+                        <option value="{{ articulo.id }}">{{ articulo.Titulo }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Solicitar intercambio</button>
+            </form>
+            {% else %}
+                    <p>No tienes articulos publicados.</p>
+            {% endif %}
+            {% if messages %}
+            <div class="alert alert-info mt-3">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

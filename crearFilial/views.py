@@ -6,6 +6,7 @@ def agregar_filial(request):
         form = FilialForm(request.POST)
         if form.is_valid():
             form.save()
+            print(form)
             return redirect('listarFiliales')
     else:
         form = FilialForm()
