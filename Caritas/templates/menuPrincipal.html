@@ -2,33 +2,37 @@
 {% block title %}Sesión iniciada{% endblock %}
 
 {% block content %}
-    <div class="post col-md-6 mb-4">
+    <div class="post col-md-12 mb-4">
         <div class="row g-0 ">
-            <div class="col-md-3 mb-4">
-                <!-- <h2 class="post-title">Se inició sesión exitosamente</h2> -->
+            <div class="col-md-2 mb-4">
                 <form action="{% url 'perfil_propio' %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary">Ver perfil propio</button>
                 </form>
             </div>
-            <div class="col-md-3 mb-4">
+            <div class="col-md-2 mb-4">
                 <form action="{% url 'confirmar_eliminar_cuenta' %}" method="get">
                     <button type="submit" class="btn btn-primary">Eliminar cuenta</button>
                 </form>
             </div>
-            <div class="col-md-3 mb-4">
+            <div class="col-md-2 mb-4">
                 <form action="{% url 'cargar_articulo' %}" method="get">
                     <button type="submit" class="btn btn-primary">Cargar artículo</button>
                 </form>
             </div>
-            <div class="col-md-3 mb-4">
+            <div class="col-md-2 mb-4">
                 <form action="{% url 'verNeedList' %}" method="get">
                     <button type="submit" class="btn btn-primary">Ver NeedList</button>
                 </form>
             </div>
-            <div class="col-md-3 mb-4">
+            <div class="col-md-2 mb-4">
                 <form action="{% url 'verArticulos' %}" method="get">
                     <button type="submit" class="btn btn-primary">Mis artículos</button>
+                </form>
+            </div>
+            <div class="col-md-2 mb-4">
+                <form action="{% url 'lista_intercambios' %}" method="get">
+                    <button type="submit" class="btn btn-primary">Intercambios</button>
                 </form>
             </div>
         </div>
@@ -99,6 +103,9 @@
                                 </a>
                                 <a href="{% url 'agregarANeedList' articulo.id %}" class="btn btn-primary">
                                     Agregar a NeedList
+                                </a>
+                                <a href="{% url 'solicitar_intercambio' articulo.id %}" class="btn btn-primary">
+                                    Solicitar intercambio
                                 </a>
                                 <span class="badge bg-dark position-absolute top-0 end-0 m-2">{{ articulo.Estado }}</span>
                             </div>

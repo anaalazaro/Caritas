@@ -25,5 +25,14 @@ class CustomUser(AbstractUser):
     pendiente_bloqueo= models.BooleanField (default=False)
     motivo_bloqueo = models.CharField(max_length=255, blank=True, null=True)
     failed_login_attempts= models.IntegerField(default=0)
+    
+    # Nuevos campos para contador de solicitudes pendientes
+    solicitudes_pendientes_enviadas = models.IntegerField(default=0)
+    solicitudes_pendientes_recibidas = models.IntegerField(default=0)
+    def actualizar_solicitudes_pendientes(self):
+        self.solicitudes_pendientes_enviadas = self.solicitudes_enviadas.filter(estado='pendiente').count()
+        self.solicitudes_pendientes_recibidas = self.solicitudes_recibidas.filter(estado='pendiente').count()
+        self.save()
+
     class Meta:
         app_label = 'app'

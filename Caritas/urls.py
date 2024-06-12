@@ -38,6 +38,10 @@ from verArticulosPropios.views import ver_articulos
 from bloquearUsuario.views import bloquear_usuario 
 from bloquearUsuario.views import lista_usuarios
 from needList import views as needListViews
+from solicitarIntercambio.views import solicitar_intercambio
+from controlarIntercambio.views import controlar_intercambio
+
+
 
 urlpatterns = [
     path('', RedirectView.as_view(url='Inicio/', permanent=True)),
@@ -85,7 +89,11 @@ urlpatterns = [
   path('agregarANeedList/<int:articulo_id>/', needListViews.agregarArticuloANeedList, name= 'agregarANeedList'),
  path('verNeedList', needListViews.verArticulosEnLaNeedList, name='verNeedList'),
  path('borrarDeNeedList/<int:articulo_id>/', needListViews.borrarArticuloDeNeedList, name='borrarDeNeedList'),
- path('confirmar_eliminar_articulo/<int:articulo_id>/', needListViews.confirmar_eliminar_articulo, name='confirmar_eliminar_articulo')
+ path('confirmar_eliminar_articulo/<int:articulo_id>/', needListViews.confirmar_eliminar_articulo, name='confirmar_eliminar_articulo'),
+ path('solicitarIntercambio/<int:articulo_id>/', solicitar_intercambio, name='solicitar_intercambio'),
+#  path('controlar_intercambio/<int:intercambio_id>', controlar_intercambio, name='controlar_intercambio'),
+ path('listaIntercambios/', viewsInicio.mostrarIntercambios, name='lista_intercambios'),
+ path('', include('controlarIntercambio.urls'))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
