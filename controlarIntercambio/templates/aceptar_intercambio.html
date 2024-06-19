@@ -6,7 +6,7 @@
 {% block content %}
 <div class="container">
     <h1 class="mb-4">Elegir Filial:</h1>
-    <i class="bi bi-info-circle"><small class="text-muted p-2 bg-light shadow-sm"> Debes elegir la filial donde se realizará el intercambio.</small></i>
+    <i class="bi bi-info-circle"><small class="text-muted p-0 bg-light shadow-sm"> Debes elegir la filial donde se realizará el intercambio.</small></i>
     <div>
         <form method="GET" action="{% url 'controlar_intercambio' intercambio.id %}" id="filialForm">
             <select name="filial_id" class="form-select me-3 mb-3" onchange="this.form.submit()">
@@ -27,7 +27,7 @@
                     {% for turno in turnos_disponibles %}
                     <li>
                         <input type="radio" name="turno_id" value="{{ turno.id }}" id="turno_{{ turno.id }}">
-                        <label for="turno_{{ turno.id }}">{{ turno.fecha }} - Turnos {{ turno.turnos_disponibles }}</label>
+                        <label for="turno_{{ turno.id }}">{{ turno.fecha }}</label>
                     </li>
                     {% endfor %}
                 </ul>

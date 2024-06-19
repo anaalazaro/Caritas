@@ -11,7 +11,7 @@ class Filial(models.Model):
 
     def generar_turnos(self):
         fecha_actual = datetime.now()
-        fecha_proximo_mes = fecha_actual + timedelta(days=30)
+        fecha_proximo_mes = fecha_actual + timedelta(days=360)
 
         while fecha_actual <= fecha_proximo_mes:
             if fecha_actual.weekday() in [5, 6]:  # Sábado es 5 y domingo es 6

@@ -80,7 +80,7 @@ INSTALLED_APPS = [
     'verIntercambiadores',
     'needList',
     'solicitarIntercambio',
-    'controlarIntercambio'
+    'controlarIntercambio',
     'eliminarArticulo',
 ]
 
