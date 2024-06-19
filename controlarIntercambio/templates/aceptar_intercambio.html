@@ -5,8 +5,9 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="mb-4">Elegir Filial:</h1>
+    <h2>Aceptar Intercambio</h2>
     <i class="bi bi-info-circle"><small class="text-muted p-0 bg-light shadow-sm"> Debes elegir la filial donde se realizará el intercambio.</small></i>
+    <h4 class="mb-2">Elegir Filial:</h4>
     <div>
         <form method="GET" action="{% url 'controlar_intercambio' intercambio.id %}" id="filialForm">
             <select name="filial_id" class="form-select me-3 mb-3" onchange="this.form.submit()">
