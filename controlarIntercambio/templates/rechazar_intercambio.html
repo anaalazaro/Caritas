@@ -1,16 +1,9 @@
 {% extends 'baseCaritas.html' %}
   <h2>Rechazar Intercambio</h2>
-  <!-- <form method="post">
-    {% csrf_token %}
-    <label for="motivo_rechazo">Motivo de rechazo:</label>
-    <textarea id="motivo_rechazo" name="motivo_rechazo" rows="4"></textarea>
-    <button type="submit">Rechazar intercambio</button>
-    <button type="button">Cancelar</button>
-  </form> -->
   {% load crispy_forms_tags %}
 
 {% block content %}
-  <h2>Aceptar Intercambio</h2>
+  <h2>Rechazar Intercambio</h2>
   <form method="post">
     {% csrf_token %}
     {{ form|crispy }}
