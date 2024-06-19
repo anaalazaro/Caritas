@@ -12,7 +12,7 @@ def solicitar_intercambio(request, articulo_id):
     solicitante = request.user
     destinatario = articulo_solicitado.usuario
 
-    # Verificar reglas de negocio
+    
     if solicitante.puntaje < 3:
         messages.error(request, 'No tienes suficiente calificación para solicitar un intercambio.')
         return redirect('menuPrincipal')
@@ -27,6 +27,10 @@ def solicitar_intercambio(request, articulo_id):
 
         if articulo_solicitado.Categoria != articulo_ofrecido.Categoria:
             messages.error(request, 'Los artículos deben ser de la misma Categoria.')
+            return redirect('solicitar_intercambio', articulo_id=articulo_id)
+        
+        if solicitante.solicitudes_enviadas.filter(estado='Pendiente',articulo_ofrecido=articulo_ofrecido,articulo_solicitado=articulo_solicitado):
+            messages.error(request, 'Ya tienes un asolicitud de intercambio para los mismos articulos.')
             return redirect('solicitar_intercambio', articulo_id=articulo_id)
 
         solicitud = Intercambio.objects.create(

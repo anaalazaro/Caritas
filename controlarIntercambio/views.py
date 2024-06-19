@@ -6,20 +6,20 @@ from crearFilial.models import Filial,Turno
 from .forms import RechazarIntercambioForm
 from django.utils.crypto import get_random_string
 from django.contrib.auth.decorators import login_required
+from datetime import date,timedelta
 
-from django.shortcuts import render, get_object_or_404
-from django.contrib import messages
-
+@login_required
 def controlar_intercambio(request,intercambio_id):
     filiales = Filial.objects.all()
     filial_seleccionada = None
     turnos_disponibles = None
     intercambio = get_object_or_404(Intercambio, id=intercambio_id,)
+    un_mes_despues = date.today() + timedelta(days=30)
 
     if 'filial_id' in request.GET:
         filial_id = request.GET['filial_id']
         filial_seleccionada = get_object_or_404(Filial, id=filial_id)
-        turnos_disponibles = Turno.objects.filter(filial=filial_seleccionada, turnos_disponibles__gt=0)
+        turnos_disponibles = Turno.objects.filter(filial=filial_seleccionada, turnos_disponibles__gt=0,fecha__gte=date.today(), fecha__lte=un_mes_despues)
 
     context = {
         'filiales': filiales,
@@ -29,7 +29,7 @@ def controlar_intercambio(request,intercambio_id):
     }
     return render(request, 'aceptar_intercambio.html', context)
 
-
+@login_required
 def aceptar_intercambio(request, intercambio_id):
     turno_id = request.POST.get('turno_id')
     turno = get_object_or_404(Turno, id=turno_id)
@@ -44,14 +44,14 @@ def aceptar_intercambio(request, intercambio_id):
     intercambio.save()
     send_mail(
                 'Código de Intercambio',
-                f'Aceptaste la solicitud de intercambio y se genero un código único para que presentes en la filial correspondiente, tu código es : {intercambio.codigo_intercambio_destinatario}. ',
+                f'Aceptaste la solicitud de intercambio y se genero un código único para que presentes en la filial {intercambio.filial.nombre} en el turno de {turno.fecha}, tu código es : {intercambio.codigo_intercambio_destinatario}.Por favor presentarse entre las 11 am y 20 pm ',
              'ingecaritas@gmail.com',
                 [intercambio.destinatario.mail],
                 fail_silently=False,
     )
     send_mail(
                 'Código de Intercambio',
-                f'Se acepto tu solicitud de intercambio y se genero un código único para que presentes en la filial correspondiente, tu código es : {intercambio.codigo_intercambio_solicitante}. ',
+                f'Se acepto tu solicitud de intercambio y se genero un código único para que presentes en la filial {intercambio.filial.nombre} en el turno de {turno.fecha}, tu código es : {intercambio.codigo_intercambio_destinatario}.Por favor presentarse entre las 11 am y 20 pm ',
              'ingecaritas@gmail.com',
                 [intercambio.solicitante.mail],
                 fail_silently=False,
@@ -66,6 +66,7 @@ def aceptar_intercambio(request, intercambio_id):
 
     return redirect('menuPrincipal')
 
+@login_required
 def rechazar_intercambio(request, intercambio_id):
     intercambio = get_object_or_404(Intercambio, id=intercambio_id)
     if request.method == 'POST':

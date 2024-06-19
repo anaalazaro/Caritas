@@ -1,0 +1,52 @@
+{% extends 'baseCaritas.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Mis solicitudes de intercambio pendientes </h1>
+    {% if intercambios %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Destinatario</th>
+                    <th scope="col">Articulo Solicitado</th>
+                    <th scope="col">Articulo Ofrecido</th>
+                    <th scope="col">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for intercambio in intercambios %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'ver_otro_usuario' intercambio.solicitante_id %}">{{ intercambio.destinatario.nombre }}</a>
+
+                        </td>
+                        <td> 
+                            <a href="{% url 'detalle' intercambio.articulo_solicitado_id %}">{{ intercambio.articulo_solicitado.Titulo }}</a>
+
+                        </td>
+                        <td>
+                            <a href="{% url 'detalle' intercambio.articulo_ofrecido_id %}">{{ intercambio.articulo_ofrecido.Titulo }}</a>
+                            
+                        </td>
+                        <td>
+                            {{ intercambio.estado }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay intercambios</p>
+    {% endif %}
+
+    {% if messages %}
+        <div class="alert alert-info mt-3">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <a href="{% url 'menuPrincipal' %}" class="btn btn-primary btn-sm">Volver</a>
+</div>
+<!-- <a href="{% url 'inicioAdmin' %}" class="btn btn-primary btn-sm">Volver</a> -->
+{% endblock %}

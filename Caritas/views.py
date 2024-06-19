@@ -121,3 +121,9 @@ def mostrarIntercambios(request):
     intercambios= Intercambio.objects.filter(destinatario=request.user,estado='Pendiente')
     print(intercambios)
     return render(request, 'listaIntercambios.html', {'intercambios': intercambios})
+
+@login_required
+def mostrarIntercambiosPendientes(request):
+    intercambios= Intercambio.objects.filter(solicitante=request.user,estado='Pendiente')
+    print(intercambios)
+    return render(request, 'listadoIntercambiosPendientes.html', {'intercambios': intercambios})

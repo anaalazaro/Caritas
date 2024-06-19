@@ -94,6 +94,7 @@ urlpatterns = [
  path('solicitarIntercambio/<int:articulo_id>/', solicitar_intercambio, name='solicitar_intercambio'),
 #  path('controlar_intercambio/<int:intercambio_id>', controlar_intercambio, name='controlar_intercambio'),
  path('listaIntercambios/', viewsInicio.mostrarIntercambios, name='lista_intercambios'),
+ path('listaIntercambiosPendientes/', viewsInicio.mostrarIntercambiosPendientes, name='lista_intercambios_pendientes'),
  path('', include('controlarIntercambio.urls')),
   path('', include('eliminarArticulo.urls')),
  path('listadoABloquear', pendienteBloqueo.verUsuariosParaBloquear, name='verABloquear' ),
