@@ -27,7 +27,8 @@ from django.views.generic import RedirectView
 from app import views
 from . import views as viewsInicio
 from cargarArticulo import views as cargarArticuloViews
-from verArticulosPendientes.views import mostrar_articulos_pendientes
+from verArticulosPendientes.views import mostrar_articulos_pendientes 
+from verArticulosPendientes.views import mostrarArticulosPendientesPropios
 from controlarPublicacion import views as controlar_publicacionViews
 from autenticacionIntercambiador import views as autenticacion_views
 from verPerfilPropio import views as perfil_views
@@ -102,6 +103,7 @@ urlpatterns = [
  path('bloquearPorPublicacion/<int:articulo_id>/<int:user_id>/', controlar_publicacionViews.bloquearUsuarioPorPublicacion, name='bloquearUsuarioPorInadecuado'),
  path('confirmarBloqueo/<int:articulo_id>/<int:user_id>/', controlar_publicacionViews.confirmar_bloquear, name='confirmar'),
  path('confirmar_eliminar_ayudante/<int:user_id>', confirmar_eliminar_ayudante, name='confirmar_eliminar_ayudante'),
+ path('verMisPublicacionesPendientes', mostrarArticulosPendientesPropios, name='verArticulosPendientesPropios'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

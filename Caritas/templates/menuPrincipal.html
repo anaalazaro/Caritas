@@ -30,6 +30,13 @@
                     <button type="submit" class="btn btn-primary">Mis artículos</button>
                 </form>
             </div>
+            <div>
+                <div class="col-md-2 mb-4">
+                    <form action="{% url 'verArticulosPendientesPropios' %}" method="get">
+                       <button type="submit"  class="btn btn-primary">Mis publicaciones pendientes</button>
+                    </form>
+                </div>
+            </div>
             <div class="col-md-2 mb-4">
                 <form action="{% url 'lista_intercambios' %}" method="get">
                     <button type="submit" class="btn btn-primary">Intercambios</button>
