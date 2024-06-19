@@ -11,3 +11,8 @@ def es_ayudante(user):
 def mostrar_articulos_pendientes(request):
     articulos_pendientes = Articulo.objects.filter(pendiente=True)
     return render(request, 'mostrarArticulosPendientes.html', {'articulos_pendientes': articulos_pendientes})
+
+@login_required
+def mostrarArticulosPendientesPropios(request):
+    pendientes= Articulo.objects.filter(pendiente=True, usuario=request.user)
+    return render(request, 'misPublicacionesPendientes.html', {'pendientes':pendientes} )
