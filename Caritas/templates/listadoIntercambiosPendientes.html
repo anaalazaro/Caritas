@@ -10,7 +10,7 @@
                     <th scope="col">Destinatario</th>
                     <th scope="col">Articulo Solicitado</th>
                     <th scope="col">Articulo Ofrecido</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col">Estado</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,8 +29,7 @@
                             
                         </td>
                         <td>
-                            <a href="{% url 'controlar_intercambio' intercambio.id %}" class="btn btn-success btn-sm">Aceptar</a>
-                            <a href="{% url 'rechazar_intercambio' intercambio.id %}" class="btn btn-danger btn-sm">Rechazar</a>
+                            {{ intercambio.estado }}
                         </td>
                     </tr>
                 {% endfor %}
