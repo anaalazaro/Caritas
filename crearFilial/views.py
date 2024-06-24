@@ -1,3 +1,4 @@
+import folium
 from django.shortcuts import render, redirect
 from .forms import FilialForm
 
@@ -10,4 +11,6 @@ def agregar_filial(request):
             return redirect('listarFiliales')
     else:
         form = FilialForm()
+    
+    
     return render(request, 'agregar_filial.html', {'form': form})
