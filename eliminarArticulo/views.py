@@ -7,5 +7,5 @@ def eliminar_articulo(request, articulo_id):
     if request.method == 'POST':
         articulo.delete()
         messages.success(request, 'Artículo eliminado exitosamente')  # Envía el mensaje de éxito
-        return redirect('verArticulos')  # Reemplaza 'lista_articulos' con el nombre de tu URL de lista de artículos
+        return redirect('listarAEliminar')  # Reemplaza 'lista_articulos' con el nombre de tu URL de lista de artículos
     return render(request, 'eliminar_articulo.html', {'articulo': articulo})
