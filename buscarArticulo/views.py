@@ -8,5 +8,7 @@ def buscar_articulos(request):
     resultados = None
     if query:
         resultados = Articulo.objects.filter(Titulo__icontains=query,aprobado=True)
+    else:
+        resultados = Articulo.objects.all()
     return render(request, 'buscarArticulo.html', {'resultados': resultados})
 

@@ -37,7 +37,7 @@
             </div>
             <div class="col-md-2 mb-4">
                 <form action="{% url 'lista_intercambios_pendientes' %}" method="get">
-                    <button type="submit" class="btn btn-primary">Intercambios pendientes</button>
+                    <button type="submit" class="btn btn-primary">Mis intercambios pendientes</button>
                 </form>
             </div>
         </div>
@@ -117,10 +117,10 @@
                                 <a href="{% url 'solicitar_intercambio' articulo.id %}" class="btn btn-primary">
                                     Solicitar intercambio
                                 </a>
-                                <span class="badge bg-dark position-absolute top-0 end-0 m-2">{{ articulo.Estado }}</span>
-                                <a href="#" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Agregar a favoritos">
+                                <span class="badge bg-primary position-absolute top-0 end-0 m-2">{{ articulo.Estado }}</span>
+                                <!-- <a href="#" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Agregar a favoritos">
                                     <i class="bi bi-heart"></i>
-                                </a>
+                                </a> -->
                             </div>
                         </div>
                     </div>

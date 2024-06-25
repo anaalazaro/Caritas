@@ -20,7 +20,7 @@
 
         {% if filial_seleccionada %}
         <div>
-            <h2>Turnos disponibles para {{ filial_seleccionada.nombre }}:</h2>
+            <h4>Turnos disponibles para {{ filial_seleccionada.nombre }}:</h4s>
             {% if turnos_disponibles %}
             <form method="POST" action="{% url 'aceptar_intercambio' intercambio.id %}">
                 {% csrf_token %}
@@ -33,6 +33,7 @@
                     {% endfor %}
                 </ul>
                 <button type="submit" class="btn btn-primary">Aceptar Intercambio</button>
+                <button type="button" class="btn btn-primary">Cancelar</button>
             </form>
             {% endif %}
         </div>

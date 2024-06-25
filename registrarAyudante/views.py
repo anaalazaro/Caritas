@@ -13,6 +13,7 @@ def es_admin(user):
 @user_passes_test(es_admin)
 def registro(request):
     filiales = Filial.objects.filter(ayudante__isnull=True)
+    formulario = CustomUserCreationForm()
     if filiales:
         if request.method == 'POST':
             formulario = CustomUserCreationForm(request.POST)
@@ -28,7 +29,6 @@ def registro(request):
 
                 messages.success(request, 'Se ha creado al usuario ayudante exitosamente.')
                 return redirect('verAyudantes')
-        formulario = CustomUserCreationForm()
         return render(request, 'singup.html', {'form': formulario})
     else:
         messages.info(request, 'No se puede registrar un ayudante porque no hay filiales disponibles. Por favor, cree una filial desde el menú principal.')

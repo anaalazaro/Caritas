@@ -29,8 +29,8 @@ def solicitar_intercambio(request, articulo_id):
             messages.error(request, 'Los artículos deben ser de la misma Categoria.')
             return redirect('solicitar_intercambio', articulo_id=articulo_id)
         
-        if solicitante.solicitudes_enviadas.filter(estado='Pendiente',articulo_ofrecido=articulo_ofrecido,articulo_solicitado=articulo_solicitado):
-            messages.error(request, 'Ya tienes un asolicitud de intercambio para los mismos articulos.')
+        if solicitante.solicitudes_enviadas.filter(estado='Pendiente',articulo_ofrecido=articulo_ofrecido):
+            messages.error(request, f'Ya tienes una solicitud de intercambio para el articulo que deseas ofrecer.')
             return redirect('solicitar_intercambio', articulo_id=articulo_id)
 
         solicitud = Intercambio.objects.create(
