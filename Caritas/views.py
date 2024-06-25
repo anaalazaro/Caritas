@@ -13,15 +13,15 @@ from solicitarIntercambio.models import Intercambio
 
 
 def hello(request):
-    if request.user.is_authenticated:
-        if request.user.roles == 'usuario':
-            user=request.user
-            sugeridos= Articulo.objects.filter(aprobado=True).exclude(usuario=request.user)
-            return render (request, 'menuPrincipal.html', {'user': user, 'articulos':sugeridos })
-        elif request.user.roles == 'ayudante':
-            return redirect('inicioAyudante')
-        else:
-            return redirect('inicioAdmin')
+  #  if request.user.is_authenticated:
+   #     if request.user.roles == 'usuario':
+    #        user=request.user
+     #       sugeridos= Articulo.objects.filter(aprobado=True).exclude(usuario=request.user)
+      #      return render (request, 'menuPrincipal.html', {'user': user, 'articulos':sugeridos })
+       # elif request.user.roles == 'ayudante':
+        #    return redirect('inicioAyudante')
+        #else:
+         #   return redirect('inicioAdmin')
     return render(request, 'inicio.html')
 
 @login_required
