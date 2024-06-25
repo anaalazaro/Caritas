@@ -37,6 +37,13 @@
                     </form>
                 </div>
             </div>
+            <div>
+                <div class="col-md-2 mb-4">
+                    <form action="{% url 'articulos_rechazados' %}" method="get">
+                       <button type="submit"  class="btn btn-primary">Mis publicaciones rechazadas</button>
+                    </form>
+                </div>
+            </div>
             <div class="col-md-2 mb-4">
                 <form action="{% url 'lista_intercambios' %}" method="get">
                     <button type="submit" class="btn btn-primary">Intercambios</button>

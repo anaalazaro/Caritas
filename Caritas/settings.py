@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     'solicitarIntercambio',
     'controlarIntercambio',
     'eliminarArticulo',
+    'verArticulosRechazados',
 ]
 
 MIDDLEWARE = [
