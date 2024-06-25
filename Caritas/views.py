@@ -117,14 +117,19 @@ def mostrarArticulosAEliminar(request):
     return render(request, 'listarEliminados.html', {'articulos': eliminar})
                   
 @login_required
-def mostrarIntercambios(request):
+def mostrarSolictudesIntercambios(request):
     intercambios= Intercambio.objects.filter(destinatario=request.user,estado='Pendiente')
     print(intercambios)
-    return render(request, 'listaIntercambios.html', {'intercambios': intercambios})
+    return render(request, 'listaIntercambiosSolicitantes.html', {'intercambios': intercambios})
 
 @login_required
-def mostrarIntercambiosPendientes(request):
-    intercambios= Intercambio.objects.filter(solicitante=request.user,estado='Pendiente')
+def mostrarIntercambiosPropuestos(request):
+    intercambios= Intercambio.objects.filter(solicitante=request.user)
     print(intercambios)
-    return render(request, 'listadoIntercambiosPendientes.html', {'intercambios': intercambios})
+    return render(request, 'listadoIntercambiosPropuestos.html', {'intercambios': intercambios})
 
+@login_required
+def mostrarIntercambios(request):
+    intercambios= Intercambio.objects.filter(destinatario=request.user).exclude(estado= 'Pendiente')
+    print(intercambios)
+    return render(request, 'listadoIntercambios.html', {'intercambios': intercambios})

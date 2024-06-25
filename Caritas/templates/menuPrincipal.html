@@ -38,13 +38,18 @@
                 </div>
             </div>
             <div class="col-md-2 mb-4">
-                <form action="{% url 'lista_intercambios' %}" method="get">
+                <form action="{% url 'lista_intercambios_solicitantes' %}" method="get">
                     <button type="submit" class="btn btn-primary">Propuestas de intercambio</button>
                 </form>
             </div>
             <div class="col-md-2 mb-4">
-                <form action="{% url 'lista_intercambios_pendientes' %}" method="get">
-                    <button type="submit" class="btn btn-primary">Mis solicitudes</button>
+                <form action="{% url 'lista_intercambios_propuestos' %}" method="get">
+                    <button type="submit" class="btn btn-primary">Mis solicitudes de intercambio</button>
+                </form>
+            </div>
+            <div class="col-md-2 mb-4">
+                <form action="{% url 'lista_intercambios' %}" method="get">
+                    <button type="submit" class="btn btn-primary">Mis intercambios</button>
                 </form>
             </div>
         </div>
