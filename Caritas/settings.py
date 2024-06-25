@@ -103,6 +103,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'autenticacionIntercambiador', 'templates'),
             os.path.join(BASE_DIR, 'Caritas', 'templates'),
             os.path.join(BASE_DIR, 'cargarArticulo', 'templates'),
+            os.path.join(BASE_DIR, 'app/templates'),
             os.path.join(BASE_DIR, 'verPerfilPropio', 'templates'),
             os.path.join(BASE_DIR, 'verDetalleDeArticulo', 'templates'), os.path.join(BASE_DIR, 'verOtroUsuario', 'templates')],
         'APP_DIRS': True,
