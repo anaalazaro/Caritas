@@ -76,8 +76,16 @@ def rechazar_intercambio(request, intercambio_id):
             intercambio.estado = 'Rechazado'
             intercambio.motivo_rechazo = request.POST.get('motivo_rechazo')
             intercambio.save()
+            send_mail(
+                'Intercambio',
+                f'Se rechazo tu solicitud de intercambio pedida al usuario {intercambio.destinatario.nombre} para el articulo {intercambio.articulo_solicitado.Titulo} por este motivo: {intercambio.motivo_rechazo}.',
+             'ingecaritas@gmail.com',
+                [intercambio.solicitante.mail],
+                fail_silently=False,
+    )
             messages.success(request, 'Intercambio rechazado con éxito.')
             return redirect('lista_intercambios')
+            
     else:
         form = RechazarIntercambioForm(instance=intercambio)
     return render(request, 'rechazar_intercambio.html', {'form': form, 'intercambio': intercambio})
