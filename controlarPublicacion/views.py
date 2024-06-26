@@ -16,7 +16,8 @@ def es_ayudante(user):
 @custom_user_passes_test(es_ayudante, message="No está habilitado para acceder a esta página.")
 def controlar_publicacion(request, articulo_id):
     articulo = get_object_or_404(Articulo, pk=articulo_id)
-    return render(request, 'controlar_publicacion.html', {'articulo': articulo})
+    usuario= get_object_or_404(CustomUser, username=articulo.usuario)
+    return render(request, 'controlar_publicacion.html', {'articulo': articulo, 'usuario': usuario})
 
 @login_required
 @custom_user_passes_test(es_ayudante, message="No está habilitado para acceder a esta página.")
