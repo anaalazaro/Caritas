@@ -18,7 +18,7 @@ def solicitar_intercambio(request, articulo_id):
         return redirect('menuPrincipal')
 
     if solicitante.solicitudes_enviadas.filter(estado='Pendiente').count() >= 5:
-        messages.error(request, 'Tienes demasiadas solicitudes pendientes.No pueder solicitar otro intercambio.')
+        messages.error(request, 'Tienes demasiadas solicitudes pendientes.No puedes solicitar otro intercambio.')
         return redirect('menuPrincipal')
 
     if request.method == 'POST':
