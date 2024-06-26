@@ -7,5 +7,6 @@
     {% csrf_token %}
     {{ form|crispy }}
     <button type="submit" class="btn btn-primary">Rechazar intercambio</button>
+    <button type="button" class="btn btn-secondary" onclick="window.history.back();">Cancelar</button>
   </form>
 {% endblock %}

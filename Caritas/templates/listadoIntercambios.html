@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-    <h1>Solicitudes de intercambio </h1>
+    <h1>Mis intercambios </h1>
     {% if intercambios %}
         <table class="table">
             <thead>
@@ -10,6 +10,8 @@
                     <th scope="col">Solitante</th>
                     <th scope="col">Articulo Solicitado</th>
                     <th scope="col">Articulo Ofrecido</th>
+                    <th scope="col">Fecha Solicitud</th>
+                    <th scope="col">Motivo Rechazo</th>
                     <th scope="col">Estado</th>
                 </tr>
             </thead>
@@ -27,6 +29,12 @@
                         <td>
                             <a href="{% url 'detalle' intercambio.articulo_ofrecido_id %}">{{ intercambio.articulo_ofrecido.Titulo }}</a>
                             
+                        </td>
+                        <td>
+                            {{ intercambio.fecha_solicitud }}
+                        </td>
+                        <td>
+                           {{ intercambio.motivo_rechazo|default:"---" }}
                         </td>
                         <td>
                             {{ intercambio.estado }}

@@ -64,7 +64,7 @@ def aceptar_intercambio(request, intercambio_id):
                                            articulo_solicitado=intercambio.articulo_solicitado, 
                                            estado='Pendiente').exclude(id=intercambio.id).update(estado='Rechazado', motivo_rechazo='Aceptado otro intercambio.')
 
-    return redirect('menuPrincipal')
+    return redirect('lista_intercambios')
 
 @login_required
 def rechazar_intercambio(request, intercambio_id):
@@ -77,7 +77,7 @@ def rechazar_intercambio(request, intercambio_id):
             intercambio.motivo_rechazo = request.POST.get('motivo_rechazo')
             intercambio.save()
             messages.success(request, 'Intercambio rechazado con éxito.')
-            return redirect('menuPrincipal')
+            return redirect('lista_intercambios')
     else:
         form = RechazarIntercambioForm(instance=intercambio)
     return render(request, 'rechazar_intercambio.html', {'form': form, 'intercambio': intercambio})
