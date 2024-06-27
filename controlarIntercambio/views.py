@@ -38,20 +38,20 @@ def aceptar_intercambio(request, intercambio_id):
     intercambio = get_object_or_404(Intercambio, id=intercambio_id)
     intercambio.estado = 'Aprobado'
     intercambio.filial = turno.filial
-    intercambio.turno = turno_id
+    intercambio.turno = turno
     intercambio.codigo_intercambio_destinatario = get_random_string(10)
     intercambio.codigo_intercambio_solicitante = get_random_string(10)
     intercambio.save()
     send_mail(
                 'Código de Intercambio',
-                f'Aceptaste la solicitud de intercambio y se genero un código único para que presentes en la filial {intercambio.filial.nombre} en el turno de {turno.fecha}, tu código es : {intercambio.codigo_intercambio_destinatario}.Por favor presentarse entre las 11 am y 20 pm ',
+                f'Aceptaste la solicitud de intercambio y se genero un código único para que presentes en la filial {intercambio.filial.nombre} en el turno de {turno.fecha}, tu código es : {intercambio.codigo_intercambio_destinatario}.Por favor presentarse entre las 11 am y 20 pm. ',
              'ingecaritas@gmail.com',
                 [intercambio.destinatario.mail],
                 fail_silently=False,
     )
     send_mail(
                 'Código de Intercambio',
-                f'Se acepto tu solicitud de intercambio y se genero un código único para que presentes en la filial {intercambio.filial.nombre} en el turno de {turno.fecha}, tu código es : {intercambio.codigo_intercambio_destinatario}.Por favor presentarse entre las 11 am y 20 pm ',
+                f'Se acepto tu solicitud de intercambio y se genero un código único para que presentes en la filial {intercambio.filial.nombre} en el turno de {turno.fecha}, tu código es : {intercambio.codigo_intercambio_destinatario}.Por favor presentarse entre las 11 am y 20 pm. ',
              'ingecaritas@gmail.com',
                 [intercambio.solicitante.mail],
                 fail_silently=False,

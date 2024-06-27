@@ -1,7 +1,7 @@
 from django.db import models
 from app.models import CustomUser
 from cargarArticulo.models import Articulo
-from crearFilial.models import Filial
+from crearFilial.models import Filial,Turno
 
 
 class Intercambio(models.Model):
@@ -18,10 +18,11 @@ class Intercambio(models.Model):
         ('Rechazado', 'Rechazado'),
     ]
     estado = models.CharField(max_length=20, choices=OPCIONES_ESTADO,default='Pendiente')
+    codigo_intercambio= models.CharField(max_length=15, blank=True, null=True)
     codigo_intercambio_destinatario = models.CharField(max_length=10, blank=True, null=True)
     codigo_intercambio_solicitante = models.CharField(max_length=10, blank=True, null=True)
     motivo_rechazo = models.TextField(blank=True, null=True)
     filial = models.ForeignKey(Filial, on_delete=models.CASCADE,blank=True, null=True)
-    turno = models.CharField(max_length=50,blank=True, null=True) 
+    turno = models.ForeignKey(Turno,on_delete=models.CASCADE,blank=True, null=True) 
     class Meta:
         verbose_name_plural = "Intercambios"
