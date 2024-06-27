@@ -106,6 +106,8 @@ urlpatterns = [
  path('confirmar_eliminar_ayudante/<int:user_id>', confirmar_eliminar_ayudante, name='confirmar_eliminar_ayudante'),
  path('verMisPublicacionesPendientes', mostrarArticulosPendientesPropios, name='verArticulosPendientesPropios'),
  path('', include('verArticulosRechazados.urls')),
+ path('intercambiosDelDia', viewsInicio.mostrarIntercambiosDelDia, name='verIntercambiosDelDia'),
+path('efectuarIntercambio/<str:codigo_intercambio>/', viewsInicio.efectuarIntercambio, name='efectuarIntercambio')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

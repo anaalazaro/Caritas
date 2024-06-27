@@ -9,8 +9,9 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from notificaciones.models import Notification
 from django.http import JsonResponse
 from solicitarIntercambio.models import Intercambio
-
-
+from django.utils import timezone
+from datetime import datetime
+from crearFilial.models import Filial, Turno
 
 def hello(request):
   #  if request.user.is_authenticated:
@@ -94,8 +95,32 @@ def inicioAdmin(request):
 @login_required
 @custom_user_passes_test(es_ayudante, message="No está habilitado para acceder a esta página.")
 def inicioAyudante(request):
-    return render(request, 'inicioAyudante.html')
+    ahora = timezone.now()
+    ahoraFalso = datetime(2024, 6, 29)
+    # Formatear la fecha y hora en el formato de un campo DateTimeField
+    formato_fecha = ahoraFalso.strftime('%Y-%m-%d')
+    ayudanteActual= request.user
+    filial_ayudante= Filial.objects.get(ayudante= ayudanteActual)
+    #turnos de hoy para la filial_ayudante
+    turnos_hoy= Turno.objects.filter(fecha= formato_fecha,filial= filial_ayudante)
+    intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante)
+    cantidad_intercambios_hoy= intercambios.count()
+    return render(request, 'inicioAyudante.html', {'cantidad_intercambios':cantidad_intercambios_hoy})
 
+def mostrarIntercambiosDelDia(request):
+    ahora = timezone.now()
+    ahoraFalso = datetime(2024, 6, 29)
+    # Formatear la fecha y hora en el formato de un campo DateTimeField
+    formato_fecha = ahoraFalso.strftime('%Y-%m-%d')
+    ayudanteActual= request.user
+    filial_ayudante= Filial.objects.get(ayudante= ayudanteActual)
+    #turnos de hoy para la filial_ayudante
+    turnos_hoy= Turno.objects.filter(fecha= formato_fecha,filial= filial_ayudante)
+    intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante)
+    return render(request, 'listadoIntercambiosHoy.html', {'intercambios': intercambios})
+
+def efectuarIntercambio(request, codigo_intercambio):
+    return render(request, 'efectuarIntercambio.html')
 
 def marcar_leida(request, notification_id):
     notification = get_object_or_404(Notification, pk=notification_id)

@@ -34,11 +34,6 @@ def solicitar_intercambio(request, articulo_id):
             return redirect('solicitar_intercambio', articulo_id=articulo_id)
 
         cod_intercambio = get_random_string(15)
-        intercambio_existente = get_object_or_404(Intercambio, codigo_intercambio = cod_intercambio)
-        while intercambio_existente:
-            cod_intercambio = get_random_string(15)
-            intercambio_existente = get_object_or_404(Intercambio, codigo_intercambio = cod_intercambio)
-        
         solicitud = Intercambio.objects.create(
             solicitante=solicitante,
             destinatario=destinatario,

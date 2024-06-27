@@ -35,6 +35,9 @@
 
 <div class="container mt-4">
     <h1>Bienvenido, {{ user.nombre }}</h1>
+    <h1>¡Hoy tenes {{ cantidad_intercambios }} intercambios para efectivizar!</h1>
+    <a href="{% url 'verIntercambiosDelDia' %}" class="btn btn-primary">Ver intercambios del dia</a>
+
 
     <div class="row">
         <div class="col-md-4">

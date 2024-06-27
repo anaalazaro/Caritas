@@ -1,0 +1,38 @@
+{% extends 'baseCaritas.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Intercambios del dia</h1>
+    {% if intercambios %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Código del intercambio</th>
+                    <th scope="col">Articulos a intercambiar</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for intercambio in intercambios %}
+                    <tr>
+                        <td>{{ intercambio.codigo_intercambio }}</td>
+                        <td>{{ intercambio.articulo_solicitado.Titulo }} Y {{ intercambio.articulo_ofrecido.Titulo }}</td>
+                        <td>
+                            <a href="{% url 'efectuarIntercambio' intercambio.codigo_intercambio %}" class="btn btn-danger btn-sm">Efectuar intercambio</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay intercambios</p>
+    {% endif %}
+
+    {% if success_message %}
+        <div class="alert alert-info mt-3">
+            <p>{{ success_message }}</p>
+        </div>
+    {% endif %}
+</div>
+<a href="{% url 'inicioAyudante' %}" class="btn btn-primary btn-sm">Volver</a>
+{% endblock %}
