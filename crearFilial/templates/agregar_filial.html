@@ -1,20 +1,42 @@
 {% extends 'baseCaritas.html' %}
 
-
 {% block content %}
 
 <head>
     <meta charset="UTF-8">
     <title>Agregar Filial</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
+
 <body>
     <h2>Agregar Filial</h2>
-    <form method="post">
+    <form method="post" id="filialForm">
         {% csrf_token %}
         {{ form.as_p }}
+        <div id="mapid" style="height: 400px;"></div>
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a href="{% url 'inicioAdmin' %}" class="btn btn-primary">Cancelar</a>
     </form>
+
+    <script>
+        var map = L.map('mapid').setView([-34.9205, -57.9536], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker = L.marker([-34.9216, -57.9544], { draggable: true }).addTo(map);
+
+        map.on('click', function(e) {
+            marker.setLatLng(e.latlng);
+            document.getElementById('id_latitud').value = e.latlng.lat;
+            document.getElementById('id_longitud').value = e.latlng.lng;
+        });
+
+    </script>
+    
 </body>
-<!-- <a href="{% url 'inicioAdmin' %}" class="btn btn-primary btn-sm">Volver</a> -->
+
 {% endblock %}

@@ -1,8 +1,12 @@
 {% extends 'baseCaritas.html' %}
 
-
 {% block content %}
-
+<head>
+    <meta charset="UTF-8">
+    <title>Ver Filiales</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
 <div class="container">
     <h1>Filiales registradas</h1>
     {% if filiales %}
@@ -11,16 +15,14 @@
                 <tr>
                     <th scope="col">Nombre</th>
                     <th scope="col">Acciones</th>
-
                 </tr>
             </thead>
             <tbody>
                 {% for filial in filiales %}
                     <tr>
-                        <td>{{ filial.nombre }} 
+                        <td>{{ filial.nombre }}</td>
                         <td>
-                            <!-- <a href="" class="btn btn-primary btn-sm">Ver Detalle</a> -->
-                           <a href="{% url 'eliminarFilial' filial.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                            <a href="{% url 'eliminarFilial' filial.id %}" class="btn btn-danger btn-sm">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -31,5 +33,10 @@
     {% endif %}
     <a href="{% url 'inicioAdmin' %}" class="btn btn-primary btn-sm">Volver</a>
 </div>
-{% endblock %}
 
+<div id="map" style="height: 400px;"></div>
+
+<!-- Incluir el script generado para el mapa -->
+{{ map_script|safe }}
+
+{% endblock %}
