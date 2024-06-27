@@ -8,9 +8,10 @@ from app.models import CustomUser
 def delete_account(request, user_id):
     usuario = CustomUser.objects.get(pk=user_id)
     usuario_actual = request.user
+    rol = usuario_actual.roles
     usuario.delete()
     messages.success(request, 'La cuenta se ha eliminado exitosamente')
-    if 'admin' in usuario_actual.roles:
+    if 'admin' in rol:
         return redirect('verAyudantes')
     else:
         return redirect('inicio')
