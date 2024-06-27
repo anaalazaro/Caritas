@@ -105,6 +105,7 @@ urlpatterns = [
  path('confirmarBloqueo/<int:articulo_id>/<int:user_id>/', controlar_publicacionViews.confirmar_bloquear, name='confirmar'),
  path('confirmar_eliminar_ayudante/<int:user_id>', confirmar_eliminar_ayudante, name='confirmar_eliminar_ayudante'),
  path('verMisPublicacionesPendientes', mostrarArticulosPendientesPropios, name='verArticulosPendientesPropios'),
+ path('', include('verArticulosRechazados.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

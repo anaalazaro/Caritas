@@ -26,6 +26,12 @@ def login_view(request):
                 if user_instance.is_blocked and user_instance.failed_login_attempts < 3:
                     error_message = f"Su cuenta está bloqueada. Motivo: {user_instance.motivo_bloqueo}"
                     return render(request, 'autenticacionIntercambiador/login.html', {'form': form, 'error_message': error_message})
+                elif user_instance.failed_login_attempts >= 3:
+                    user_instance.is_blocked = True
+                    user_instance.motivo_bloqueo = "Demasiados intentos de inicio de sesión fallidos."
+                    user_instance.save()
+                    messages.error(request, f"Su cuenta está bloqueada. Motivo: {user_instance.motivo_bloqueo}")
+                    return redirect('change_password')
 
                 # Autenticar al usuario
                 user = authenticate(request, username=dni, password=password)
@@ -33,7 +39,8 @@ def login_view(request):
                     if user.roles != 'usuario':
                         error_message = 'No se encuentra habilitado para iniciar sesión por este medio. Elija la opción "Iniciar sesión como administrador o ayudante".'
                         return render(request, 'autenticacionIntercambiador/login.html', {'form': form, 'error_message': error_message})
-                    
+                    user_instance.failed_login_attempts = 0
+                    user_instance.save()
                     login(request, user)
                     
                     if user.passChange:

@@ -4,7 +4,9 @@ from datetime import datetime, timedelta
 
 class Filial(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
-    ayudante = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, db_constraint=False,null=True, blank=True)
+    ayudante = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
+    latitud = models.FloatField(null=True, blank=True)
+    longitud = models.FloatField(null=True, blank=True)
 
     def __str__(self):
         return self.nombre

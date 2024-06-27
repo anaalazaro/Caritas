@@ -7,26 +7,40 @@ from .forms import RechazarIntercambioForm
 from django.utils.crypto import get_random_string
 from django.contrib.auth.decorators import login_required
 from datetime import date,timedelta
+import folium
 
 @login_required
-def controlar_intercambio(request,intercambio_id):
+def controlar_intercambio(request, intercambio_id):
     filiales = Filial.objects.all()
     filial_seleccionada = None
     turnos_disponibles = None
-    intercambio = get_object_or_404(Intercambio, id=intercambio_id,)
+    intercambio = get_object_or_404(Intercambio, id=intercambio_id)
     un_mes_despues = date.today() + timedelta(days=30)
 
     if 'filial_id' in request.GET:
         filial_id = request.GET['filial_id']
         filial_seleccionada = get_object_or_404(Filial, id=filial_id)
-        turnos_disponibles = Turno.objects.filter(filial=filial_seleccionada, turnos_disponibles__gt=0,fecha__gte=date.today(), fecha__lte=un_mes_despues)
+        turnos_disponibles = Turno.objects.filter(filial=filial_seleccionada, turnos_disponibles__gt=0, fecha__gte=date.today(), fecha__lte=un_mes_despues)
+
+    # Crea el mapa con Folium
+    mapa = folium.Map(location=[-34.9205, -57.9536], zoom_start=13)
+
+    # Añade un marcador para cada filial, marcando en rojo el de la filial seleccionada
+    for filial in filiales:
+        if filial.latitud and filial.longitud:
+            if filial==filial_seleccionada:
+                folium.Marker([filial.latitud, filial.longitud], icon=folium.Icon(prefix='fa', icon='location-mark', color='green'), popup=filial.nombre).add_to(mapa)
+            else:
+                folium.Marker([filial.latitud, filial.longitud], popup=filial.nombre).add_to(mapa)
 
     context = {
         'filiales': filiales,
         'filial_seleccionada': filial_seleccionada,
         'turnos_disponibles': turnos_disponibles,
         'intercambio': intercambio,
+        'mapa': mapa._repr_html_(),  # Convertir el mapa a HTML para la plantilla
     }
+
     return render(request, 'aceptar_intercambio.html', context)
 
 @login_required
