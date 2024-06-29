@@ -106,7 +106,7 @@ def inicioAyudante(request):
     filial_ayudante= Filial.objects.get(ayudante= ayudanteActual)
     #turnos de hoy para la filial_ayudante
     turnos_hoy= Turno.objects.filter(fecha= formato_fecha,filial= filial_ayudante)
-    intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante)
+    intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante,estado= 'Aprobado')
     cantidad_intercambios_hoy= intercambios.count()
     return render(request, 'inicioAyudante.html', {'cantidad_intercambios':cantidad_intercambios_hoy})
 
@@ -120,7 +120,7 @@ def mostrarIntercambiosDelDia(request):
     filial_ayudante= Filial.objects.get(ayudante= ayudanteActual)
     #turnos de hoy para la filial_ayudante
     turnos_hoy= Turno.objects.filter(fecha= formato_fecha,filial= filial_ayudante)
-    intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante)
+    intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante,estado='Aprobado')
     return render(request, 'listadoIntercambiosHoy.html', {'intercambios': intercambios})
 
 def promedio(numero1,numero2):
@@ -168,7 +168,8 @@ def efectuarIntercambio(request, codigo_intercambio):
                 #     [intercambio.solicitante.mail],
                 #     fail_silently=False,
                 # )
-                messages.success(request, 'El intercambio se ha efectuado exitosamente.')
+                messages.success(request, 'El intercambio se ha efectuado exitosamente.')               
+                return redirect('listadoIntercambiosAyudante')
             else:
                 messages.error(request, 'Código invalido. Alguno de los códigos ingresados no es válido.')
         elif codigo_solicitante and not codigo_destinatario:
@@ -193,6 +194,7 @@ def efectuarIntercambio(request, codigo_intercambio):
                 #         fail_silently=False,
                 #     )
                 messages.success(request, 'El intercambio no se ha efectuado.')
+                return redirect('listadoIntercambiosAyudante')
             else:
                 messages.error(request, 'Código invalido. El código ingresado no es válido.')
         elif not codigo_solicitante and codigo_destinatario:
@@ -217,6 +219,7 @@ def efectuarIntercambio(request, codigo_intercambio):
                 #         fail_silently=False,
                 #     )
                 messages.success(request, 'El intercambio no se ha efectuado.')
+                return redirect('listadoIntercambiosAyudante')
             else:
                 messages.error(request, 'Código invalido. El código ingresado no es válido.')
             
@@ -260,3 +263,12 @@ def mostrarIntercambios(request):
     intercambios= Intercambio.objects.filter(destinatario=request.user).exclude(estado= 'Pendiente')
     print(intercambios)
     return render(request, 'listadoIntercambios.html', {'intercambios': intercambios})
+
+@login_required
+def mostrarIntercambiosAyudante(request):
+    ayudanteActual= request.user
+    filial_ayudante= Filial.objects.get(ayudante= ayudanteActual)
+    estados_a_excluir = ['Pendiente', 'Aprobado', 'Rechazado']
+    intercambios = Intercambio.objects.filter(filial=filial_ayudante).exclude(estado__in=estados_a_excluir)
+    print(intercambios)
+    return render(request, 'listadoIntercambiosAyudante.html', {'intercambios': intercambios})

@@ -49,7 +49,24 @@
                 </div>
             </div>
         </div>
-        <!-- Agrega más tarjetas para otras acciones -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Ver intercambios del día</h5>
+                        <p class="card-text">Gestione los intercambios a realizarse hoy.</p>
+                        <a href="{% url 'verIntercambiosDelDia' %}" class="btn btn-primary">Ver intercambios del dia</a>
+                    </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Ver historial de intercambios </h5>
+                    <p class="card-text"> Vea su historial de intercambios gestionados.</p>
+                    <a href="{% url 'listadoIntercambiosAyudante' %}" class="btn btn-primary">Ver intercambios</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
