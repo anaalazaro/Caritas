@@ -7,4 +7,6 @@ class OpcionesCodigos(forms.Form):
         ('opcion3', 'Ingresar código del destinatario.'),
     ]
 
-    seleccion = forms.ChoiceField(choices=OPCIONES, widget=forms.RadioSelect(attrs={'onchange': 'this.form.submit();', 'class': 'form-check-inline'}),required=True)
+    seleccion = forms.ChoiceField(choices=OPCIONES, widget=forms.RadioSelect(attrs={'onchange': 'clearInputsAndSubmit(this);'}),required=True)
+    codigo_solicitante = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'codigo_solicitante'}))
+    codigo_destinatario = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'codigo_destinatario'}))

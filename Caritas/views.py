@@ -176,7 +176,7 @@ def efectuarIntercambio(request, codigo_intercambio):
             if codigo_solicitante == intercambio.codigo_intercambio_solicitante:
                 intercambio.estado= 'No Efectuado'
                 #se promedia el puntaje de cada user intercambiador
-                intercambio.solicitante.puntaje = promedio(intercambio.solicitante.puntaje , 1)
+                intercambio.solicitante.puntaje = promedio(intercambio.solicitante.puntaje , 4)
                 intercambio.destinatario.puntaje = promedio(intercambio.destinatario.puntaje , 1)
                 intercambio.save()
                 send_mail(
@@ -202,7 +202,7 @@ def efectuarIntercambio(request, codigo_intercambio):
                 intercambio.estado= 'No Efectuado'
                 #se promedia el puntaje de cada user intercambiador
                 intercambio.solicitante.puntaje = promedio(intercambio.solicitante.puntaje , 1)
-                intercambio.destinatario.puntaje = promedio(intercambio.destinatario.puntaje , 1) 
+                intercambio.destinatario.puntaje = promedio(intercambio.destinatario.puntaje , 4) 
                 intercambio.save()
                 send_mail(
                         'Intercambio',

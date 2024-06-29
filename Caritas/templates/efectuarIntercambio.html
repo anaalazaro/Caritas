@@ -44,4 +44,20 @@
         </div>
     </form>
 </div>
+<script>
+    function clearInputsAndSubmit(radio) {
+        console.log('se envia')
+        // Limpiar los valores de los inputs
+        var codigo_solicitante = document.querySelector('input[name="codigo_solicitante"]');
+        var codigo_destinatario = document.querySelector('input[name="codigo_destinatario"]');
+        if (codigo_solicitante) {
+            codigo_solicitante.value = '';
+        }
+        if (codigo_destinatario) {
+            codigo_destinatario.value = '';
+        }
+        // Enviar el formulario
+        radio.form.submit();
+    }
+</script>
 {% endblock %}
