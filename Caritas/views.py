@@ -12,6 +12,9 @@ from solicitarIntercambio.models import Intercambio
 from django.utils import timezone
 from datetime import datetime
 from crearFilial.models import Filial, Turno
+from django.core.mail import send_mail
+from .formsEfectuar import OpcionesCodigos
+
 
 def hello(request):
   #  if request.user.is_authenticated:
@@ -107,6 +110,7 @@ def inicioAyudante(request):
     cantidad_intercambios_hoy= intercambios.count()
     return render(request, 'inicioAyudante.html', {'cantidad_intercambios':cantidad_intercambios_hoy})
 
+@login_required
 def mostrarIntercambiosDelDia(request):
     ahora = timezone.now()
     ahoraFalso = datetime(2024, 6, 29)
@@ -119,8 +123,106 @@ def mostrarIntercambiosDelDia(request):
     intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante)
     return render(request, 'listadoIntercambiosHoy.html', {'intercambios': intercambios})
 
+def promedio(numero1,numero2):
+    suma = numero1 + numero2
+    return suma / 2
+
+@login_required
 def efectuarIntercambio(request, codigo_intercambio):
-    return render(request, 'efectuarIntercambio.html')
+    input_solicitante = False
+    input_destinatario = False
+    if request.method == 'POST':
+        form = OpcionesCodigos(request.POST)
+        if form.is_valid():
+            seleccion = form.cleaned_data['seleccion']
+            if seleccion == 'opcion1':
+                input_solicitante = True
+                input_destinatario = True
+            elif seleccion == 'opcion2':
+                input_solicitante = True
+                input_destinatario = False
+            elif seleccion == 'opcion3':
+                input_destinatario = True
+                input_solicitante = False
+        intercambio= get_object_or_404(Intercambio,codigo_intercambio= codigo_intercambio)
+        codigo_solicitante = request.POST.get('codigo_solicitante')
+        codigo_destinatario = request.POST.get('codigo_destinatario')
+        if  codigo_solicitante and codigo_destinatario:
+            if codigo_solicitante == intercambio.codigo_intercambio_solicitante and codigo_destinatario == intercambio.codigo_intercambio_destinatario:    
+                intercambio.estado= 'Efectuado'
+                #se promedia el puntaje de cada user intercambiador
+                intercambio.solicitante.puntaje = promedio(intercambio.solicitante.puntaje , 4)
+                intercambio.destinatario.puntaje = promedio(intercambio.destinatario.puntaje , 4)
+                intercambio.save()
+                send_mail(
+                    'Intercambio',
+                    f'¡Se ha efectuado el intercambio con código {intercambio.codigo_intercambio} exitosamente! Si lo deseas, puedes calificar al usuario con el que has realizado el intercambio, dirígete a su perfil y deja tu reseña.',
+                'ingecaritas@gmail.com',
+                    [intercambio.destinatario.mail,intercambio.solicitante.mail],
+                    fail_silently=False,
+                )
+                # send_mail(
+                #     'Intercambio',
+                #     f'¡Se ha efectuado el intercambio con código {intercambio.codigo_intercambio} exitosamente! Si lo deseas, puedes calificar al usuario con el que has realizado el intercambio, dirígete a su perfil y deja tu reseña.',
+                # 'ingecaritas@gmail.com',
+                #     [intercambio.solicitante.mail],
+                #     fail_silently=False,
+                # )
+                messages.success(request, 'El intercambio se ha efectuado exitosamente.')
+            else:
+                messages.error(request, 'Código invalido. Alguno de los códigos ingresados no es válido.')
+        elif codigo_solicitante and not codigo_destinatario:
+            if codigo_solicitante == intercambio.codigo_intercambio_solicitante:
+                intercambio.estado= 'No Efectuado'
+                #se promedia el puntaje de cada user intercambiador
+                intercambio.solicitante.puntaje = promedio(intercambio.solicitante.puntaje , 1)
+                intercambio.destinatario.puntaje = promedio(intercambio.destinatario.puntaje , 1)
+                intercambio.save()
+                send_mail(
+                        'Intercambio',
+                        f'¡No se ha efectuado el intercambio con código {intercambio.codigo_intercambio}!.',
+                    'ingecaritas@gmail.com',
+                        [intercambio.solicitante.mail,intercambio.destinatario.mail],
+                        fail_silently=False,
+                    )
+                # send_mail(
+                #         'Intercambio',
+                #         f'¡Se ha efectuado el intercambio con código {intercambio.codigo_intercambio} exitosamente! Si lo deseas, puedes calificar al usuario con el que has realizado el intercambio, dirígete a su perfil y deja tu reseña.',
+                #     'ingecaritas@gmail.com',
+                #         [intercambio.destinatario.mail],
+                #         fail_silently=False,
+                #     )
+                messages.success(request, 'El intercambio no se ha efectuado.')
+            else:
+                messages.error(request, 'Código invalido. El código ingresado no es válido.')
+        elif not codigo_solicitante and codigo_destinatario:
+            if codigo_destinatario == intercambio.codigo_intercambio_destinatario:
+                intercambio.estado= 'No Efectuado'
+                #se promedia el puntaje de cada user intercambiador
+                intercambio.solicitante.puntaje = promedio(intercambio.solicitante.puntaje , 1)
+                intercambio.destinatario.puntaje = promedio(intercambio.destinatario.puntaje , 1) 
+                intercambio.save()
+                send_mail(
+                        'Intercambio',
+                        f'¡No se ha efectuado el intercambio con código {intercambio.codigo_intercambio}!',
+                    'ingecaritas@gmail.com',
+                        [intercambio.destinatario.mail,intercambio.solicitante.mail],
+                        fail_silently=False,
+                    )
+                # send_mail(
+                #         'Intercambio',
+                #         f'¡No se ha efectuado el intercambio con código {intercambio.codigo_intercambio}!',
+                #     'ingecaritas@gmail.com',
+                #         [intercambio.destinatario.mail],
+                #         fail_silently=False,
+                #     )
+                messages.success(request, 'El intercambio no se ha efectuado.')
+            else:
+                messages.error(request, 'Código invalido. El código ingresado no es válido.')
+            
+    else:
+        form = OpcionesCodigos()
+    return render(request, 'efectuarIntercambio.html', {'codigo_intercambio':codigo_intercambio,'form':form,'input_solicitante':input_solicitante,'input_destinatario':input_destinatario})            
 
 def marcar_leida(request, notification_id):
     notification = get_object_or_404(Notification, pk=notification_id)
