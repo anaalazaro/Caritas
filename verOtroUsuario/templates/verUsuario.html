@@ -16,7 +16,10 @@
                         <form action="{% url 'productos_del_usuario' user_profile.id %}" method="get" class="me-3">
                             <button type="submit" class="btn btn-primary ">Ver Articulos</button>
                         </form>
-                        <form action="" method="get" class="me-3">
+                        <form action="{% url 'dejar_reseña' user_profile.id %}" method="get" class="me-3">
+                            <button type="submit" class="btn btn-primary ">Dejar Reseña</button>
+                        </form>
+                        <form action="{% url 'ver_reseñas' user_profile.id %}" method="get" class="me-3">
                             <button type="submit" class="btn btn-primary">Ver Reseñas</button>
                         </form>
                         <form action="{% url 'menuPrincipal' %}" method="get" class="me-3">

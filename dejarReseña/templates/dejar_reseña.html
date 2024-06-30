@@ -1,0 +1,29 @@
+{% extends "baseCaritas.html" %}
+{% load static %}
+
+{% block content %}
+<body>
+    <div class="container mt-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header text-center bg-primary text-white p-2">
+                <h1 class="h4 m-0">Deje una reseña para {{ user_profile.nombre }} {{ user_profile.apellido }}</h1>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_comentario" class="form-label">Comentario:</label>
+                        <textarea class="form-control" id="id_comentario" name="comentario" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Reseña</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <form action="{% url 'ver_otro_usuario' user_profile.id %}" method="get" class="me-3">
+        <button type="submit" class="btn btn-primary ">Volver</button>
+    </form>
+    <br>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+{% endblock %}
