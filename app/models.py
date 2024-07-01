@@ -10,6 +10,7 @@ class CustomUser(AbstractUser):
     fechaNacimiento = models.DateField(default='2000-01-01')
     puntaje= models.FloatField(default=3.0)
     passChange = models.BooleanField(default=False)
+    borrado=models.BooleanField(default=False)
   
     # Campos con opciones
     OPCIONES_ROL = [

@@ -11,3 +11,4 @@ class Articulo(models.Model):
     pendiente = models.BooleanField(default=True)
     aprobado = models.BooleanField(default=False)
     motivo_rechazo= models.CharField(max_length=255, blank=True, null=True)
+    borrado=models.BooleanField(default=False)

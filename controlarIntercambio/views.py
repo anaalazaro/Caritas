@@ -74,6 +74,18 @@ def aceptar_intercambio(request, intercambio_id):
     messages.success(request, 'Intercambio aceptado con éxito.')
                 
     # Rechazar otras solicitudes sobre el mismo artículo
+    rechazados=Intercambio.objects.filter(destinatario=intercambio.destinatario, 
+                                           articulo_solicitado=intercambio.articulo_solicitado, 
+                                           estado='Pendiente')
+    for rechazado in rechazados:
+                    send_mail(
+                'Intercambio',
+                f'Se rechazo tu solicitud de intercambio pedida al usuario {rechazado.destinatario.nombre} para el articulo {rechazado.articulo_solicitado.Titulo} por este motivo: Se aceptó el intercambio a otro usuario.',
+             'ingecaritas@gmail.com',
+                [rechazado.solicitante.mail],
+                fail_silently=False,
+    )
+        
     Intercambio.objects.filter(destinatario=intercambio.destinatario, 
                                            articulo_solicitado=intercambio.articulo_solicitado, 
                                            estado='Pendiente').exclude(id=intercambio.id).update(estado='Rechazado', motivo_rechazo='Aceptado otro intercambio.')
