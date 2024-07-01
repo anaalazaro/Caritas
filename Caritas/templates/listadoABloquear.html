@@ -18,7 +18,7 @@
                         <td>{{ usuario.nombre }}</td>
                         <td>{{ usuario.apellido }}</td>
                         <td>
-                            <a href="{% url 'bloquear_usuario' usuario.id %}" class="btn btn-danger btn-sm">Bloquear</a>
+                            <a href="{% url 'confirmar_bloqueo_usuario' usuario.id %}" class="btn btn-danger btn-sm">Bloquear</a>
                         </td>
                     </tr>
                 {% endfor %}

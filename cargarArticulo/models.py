@@ -10,3 +10,4 @@ class Articulo(models.Model):
     Estado = models.CharField(max_length=20)
     pendiente = models.BooleanField(default=True)
     aprobado = models.BooleanField(default=False)
+    motivo_rechazo= models.CharField(max_length=255, blank=True, null=True)

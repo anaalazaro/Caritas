@@ -108,7 +108,9 @@ urlpatterns = [
  path('', include('verArticulosRechazados.urls')),
  path('intercambiosDelDia', viewsInicio.mostrarIntercambiosDelDia, name='verIntercambiosDelDia'),
 path('efectuarIntercambio/<str:codigo_intercambio>/', viewsInicio.efectuarIntercambio, name='efectuarIntercambio'),
-path('listadoIntercambiosAyudante/', viewsInicio.mostrarIntercambiosAyudante, name='listadoIntercambiosAyudante')
+path('listadoIntercambiosAyudante/', viewsInicio.mostrarIntercambiosAyudante, name='listadoIntercambiosAyudante'),
+path('confirmarBloqueo/<int:user_id>', viewsInicio.confirmarBloqueo, name='confirmar_bloqueo_usuario'),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

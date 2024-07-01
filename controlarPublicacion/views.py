@@ -38,6 +38,7 @@ def aprobar_articulo(request, articulo_id):
 def desaprobar_articulo(request, articulo_id):
     articulo = get_object_or_404(Articulo, pk=articulo_id)
     articulo.pendiente = False
+    articulo.motivo_rechazo= "Publicacion inadecuada"
     usuario= articulo.usuario
     usuario.cantidad_rechazos_publicacion+=1
     if(usuario.cantidad_rechazos_publicacion >= 5):
@@ -70,4 +71,5 @@ def bloquearUsuarioPorPublicacion(request, articulo_id,  user_id):
     return render(request, 'mostrarArticulosPendientes.html',{'success_message': messages, 'articulos_pendientes': pendientes} )
 
 def confirmar_bloquear(request, articulo_id, user_id):
-    return render(request, 'confirmarBloqueo.html', {'articulo': articulo_id, 'user_id': user_id})
+    usuario= CustomUser.objects.get(pk=user_id)
+    return render(request, 'confirmarBloqueo.html', {'articulo': articulo_id, 'user_id': user_id, 'usuario': usuario})

@@ -99,7 +99,7 @@ def inicioAdmin(request):
 @custom_user_passes_test(es_ayudante, message="No está habilitado para acceder a esta página.")
 def inicioAyudante(request):
     ahora = timezone.now()
-    ahoraFalso = datetime(2024, 6, 29)
+    ahoraFalso = datetime(2024, 7, 6)
     # Formatear la fecha y hora en el formato de un campo DateTimeField
     formato_fecha = ahoraFalso.strftime('%Y-%m-%d')
     ayudanteActual= request.user
@@ -113,7 +113,7 @@ def inicioAyudante(request):
 @login_required
 def mostrarIntercambiosDelDia(request):
     ahora = timezone.now()
-    ahoraFalso = datetime(2024, 6, 29)
+    ahoraFalso = datetime(2024, 7, 6)
     # Formatear la fecha y hora en el formato de un campo DateTimeField
     formato_fecha = ahoraFalso.strftime('%Y-%m-%d')
     ayudanteActual= request.user
@@ -151,8 +151,10 @@ def efectuarIntercambio(request, codigo_intercambio):
             if codigo_solicitante == intercambio.codigo_intercambio_solicitante and codigo_destinatario == intercambio.codigo_intercambio_destinatario:    
                 intercambio.estado= 'Efectuado'
                 #se promedia el puntaje de cada user intercambiador
-                intercambio.solicitante.puntaje = promedio(intercambio.solicitante.puntaje , 4)
-                intercambio.destinatario.puntaje = promedio(intercambio.destinatario.puntaje , 4)
+                intercambio.solicitante.puntaje +=0.5
+                intercambio.destinatario.puntaje +=0.5
+                intercambio.destinatario.save()
+                intercambio.destinatario.save()
                 intercambio.save()
                 send_mail(
                     'Intercambio',
@@ -176,8 +178,10 @@ def efectuarIntercambio(request, codigo_intercambio):
             if codigo_solicitante == intercambio.codigo_intercambio_solicitante:
                 intercambio.estado= 'No Efectuado'
                 #se promedia el puntaje de cada user intercambiador
-                intercambio.solicitante.puntaje = promedio(intercambio.solicitante.puntaje , 4)
-                intercambio.destinatario.puntaje = promedio(intercambio.destinatario.puntaje , 1)
+                intercambio.solicitante.puntaje +=0.5
+                intercambio.destinatario.puntaje -= 0.5
+                intercambio.solicitante.save()
+                intercambio.destinatario.save()
                 intercambio.save()
                 send_mail(
                         'Intercambio',
@@ -201,8 +205,11 @@ def efectuarIntercambio(request, codigo_intercambio):
             if codigo_destinatario == intercambio.codigo_intercambio_destinatario:
                 intercambio.estado= 'No Efectuado'
                 #se promedia el puntaje de cada user intercambiador
-                intercambio.solicitante.puntaje = promedio(intercambio.solicitante.puntaje , 1)
-                intercambio.destinatario.puntaje = promedio(intercambio.destinatario.puntaje , 4) 
+                intercambio.solicitante.puntaje -= 0.5
+                intercambio.destinatario.puntaje +=0.5
+                intercambio.solicitante.save()
+                intercambio.destinatario.save()
+                print("Entró al destinatario", intercambio.solicitante.puntaje)
                 intercambio.save()
                 send_mail(
                         'Intercambio',
@@ -272,3 +279,7 @@ def mostrarIntercambiosAyudante(request):
     intercambios = Intercambio.objects.filter(filial=filial_ayudante).exclude(estado__in=estados_a_excluir)
     print(intercambios)
     return render(request, 'listadoIntercambiosAyudante.html', {'intercambios': intercambios})
+
+def confirmarBloqueo(request, user_id):
+    usuario= CustomUser.objects.get(pk= user_id)
+    return render(request, 'confirmarBloqueo.html', {'usuario': usuario})
