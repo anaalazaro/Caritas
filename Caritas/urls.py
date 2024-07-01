@@ -111,6 +111,7 @@ path('efectuarIntercambio/<str:codigo_intercambio>/', viewsInicio.efectuarInterc
 path('listadoIntercambiosAyudante/', viewsInicio.mostrarIntercambiosAyudante, name='listadoIntercambiosAyudante'), 
 path('', include('dejarReseña.urls')),
 path('', include('verReseñas.urls')),
+path('', include('realizarDonacion.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
