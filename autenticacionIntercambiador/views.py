@@ -19,7 +19,7 @@ def login_view(request):
             password = form.cleaned_data['password']
 
             # Verificar si el usuario existe
-            if CustomUser.objects.filter(dni=dni).exists():
+            if (CustomUser.objects.get(dni=dni)).borrado==False:
                 user_instance = CustomUser.objects.get(dni=dni)
                 
                 # Verificar si el usuario está bloqueado

@@ -38,7 +38,7 @@ def mostrar(request):
         # Si el usuario no tiene el rol de usuario normal, redirigir a alguna otra página o mostrar un mensaje de error
         return HttpResponse("No tienes permiso para acceder a esta página")
     user=request.user
-    sugeridos= Articulo.objects.filter(aprobado=True).exclude(usuario=request.user)
+    sugeridos= Articulo.objects.filter(aprobado=True, borrado=False).exclude(usuario=request.user)
     print(sugeridos)
     return render (request, 'menuPrincipal.html', {'user': user, 'articulos':sugeridos })
 
@@ -47,7 +47,7 @@ def mostrarArticulosOrdenados(request):
     usuario_actual = request.user
     if usuario_actual.roles != 'usuario':
        return HttpResponse("No tienes permiso para acceder a esta página")
-    ordenados= Articulo.objects.filter(aprobado=True).exclude(usuario=request.user).order_by('Titulo')
+    ordenados= Articulo.objects.filter(aprobado=True, borrado=False).exclude(usuario=request.user).order_by('Titulo')
     return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': ordenados})
 
 
@@ -60,7 +60,7 @@ def mostrarPorCategoria(request):
         return HttpResponse("No tienes permiso para acceder a esta página")
     if 'categoria' in request.GET:
         categoria_seleccionada = request.GET['categoria']
-        articulos_filtrados = Articulo.objects.filter(aprobado=True, Categoria=categoria_seleccionada).exclude(usuario=request.user)
+        articulos_filtrados = Articulo.objects.filter(aprobado=True, Categoria=categoria_seleccionada, borrado=False).exclude(usuario=request.user)
         if articulos_filtrados.exists():
             # Si hay artículos para la categoría seleccionada, los mostramos
             return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': articulos_filtrados})
@@ -69,7 +69,7 @@ def mostrarPorCategoria(request):
             messages.info(request, 'No hay artículos para la categoría seleccionada.')
             return render(request, 'menuPrincipal.html', {'user': request.user})
     else:
-        articulos = Articulo.objects.filter(aprobado=True).exclude(usuario=request.user)
+        articulos = Articulo.objects.filter(aprobado=True, borrado=False).exclude(usuario=request.user)
         # Si no se ha seleccionado ninguna categoría, puedes manejarlo de acuerdo a tu lógica
         return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': articulos})
     
@@ -244,13 +244,14 @@ def marcar_leida(request, notification_id):
 @custom_user_passes_test(es_admin, message="No está habilitado para acceder a esta página.")
 def eliminarArticulo(request, articulo_id):
      articulo= Articulo.objects.get(pk= articulo_id)
-     articulo.delete()
+     articulo.borrado=True
+     articulo.save()
      HttpResponse("Se eliminó con éxito")
 
 @login_required
 @custom_user_passes_test(es_admin, message="No está habilitado para acceder a esta página.")
 def mostrarArticulosAEliminar(request):
-    eliminar= Articulo.objects.filter(aprobado=False, pendiente=False)
+    eliminar= Articulo.objects.filter(aprobado=False, pendiente=False, borrado=False)
     return render(request, 'listarEliminados.html', {'articulos': eliminar})
                   
 @login_required

@@ -25,9 +25,9 @@ def delete_account(request, user_id):
     for solicitante_usuario in intercambios_destinatario:
         send_mail(
              'Intercambio',
-                f'Se canceló el intercambio pactado con el intercambiador{solicitante_usuario.destinatario.nombre} para el articulo {solicitante_usuario.articulo_ofrecido.Titulo} para el día {destinatario_usuario.turno.fecha }por este motivo: Se dió de baja la cuenta del usuario {solicitante_usuario.destinatario.nombre}' ,
+                f'Se canceló el intercambio pactado con el intercambiador{solicitante_usuario.destinatario.nombre} para el articulo {solicitante_usuario.articulo_ofrecido.Titulo} para el día {solicitante_usuario.turno.fecha }por este motivo: Se dió de baja la cuenta del usuario {solicitante_usuario.destinatario.nombre}' ,
                 'ingecaritas@gmail.com',
-                [destinatario_usuario.destinatario.mail],
+                [solicitante_usuario.destinatario.mail],
                 fail_silently=False,
           )
     usuario.borrado=True
