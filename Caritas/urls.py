@@ -110,6 +110,8 @@ urlpatterns = [
 path('efectuarIntercambio/<str:codigo_intercambio>/', viewsInicio.efectuarIntercambio, name='efectuarIntercambio'),
 path('listadoIntercambiosAyudante/', viewsInicio.mostrarIntercambiosAyudante, name='listadoIntercambiosAyudante'),
 path('confirmarBloqueo/<int:user_id>', viewsInicio.confirmarBloqueo, name='confirmar_bloqueo_usuario'),
+path('/historial_intercambios/', viewsInicio.ver_historial_intercambios, name='historial_intercambios'),
+
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
