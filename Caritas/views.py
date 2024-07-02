@@ -266,6 +266,7 @@ def mostrarIntercambios(request):
 
 @login_required
 def mostrarIntercambiosAyudante(request):
+    
     ayudanteActual= request.user
     filial_ayudante= Filial.objects.get(ayudante= ayudanteActual)
     estados_a_excluir = ['Pendiente', 'Aprobado', 'Rechazado']
