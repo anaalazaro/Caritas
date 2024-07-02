@@ -9,6 +9,7 @@
                 <tr>
                     <th scope="col">Título</th>
                     <th scope="col">Descripción</th>
+                    <th scope="col">Motivo de rechazo</th> 
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -17,6 +18,7 @@
                     <tr>
                         <td>{{ articulo.Titulo }}</td>
                         <td>{{ articulo.Descripcion }}</td>
+                        <td>{{ articulo.motivo_rechazo }} </td>
                         <td>
                             <a href="{% url 'detalle' articulo.id %}" class="btn btn-primary btn-sm">Ver detalle</a>
                         </td>

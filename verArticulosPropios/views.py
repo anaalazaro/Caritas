@@ -8,6 +8,6 @@ def ver_articulos(request):
     if usuario_actual.roles != 'usuario':
         # Si el usuario no tiene el rol de usuario normal, redirigir a alguna otra página o mostrar un mensaje de error
         return HttpResponse("No tienes permiso para acceder a esta página")
-    articulos = Articulo.objects.filter(usuario=usuario_actual,aprobado=True)
+    articulos = Articulo.objects.filter(usuario=usuario_actual,aprobado=True, borrado=False)
 
     return render(request, 'verArticulosPropios.html', {'articulos': articulos})

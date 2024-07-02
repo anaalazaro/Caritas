@@ -13,7 +13,7 @@ def solicitar_intercambio(request, articulo_id):
     destinatario = articulo_solicitado.usuario
 
     
-    if solicitante.puntaje < 3:
+    if solicitante.puntaje < 2:
         messages.error(request, 'No tienes suficiente calificación para solicitar un intercambio.')
         return redirect('menuPrincipal')
 

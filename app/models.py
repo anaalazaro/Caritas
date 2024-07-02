@@ -8,8 +8,9 @@ class CustomUser(AbstractUser):
     telefono = models.CharField(max_length=15)
     dni = models.IntegerField(max_length=20, unique=True,default=0)
     fechaNacimiento = models.DateField(default='2000-01-01')
-    puntaje= models.IntegerField(default=3)
+    puntaje= models.FloatField(default=3.0)
     passChange = models.BooleanField(default=False)
+    borrado=models.BooleanField(default=False)
   
     # Campos con opciones
     OPCIONES_ROL = [
