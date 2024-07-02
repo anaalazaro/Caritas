@@ -83,30 +83,25 @@ def estadisticas_periodo_tiempo(request):
     })
 
 def estadisticas_por_filial(request):
-    form = FilialForm()
     chart_div = None
     error_message = None
-    if request.method == 'POST':
-        form = FilialForm(request.POST)
-        if form.is_valid():
-            filial = form.cleaned_data['filial']
-            filial = Filial.objects.get(nombre=filial)
-            print(filial)
-            intercambios = Intercambio.objects.filter(filial=filial, estado = 'Efectuado') \
-                                      .values('filial') \
-                                      .annotate(cantidad=Count('id'))
-   
-            df = pd.DataFrame(intercambios)
-            df['filial'] = filial.nombre
-            print(df['filial'])
-            if not df.empty:
-                fig = px.line(df, x='filial', y= 'cantidad', title=f'Cantidad de Intercambios por filial')
-                chart_div = fig.to_html(full_html=False)
-            else:
-                error_message = "No hay intercambios solicitados para la filial seleccionada."
+    filiales = Filial.objects.filter(ayudante__isnull=False)
+    print(filiales)
+    if filiales:         
+        intercambios = Intercambio.objects.filter(filial__in=filiales, estado = 'Efectuado') \
+                                .values('filial__nombre') \
+                                .annotate(cantidad=Count('id'))
+
+        df = pd.DataFrame(intercambios)
+
+        if not df.empty:
+            df.rename(columns={'filial__nombre': 'filial'}, inplace=True)
+            fig = px.bar(df, x='filial', y= 'cantidad', title=f'Cantidad de Intercambios por filial')
+            chart_div = fig.to_html(full_html=False)
+        else:
+            error_message = "No hay intercambios solicitados para la filial seleccionada."
 
     return render(request, 'estadisticasPorFilial.html', {
-        'form': form,
         'chart_div': chart_div,
         'error_message': error_message,
     })
