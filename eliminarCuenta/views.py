@@ -7,6 +7,7 @@ from app.models import CustomUser
 from solicitarIntercambio.models import Intercambio
 from django.db.models import Q
 from django.core.mail import send_mail
+from crearFilial.models import Filial
 
 def delete_account(request, user_id):
     usuario = CustomUser.objects.get(pk=user_id)
@@ -36,6 +37,9 @@ def delete_account(request, user_id):
     usuario.save()
     messages.success(request, 'La cuenta se ha eliminado exitosamente')
     if 'admin' in rol:
+        filial_ayudante= Filial.objects.get(ayudante=user_id)
+        filial_ayudante.ayudante=None
+        filial_ayudante.save()
         return redirect('verAyudantes')
     else:
         return redirect('inicio')

@@ -11,7 +11,7 @@ def es_admin(user):
 
 def ver_ayudantes(request):
     # Filtra los usuarios por el rol de "ayudante"
-    ayudantes = CustomUser.objects.filter(roles='ayudante')
+    ayudantes = CustomUser.objects.filter(roles='ayudante', borrado=False)
     ayudantesF = []
     for ayudante in ayudantes:
         filial = ayudante.filial_set.first()  # Obtiene la filial asociada al ayudante (si existe)
