@@ -72,4 +72,4 @@ def bloquearUsuarioPorPublicacion(request, articulo_id,  user_id):
 
 def confirmar_bloquear(request, articulo_id, user_id):
     usuario= CustomUser.objects.get(pk=user_id)
-    return render(request, 'confirmarBloqueo.html', {'articulo': articulo_id, 'user_id': user_id, 'usuario': usuario})
+    return render(request, 'confirmarSolicitudBloqueo.html', {'articulo': articulo_id, 'user_id': user_id, 'usuario': usuario})

@@ -83,6 +83,7 @@ INSTALLED_APPS = [
     'controlarIntercambio',
     'eliminarArticulo',
     'verArticulosRechazados',
+    'estadisticas',
     'dejarReseña',
     'verReseñas',
     'realizarDonacion',

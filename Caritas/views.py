@@ -18,7 +18,7 @@ from datetime import datetime
 from crearFilial.models import Filial, Turno
 from django.core.mail import send_mail
 from .formsEfectuar import OpcionesCodigos
-
+from django.db.models import Q
 
 def hello(request):
   #  if request.user.is_authenticated:
@@ -272,12 +272,17 @@ def mostrarIntercambiosPropuestos(request):
 
 @login_required
 def mostrarIntercambios(request):
-    intercambios= Intercambio.objects.filter(destinatario=request.user).exclude(estado= 'Pendiente')
+    intercambios = Intercambio.objects.filter(
+        Q(destinatario=request.user) | Q(solicitante=request.user)
+        ).exclude(
+        estado='Pendiente'
+        )
     print(intercambios)
     return render(request, 'listadoIntercambios.html', {'intercambios': intercambios})
 
 @login_required
 def mostrarIntercambiosAyudante(request):
+    
     ayudanteActual= request.user
     filial_ayudante= Filial.objects.get(ayudante= ayudanteActual)
     estados_a_excluir = ['Pendiente', 'Aprobado', 'Rechazado']
