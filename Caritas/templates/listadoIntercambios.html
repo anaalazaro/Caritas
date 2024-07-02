@@ -7,13 +7,15 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Solitante</th>
+                    <th scope="col">Solicitante</th>
+                    <th scope="col">Destinatario</th>
                     <th scope="col">Articulo Solicitado</th>
                     <th scope="col">Articulo Ofrecido</th>
                     <th scope="col">Fecha Intercambio</th>
                     <th scope="col">Filial</th>
                     <th scope="col">Motivo Rechazo</th>
                     <th scope="col">Estado</th>
+                    <th scope="col">Reseña</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,6 +23,10 @@
                     <tr>
                         <td>
                             <a href="{% url 'ver_otro_usuario' intercambio.solicitante_id %}">{{ intercambio.solicitante.nombre }}</a>
+
+                        </td>
+                        <td>
+                            <a href="{% url 'ver_otro_usuario' intercambio.destinatario_id %}">{{ intercambio.destinatario.nombre }}</a>
 
                         </td>
                         <td> 
@@ -42,6 +48,19 @@
                         </td>
                         <td>
                             {{ intercambio.estado }}
+                        </td>
+                        <td>
+                        {% if intercambio.estado == 'Efectuado' %}
+                            {% if user.id == intercambio.solicitante_id and not intercambio.reseña_solicitante %} 
+                                <a href="{% url 'dejar_reseña' intercambio.id intercambio.destinatario_id %}" class="btn btn-primary btn-sm">Dejar reseña</a>
+                            {% elif user.id == intercambio.destinatario_id and not intercambio.reseña_destinatario %}
+                                <a href="{% url 'dejar_reseña' intercambio.id intercambio.solicitante_id %}" class="btn btn-primary btn-sm">Dejar reseña</a>
+                            {% else %}
+                                Ya ha dejado una reseña
+                            {% endif %}
+                        {% else %}
+                            No disponible para intercambios no efectuados
+                        {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

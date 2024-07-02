@@ -11,7 +11,7 @@ import folium
 
 @login_required
 def controlar_intercambio(request, intercambio_id):
-    filiales = Filial.objects.all()
+    filiales = Filial.objects.filter(ayudante__isnull=False)
     filial_seleccionada = None
     turnos_disponibles = None
     intercambio = get_object_or_404(Intercambio, id=intercambio_id)

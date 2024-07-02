@@ -8,10 +8,6 @@
     <i class="bi bi-info-circle"><small class="text-muted p-0 bg-light shadow-sm"> Debes elegir la filial donde se realizará el intercambio.</small></i>
     <h4 class="mb-2">Elegir Filial:</h4>
     <div>
-        <!-- Mostrar el mapa -->
-        <div id="map" style="height: 20px; width: 10%;"></div>
-        {{ mapa|safe }}
-        <p></p>
         <form method="GET" action="{% url 'controlar_intercambio' intercambio.id %}" id="filialForm">
             <select name="filial_id" class="form-select me-3 mb-3" onchange="this.form.submit()">
                 <option value="" selected disabled>Selecciona una filial</option>
@@ -20,7 +16,13 @@
                 {% endfor %}
             </select>
         </form>
-
+        <!-- Mostrar el mapa -->
+        <div id="map" style="height: 100%; width: 100%;"></div>
+        <div id="map" style="height: 70%; width: 70%;">
+            {{ mapa|safe }}
+        </div>
+        <p></p>
+        
 
 
         {% if filial_seleccionada %}

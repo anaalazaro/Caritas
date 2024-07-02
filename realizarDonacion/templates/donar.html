@@ -2,7 +2,12 @@
 
 {% block content %}
 <!DOCTYPE html>
-<html lang="es">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    input[type=number] {
+        -moz-appearance: textfield;
+}
+</style>
 <head>
     <meta charset="UTF-8">
     <title>Donación</title>
@@ -12,7 +17,7 @@
     <form method="post" action="{% url 'donar' %}">
         {% csrf_token %}
         <label for="monto">Monto a donar:</label>
-        <input type="text" inputmode="numeric" pattern="[0-9]*" id="monto" name="monto" step="0.01" min="1" required>
+        <input type="number" id="monto" name="monto" step="1" min="1" required>
         <button type="submit" class="btn btn-primary">Donar con MercadoPago</button>
     </form>
 </body>

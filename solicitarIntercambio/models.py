@@ -24,5 +24,7 @@ class Intercambio(models.Model):
     motivo_rechazo = models.TextField(blank=True, null=True)
     filial = models.ForeignKey(Filial, on_delete=models.CASCADE,blank=True, null=True)
     turno = models.ForeignKey(Turno,on_delete=models.CASCADE,blank=True, null=True) 
+    reseña_solicitante = models.BooleanField(default=False)
+    reseña_destinatario = models.BooleanField(default=False)
     class Meta:
         verbose_name_plural = "Intercambios"

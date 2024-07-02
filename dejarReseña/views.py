@@ -4,9 +4,10 @@ from django.http import HttpResponse
 from app.models import CustomUser
 from .models import Reseña
 from .forms import ReviewForm
+from solicitarIntercambio.models import Intercambio
 
 @login_required
-def dejar_reseña(request, user_id):
+def dejar_reseña(request, intercambio_id, user_id):
     other_user = get_object_or_404(CustomUser, id=user_id)
 
     if request.method == 'POST':
@@ -16,7 +17,13 @@ def dejar_reseña(request, user_id):
             review.reseñante = request.user  # Aquí asumimos que request.user es un CustomUser
             review.reseñado = other_user
             review.save()
-            return redirect('ver_otro_usuario', user_id=user_id)  # Ajusta según la URL de detalle de usuario
+            intercambio = get_object_or_404(Intercambio, id=intercambio_id)
+            if(intercambio.destinatario_id == request.user.id):
+                intercambio.reseña_destinatario=True
+            else:
+                intercambio.reseña_solicitante=True
+            intercambio.save()
+            return redirect('lista_intercambios')  # Ajusta según la URL de detalle de usuario
     else:
         form = ReviewForm()
 

@@ -44,7 +44,7 @@ def donar(request):
 
         except Exception as e:
             # Manejar cualquier excepción que pueda surgir durante la creación de la preferencia
-            error_message = f"Error al crear la preferencia de pago: {str(e)}"
+            error_message = f"Error al crear la preferencia de pago: No se pudo establecer conexión con la API de MercadoPago"
             # Puedes registrar este error o mostrar un mensaje genérico de error
             return render(request, 'error.html', {'error_message': error_message})
 
