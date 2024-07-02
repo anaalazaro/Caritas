@@ -1,3 +1,7 @@
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+from django.shortcuts import render
+from solicitarIntercambio.models import Intercambio
 from functools import wraps
 from django.contrib import messages
 from django.http import HttpResponseForbidden
@@ -284,3 +288,18 @@ def mostrarIntercambiosAyudante(request):
 def confirmarBloqueo(request, user_id):
     usuario= CustomUser.objects.get(pk= user_id)
     return render(request, 'confirmarBloqueo.html', {'usuario': usuario})
+
+
+@login_required
+def ver_historial_intercambios(request):
+    # Asegúrate de que el usuario sea administrador
+    if not request.user.is_superuser:
+        return HttpResponseForbidden("No tienes permiso para acceder a esta página")
+    intercambios = Intercambio.objects.all()
+
+    # Verificar si hay intercambios
+    if not intercambios.exists():
+        mensaje = "No se encontraron solicitudes de intercambios"
+        return render(request, 'historial_intercambios.html', {'mensaje': mensaje})
+
+    return render(request, 'historial_intercambios.html', {'intercambios': intercambios}) 
