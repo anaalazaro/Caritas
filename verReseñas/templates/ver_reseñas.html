@@ -1,0 +1,35 @@
+{% extends "baseCaritas.html" %}
+{% load static %}
+
+{% block content %}
+<body>
+    <div class="container mt-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header text-center bg-primary text-white p-2">
+                <h1 class="h4 m-0">Reseñas de {{ user_profile.nombre }} {{ user_profile.apellido }}</h1>
+            </div>
+            <div class="card-body">
+                {% if reseñas %}
+                    <div class="list-group">
+                        {% for reseña in reseñas %}
+                            <div class="list-group-item">
+                                <p>{{ reseña.comentario }}</p>
+                                <small>Fecha: {{ reseña.fecha|date:"d/m/Y" }}</small>
+                                <br>
+                                <small>Por: {{ reseña.reseñante.nombre }} {{ reseña.reseñante.apellido }}</small>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No hay reseñas para mostrar.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <br>
+    <form action="{% url 'ver_otro_usuario' user_profile.id %}" method="get" class="me-3">
+        <button type="submit" class="btn btn-primary ">Volver</button>
+    </form>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+{% endblock %}

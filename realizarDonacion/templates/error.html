@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #003DA5; /* Fondo azul de Fundación Cáritas */
+            color: white; /* Texto en blanco para mayor contraste */
+            margin-top: 50px;
+        }
+        .container {
+            padding-top: 20px; /* Ajuste de espacio en la parte superior */
+        }
+        h2 {
+            color: #fff; /* Color de texto para títulos */
+            text-align: center; /* Centrar el título */
+            margin-top: 40px; /* Ajuste de espacio superior para el título */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Error</h2>
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

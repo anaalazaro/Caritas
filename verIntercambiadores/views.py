@@ -10,5 +10,5 @@ def es_admin(user):
 
 def ver_intercambiadores(request):
     # Filtra los usuarios por el rol de "ayudante"
-    usuarios = CustomUser.objects.filter(roles='usuario')
+    usuarios = CustomUser.objects.filter(roles='usuario', is_blocked=False, borrado=False)
     return render(request, 'verIntercambiadores.html', {'usuarios': usuarios})

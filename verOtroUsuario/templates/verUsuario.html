@@ -12,11 +12,15 @@
                     <p><strong>Nombre:</strong> {{ user_profile.nombre }}</p>
                     <p><strong>Apellido:</strong> {{ user_profile.apellido }}</p>
                     <p><strong>Puntaje:</strong> {{ user_profile.puntaje }}</p>
+                    <p><strong>Email:</strong> {{ user_profile.mail }}</p>
                     <div class="mt-3 d-flex">
                         <form action="{% url 'productos_del_usuario' user_profile.id %}" method="get" class="me-3">
                             <button type="submit" class="btn btn-primary ">Ver Articulos</button>
                         </form>
-                        <form action="" method="get" class="me-3">
+                        <form action="{% url 'dejar_reseña' user_profile.id %}" method="get" class="me-3">
+                            <button type="submit" class="btn btn-primary ">Dejar Reseña</button>
+                        </form>
+                        <form action="{% url 'ver_reseñas' user_profile.id %}" method="get" class="me-3">
                             <button type="submit" class="btn btn-primary">Ver Reseñas</button>
                         </form>
                         <form action="{% url 'menuPrincipal' %}" method="get" class="me-3">

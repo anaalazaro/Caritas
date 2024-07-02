@@ -25,3 +25,4 @@ def lista_usuarios(request):
     # Filtrar solo los usuarios que están pendientes de bloqueo
     users = CustomUser.objects.filter(pendiente_bloqueo=True)
     return render(request, 'listadoABloquear.html', {'usuarios_a_bloquear': users})
+

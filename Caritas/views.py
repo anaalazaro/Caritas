@@ -1,3 +1,7 @@
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+from django.shortcuts import render
+from solicitarIntercambio.models import Intercambio
 from functools import wraps
 from django.contrib import messages
 from django.http import HttpResponseForbidden
@@ -14,7 +18,7 @@ from datetime import datetime
 from crearFilial.models import Filial, Turno
 from django.core.mail import send_mail
 from .formsEfectuar import OpcionesCodigos
-
+from django.db.models import Q
 
 def hello(request):
   #  if request.user.is_authenticated:
@@ -38,7 +42,7 @@ def mostrar(request):
         # Si el usuario no tiene el rol de usuario normal, redirigir a alguna otra página o mostrar un mensaje de error
         return HttpResponse("No tienes permiso para acceder a esta página")
     user=request.user
-    sugeridos= Articulo.objects.filter(aprobado=True).exclude(usuario=request.user)
+    sugeridos= Articulo.objects.filter(aprobado=True, borrado=False).exclude(usuario=request.user)
     print(sugeridos)
     return render (request, 'menuPrincipal.html', {'user': user, 'articulos':sugeridos })
 
@@ -47,7 +51,7 @@ def mostrarArticulosOrdenados(request):
     usuario_actual = request.user
     if usuario_actual.roles != 'usuario':
        return HttpResponse("No tienes permiso para acceder a esta página")
-    ordenados= Articulo.objects.filter(aprobado=True).exclude(usuario=request.user).order_by('Titulo')
+    ordenados= Articulo.objects.filter(aprobado=True, borrado=False).exclude(usuario=request.user).order_by('Titulo')
     return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': ordenados})
 
 
@@ -60,7 +64,7 @@ def mostrarPorCategoria(request):
         return HttpResponse("No tienes permiso para acceder a esta página")
     if 'categoria' in request.GET:
         categoria_seleccionada = request.GET['categoria']
-        articulos_filtrados = Articulo.objects.filter(aprobado=True, Categoria=categoria_seleccionada).exclude(usuario=request.user)
+        articulos_filtrados = Articulo.objects.filter(aprobado=True, Categoria=categoria_seleccionada, borrado=False).exclude(usuario=request.user)
         if articulos_filtrados.exists():
             # Si hay artículos para la categoría seleccionada, los mostramos
             return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': articulos_filtrados})
@@ -69,7 +73,7 @@ def mostrarPorCategoria(request):
             messages.info(request, 'No hay artículos para la categoría seleccionada.')
             return render(request, 'menuPrincipal.html', {'user': request.user})
     else:
-        articulos = Articulo.objects.filter(aprobado=True).exclude(usuario=request.user)
+        articulos = Articulo.objects.filter(aprobado=True, borrado=False).exclude(usuario=request.user)
         # Si no se ha seleccionado ninguna categoría, puedes manejarlo de acuerdo a tu lógica
         return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': articulos})
     
@@ -99,7 +103,7 @@ def inicioAdmin(request):
 @custom_user_passes_test(es_ayudante, message="No está habilitado para acceder a esta página.")
 def inicioAyudante(request):
     ahora = timezone.now()
-    ahoraFalso = datetime(2024, 6, 29)
+    ahoraFalso = datetime(2024, 7, 6)
     # Formatear la fecha y hora en el formato de un campo DateTimeField
     formato_fecha = ahoraFalso.strftime('%Y-%m-%d')
     ayudanteActual= request.user
@@ -113,7 +117,7 @@ def inicioAyudante(request):
 @login_required
 def mostrarIntercambiosDelDia(request):
     ahora = timezone.now()
-    ahoraFalso = datetime(2024, 6, 29)
+    ahoraFalso = datetime(2024, 7, 6)
     # Formatear la fecha y hora en el formato de un campo DateTimeField
     formato_fecha = ahoraFalso.strftime('%Y-%m-%d')
     ayudanteActual= request.user
@@ -151,8 +155,10 @@ def efectuarIntercambio(request, codigo_intercambio):
             if codigo_solicitante == intercambio.codigo_intercambio_solicitante and codigo_destinatario == intercambio.codigo_intercambio_destinatario:    
                 intercambio.estado= 'Efectuado'
                 #se promedia el puntaje de cada user intercambiador
-                intercambio.solicitante.puntaje = promedio(intercambio.solicitante.puntaje , 4)
-                intercambio.destinatario.puntaje = promedio(intercambio.destinatario.puntaje , 4)
+                intercambio.solicitante.puntaje +=0.5
+                intercambio.destinatario.puntaje +=0.5
+                intercambio.destinatario.save()
+                intercambio.destinatario.save()
                 intercambio.save()
                 send_mail(
                     'Intercambio',
@@ -176,8 +182,10 @@ def efectuarIntercambio(request, codigo_intercambio):
             if codigo_solicitante == intercambio.codigo_intercambio_solicitante:
                 intercambio.estado= 'No Efectuado'
                 #se promedia el puntaje de cada user intercambiador
-                intercambio.solicitante.puntaje = promedio(intercambio.solicitante.puntaje , 4)
-                intercambio.destinatario.puntaje = promedio(intercambio.destinatario.puntaje , 1)
+                intercambio.solicitante.puntaje +=0.5
+                intercambio.destinatario.puntaje -= 0.5
+                intercambio.solicitante.save()
+                intercambio.destinatario.save()
                 intercambio.save()
                 send_mail(
                         'Intercambio',
@@ -201,8 +209,11 @@ def efectuarIntercambio(request, codigo_intercambio):
             if codigo_destinatario == intercambio.codigo_intercambio_destinatario:
                 intercambio.estado= 'No Efectuado'
                 #se promedia el puntaje de cada user intercambiador
-                intercambio.solicitante.puntaje = promedio(intercambio.solicitante.puntaje , 1)
-                intercambio.destinatario.puntaje = promedio(intercambio.destinatario.puntaje , 4) 
+                intercambio.solicitante.puntaje -= 0.5
+                intercambio.destinatario.puntaje +=0.5
+                intercambio.solicitante.save()
+                intercambio.destinatario.save()
+                print("Entró al destinatario", intercambio.solicitante.puntaje)
                 intercambio.save()
                 send_mail(
                         'Intercambio',
@@ -237,13 +248,14 @@ def marcar_leida(request, notification_id):
 @custom_user_passes_test(es_admin, message="No está habilitado para acceder a esta página.")
 def eliminarArticulo(request, articulo_id):
      articulo= Articulo.objects.get(pk= articulo_id)
-     articulo.delete()
+     articulo.borrado=True
+     articulo.save()
      HttpResponse("Se eliminó con éxito")
 
 @login_required
 @custom_user_passes_test(es_admin, message="No está habilitado para acceder a esta página.")
 def mostrarArticulosAEliminar(request):
-    eliminar= Articulo.objects.filter(aprobado=False, pendiente=False)
+    eliminar= Articulo.objects.filter(aprobado=False, pendiente=False, borrado=False)
     return render(request, 'listarEliminados.html', {'articulos': eliminar})
                   
 @login_required
@@ -260,7 +272,11 @@ def mostrarIntercambiosPropuestos(request):
 
 @login_required
 def mostrarIntercambios(request):
-    intercambios= Intercambio.objects.filter(destinatario=request.user).exclude(estado= 'Pendiente')
+    intercambios = Intercambio.objects.filter(
+        Q(destinatario=request.user) | Q(solicitante=request.user)
+        ).exclude(
+        estado='Pendiente'
+        )
     print(intercambios)
     return render(request, 'listadoIntercambios.html', {'intercambios': intercambios})
 
@@ -273,3 +289,22 @@ def mostrarIntercambiosAyudante(request):
     intercambios = Intercambio.objects.filter(filial=filial_ayudante).exclude(estado__in=estados_a_excluir)
     print(intercambios)
     return render(request, 'listadoIntercambiosAyudante.html', {'intercambios': intercambios})
+
+def confirmarBloqueo(request, user_id):
+    usuario= CustomUser.objects.get(pk= user_id)
+    return render(request, 'confirmarBloqueo.html', {'usuario': usuario})
+
+
+@login_required
+def ver_historial_intercambios(request):
+    # Asegúrate de que el usuario sea administrador
+    if not request.user.is_superuser:
+        return HttpResponseForbidden("No tienes permiso para acceder a esta página")
+    intercambios = Intercambio.objects.all()
+
+    # Verificar si hay intercambios
+    if not intercambios.exists():
+        mensaje = "No se encontraron solicitudes de intercambios"
+        return render(request, 'historial_intercambios.html', {'mensaje': mensaje})
+
+    return render(request, 'historial_intercambios.html', {'intercambios': intercambios}) 

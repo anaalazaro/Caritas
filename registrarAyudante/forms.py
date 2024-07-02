@@ -78,9 +78,10 @@ class CustomUserCreationForm(UserCreationForm):
     def clean_dni(self):
         dni = self.cleaned_data.get('dni')
         if CustomUser.objects.filter(dni=dni).exists():
-           raise forms.ValidationError(_("Este DNI ya está registrado. Por favor, utiliza otro."))
+           if(CustomUser.objects.get(dni=dni)).borrado==False:
+              raise forms.ValidationError(_("Este DNI ya está registrado. Por favor, utiliza otro."))
         return dni
-
+    
     def clean_fechaNacimiento(self):
         fechaNacimiento = self.cleaned_data.get('fechaNacimiento')
         today = datetime.today()

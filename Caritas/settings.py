@@ -84,6 +84,9 @@ INSTALLED_APPS = [
     'eliminarArticulo',
     'verArticulosRechazados',
     'estadisticas'
+    'dejarReseña',
+    'verReseñas',
+    'realizarDonacion',
 ]
 
 MIDDLEWARE = [
