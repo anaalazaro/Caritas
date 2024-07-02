@@ -4,8 +4,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext, gettext_lazy as _
 from datetime import datetime
 from django.core.exceptions import ValidationError
-# from django.core.validators import EmailValidator
-# import re
 from django.contrib.auth import password_validation
 
 
@@ -16,14 +14,6 @@ class CustomUserCreationForm(UserCreationForm):
         widget=forms.DateInput(attrs={'type': 'date'})
     )
 
-    # email = forms.EmailField(
-    #     validators=[EmailValidator()],
-    #     error_messages={
-    #         'invalid': 'Introduce una dirección de correo electrónico válida.',
-    #     }
-    # )
-    # email = forms.EmailField(label=_("Email"), required=True)
-   
     password1 = forms.CharField(
         label=_("Contraseña"),
         strip=False,
@@ -48,7 +38,6 @@ class CustomUserCreationForm(UserCreationForm):
             'password2',
             'telefono',
             'fechaNacimiento',
-            #'roles'
         ]
         labels = {
             'dni': _('DNI'),
@@ -59,21 +48,25 @@ class CustomUserCreationForm(UserCreationForm):
             'password2': _('Repetir contraseña'),
             'telefono': _('Teléfono'),
             'fechaNacimiento': _('Fecha de nacimiento'),
-            #'roles': _('Rol del usuario'),
         }
-
-
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Modificar los mensajes de validación de la contraseña
         self.fields['password1'].help_text = _("La contraseña debe tener al menos 6 caracteres y ser alfanumérica.")
         self.fields['password2'].help_text = _("Ingrese la misma contraseña que antes, para verificarla")
 
     def clean_dni(self):
         dni = self.cleaned_data.get('dni')
-        if CustomUser.objects.filter(dni=dni).exists():
-           raise forms.ValidationError(_("Este DNI ya está registrado. Por favor, utiliza otro."))
+        existing_user = CustomUser.objects.filter(dni=dni).first()
+        
+        if existing_user:
+            if existing_user.borrado:
+                # Permitir registro si el usuario existe pero está marcado como borrado
+                return dni
+            else:
+                # Usuario activo con el mismo DNI
+                raise forms.ValidationError(_("Este DNI ya está registrado. Por favor, utiliza otro."))
+        
         return dni
 
     def clean_fechaNacimiento(self):
@@ -91,22 +84,20 @@ class CustomUserCreationForm(UserCreationForm):
             raise forms.ValidationError(_("La contraseña debe poseer 6 o más caracteres"))
         
         if password1.isalnum():
-            # Alphanumeric passwords consist only of letters and numbers.
-            # We'll ensure the password contains at least one letter and one number.
             has_letter = any(char.isalpha() for char in password1)
             has_number = any(char.isdigit() for char in password1)
             
             if not (has_letter and has_number):
-                raise forms.ValidationError(_("La contraseña debe ser alfanumerica"))
+                raise forms.ValidationError(_("La contraseña debe ser alfanumérica"))
         else:
-            raise forms.ValidationError(_("La contraseña debe ser alfanumerica"))
+            raise forms.ValidationError(_("La contraseña debe ser alfanumérica"))
         
         return password1
     
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
-        if password1  and password1 != password2:
+        if password1 and password1 != password2:
             raise forms.ValidationError(_("Las contraseñas no coinciden."))
         if len(password2) < 6:
             raise forms.ValidationError(_('La contraseña debe tener al menos 6 caracteres.'))
@@ -122,8 +113,6 @@ class CustomUserCreationForm(UserCreationForm):
         email = self.cleaned_data.get('mail')
         if CustomUser.objects.filter(mail=email).exists():
             raise ValidationError('Ya existe un usuario con este correo electrónico.')
-        # if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
-        #     raise ValidationError(_('El formato del correo electrónico es incorrecto.'))
         return email
     
     def save(self, commit=True):
