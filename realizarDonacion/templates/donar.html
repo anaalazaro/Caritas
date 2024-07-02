@@ -1,0 +1,20 @@
+{% extends 'baseCaritas.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Donación</title>
+</head>
+<body>
+    <h2>Donación</h2>
+    <form method="post" action="{% url 'donar' %}">
+        {% csrf_token %}
+        <label for="monto">Monto a donar:</label>
+        <input type="text" inputmode="numeric" pattern="[0-9]*" id="monto" name="monto" step="0.01" min="1" required>
+        <button type="submit" class="btn btn-primary">Donar con MercadoPago</button>
+    </form>
+</body>
+</html>
+{% endblock %}

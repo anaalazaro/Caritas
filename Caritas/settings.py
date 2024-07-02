@@ -83,6 +83,9 @@ INSTALLED_APPS = [
     'controlarIntercambio',
     'eliminarArticulo',
     'verArticulosRechazados',
+    'dejarReseña',
+    'verReseñas',
+    'realizarDonacion',
 ]
 
 MIDDLEWARE = [
