@@ -9,7 +9,7 @@ def es_ayudante(user):
 @login_required
 @custom_user_passes_test(es_ayudante, message="No está habilitado para acceder a esta página.")
 def mostrar_articulos_pendientes(request):
-    articulos_pendientes = Articulo.objects.filter(pendiente=True)
+    articulos_pendientes = Articulo.objects.filter(pendiente=True, borrado=False)
     return render(request, 'mostrarArticulosPendientes.html', {'articulos_pendientes': articulos_pendientes})
 
 @login_required
