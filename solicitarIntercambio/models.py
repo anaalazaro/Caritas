@@ -14,8 +14,10 @@ class Intercambio(models.Model):
     # Campos con opciones para un estado
     OPCIONES_ESTADO = [
         ('Pendiente', 'Articulo Pendiente'),
-        ('Aprobado', 'Articulo Aprobado'),
+        ('Aceptado', 'Articulo Aceptado'),
         ('Rechazado', 'Rechazado'),
+        ('Efectuado', 'Efectuado'),
+        ('No efectuado', 'No efectuado'),
     ]
     estado = models.CharField(max_length=20, choices=OPCIONES_ESTADO,default='Pendiente')
     codigo_intercambio= models.CharField(max_length=15, blank=True, null=True)

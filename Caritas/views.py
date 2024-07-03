@@ -115,7 +115,7 @@ def inicioAyudante(request):
     filial_ayudante= Filial.objects.get(ayudante= ayudanteActual)
     #turnos de hoy para la filial_ayudante
     turnos_hoy= Turno.objects.filter(fecha= formato_fecha,filial= filial_ayudante)
-    intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante,estado= 'Aprobado')
+    intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante,estado= 'Aceptado')
     cantidad_intercambios_hoy= intercambios.count()
     return render(request, 'inicioAyudante.html', {'cantidad_intercambios':cantidad_intercambios_hoy})
 
@@ -129,7 +129,7 @@ def mostrarIntercambiosDelDia(request):
     filial_ayudante= Filial.objects.get(ayudante= ayudanteActual)
     #turnos de hoy para la filial_ayudante
     turnos_hoy= Turno.objects.filter(fecha= formato_fecha,filial= filial_ayudante)
-    intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante,estado='Aprobado')
+    intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante,estado='Aceptado')
     return render(request, 'listadoIntercambiosHoy.html', {'intercambios': intercambios})
 
 def promedio(numero1,numero2):
@@ -189,7 +189,7 @@ def efectuarIntercambio(request, codigo_intercambio):
                 messages.error(request, 'Código invalido. Alguno de los códigos ingresados no es válido.')
         elif codigo_solicitante and not codigo_destinatario:
             if codigo_solicitante == intercambio.codigo_intercambio_solicitante:
-                intercambio.estado= 'No Efectuado'
+                intercambio.estado= 'No efectuado'
                 #se promedia el puntaje de cada user intercambiador
                 intercambio.solicitante.puntaje +=0.5
                 intercambio.destinatario.puntaje -= 0.5
@@ -216,7 +216,7 @@ def efectuarIntercambio(request, codigo_intercambio):
                 messages.error(request, 'Código invalido. El código ingresado no es válido.')
         elif not codigo_solicitante and codigo_destinatario:
             if codigo_destinatario == intercambio.codigo_intercambio_destinatario:
-                intercambio.estado= 'No Efectuado'
+                intercambio.estado= 'No efectuado'
                 #se promedia el puntaje de cada user intercambiador
                 intercambio.solicitante.puntaje -= 0.5
                 intercambio.destinatario.puntaje +=0.5
@@ -296,7 +296,7 @@ def mostrarIntercambiosAyudante(request):
     print(datetime.now().hour > 20)
     turnos= Turno.objects.filter(fecha__lte= datetime.now())
     for turno in turnos:
-        intercambios = Intercambio.objects.filter(filial=filial_ayudante,estado='Aprobado',turno= turno)
+        intercambios = Intercambio.objects.filter(filial=filial_ayudante,estado='Aceptado',turno= turno)
         if intercambios:
             if datetime.now().hour > 20 or turno.fecha < datetime.now().date():
                 for intercambio in intercambios:
@@ -310,7 +310,7 @@ def mostrarIntercambiosAyudante(request):
                     intercambio.estado= 'No efectuado'
                     intercambio.motivo_rechazo= 'El usuario no se presentó en el turno asignado al intercambio.'
                     intercambio.save()
-    estados_a_excluir = ['Pendiente', 'Aprobado', 'Rechazado']
+    estados_a_excluir = ['Pendiente', 'Aceptado', 'Rechazado']
     intercambios = Intercambio.objects.filter(filial=filial_ayudante).exclude(estado__in=estados_a_excluir)
     print(intercambios)
     return render(request, 'listadoIntercambiosAyudante.html', {'intercambios': intercambios})

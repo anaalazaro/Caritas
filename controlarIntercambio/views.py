@@ -50,7 +50,7 @@ def aceptar_intercambio(request, intercambio_id):
     turno.turnos_disponibles-=1
     turno.save()
     intercambio = get_object_or_404(Intercambio, id=intercambio_id)
-    intercambio.estado = 'Aprobado'
+    intercambio.estado = 'Aceptado'
     intercambio.filial = turno.filial
     intercambio.turno = turno
     intercambio.codigo_intercambio_destinatario = get_random_string(10)

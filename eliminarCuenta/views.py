@@ -25,8 +25,8 @@ def delete_account(request, user_id):
         else:
             messages.success(request, 'No puedes eliminar al ayudante ya que esta asociado a una filial con intercambios pendientes a efectuar')
         return redirect('verAyudantes')   
-    intercambios_solicitante= Intercambio.objects.filter(solicitante= user_id, estado='Aprobado')
-    intercambios_destinatario= Intercambio.objects.filter(destinatario= user_id, estado='Aprobado')
+    intercambios_solicitante= Intercambio.objects.filter(solicitante= user_id, estado='Aceptado')
+    intercambios_destinatario= Intercambio.objects.filter(destinatario= user_id, estado='Aceptado')
     if intercambios_solicitante.exists() :
         for destinatario_usuario in intercambios_solicitante:
             send_mail(

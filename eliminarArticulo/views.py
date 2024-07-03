@@ -11,7 +11,7 @@ def eliminar_articulo(request, articulo_id):
    if request.method == 'POST':
       intercambio = Intercambio.objects.filter(
         Q(articulo_ofrecido=articulo_id) | Q(articulo_solicitado=articulo_id),
-        estado='Aprobado'
+        estado='Aceptado'
        ).first()
       if intercambio is not None:
          send_mail(
