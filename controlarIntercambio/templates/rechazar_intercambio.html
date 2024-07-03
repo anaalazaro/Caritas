@@ -2,11 +2,42 @@
   {% load crispy_forms_tags %}
 
 {% block content %}
+  <style>
+    
+  </style>
   <h2>Rechazar Intercambio</h2>
   <form method="post">
     {% csrf_token %}
-    {{ form|crispy }}
+    {{ form|crispy}}
     <button type="submit" class="btn btn-primary">Rechazar intercambio</button>
     <button type="button" class="btn btn-secondary" onclick="window.history.back();">Cancelar</button>
   </form>
+  <script>
+    function clearInputsAndSubmit(radio) {
+        // Obtener el valor del input seleccionado
+        var motivo_rechazo = document.querySelector('input[name="motivo_rechazo"]:checked').value;
+        var otro_motivo = document.querySelector('input[name="otro_motivo"]');
+        
+        if (motivo_rechazo === 'Otro') {
+          otro_motivo.style.display = 'block';
+          otro_motivo.setAttribute('required', true);
+        } else {
+          otro_motivo.style.display = 'none';
+          otro_motivo.value = ''
+          otro_motivo.removeAttribute('required');
+        }
+    }
+    
+    // Ejecutar la función al cargar la página para verificar el estado inicial
+    document.addEventListener('DOMContentLoaded', function() {
+        clearInputsAndSubmit();
+    });
+
+    // Añadir el evento 'change' a los inputs radio
+    document.querySelectorAll('input[name="motivo_rechazo"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            clearInputsAndSubmit();
+        });
+    });
+  </script>
 {% endblock %}
