@@ -14,7 +14,7 @@
             <tbody>
                 {% for usuario in usuarios_bloq %}
                     <tr>
-                        <td>{{ usuario.username }}</td>
+                        <td>{{ usuario.nombre }} {{usuario.apellido }}</td>
                         <td>{{ usuario.motivo_bloqueo}}</td>
                     </tr>
                 {% endfor %}
