@@ -16,7 +16,7 @@ def eliminar_articulo(request, articulo_id):
       if intercambio is not None:
          send_mail(
                   'Intercambio',
-                   f'Se canceloó el intercambio pedida al usuario {intercambio.destinatario.nombre} para el articulo {intercambio.articulo_solicitado.Titulo} para el día {intercambio.turno.fecha }por este motivo: SE eliminó el artículo que solicitaste',
+                   f'Se canceló el intercambio que solicisitaste al usuario {intercambio.destinatario.nombre} para el articulo {intercambio.articulo_solicitado.Titulo} para el día {intercambio.turno.fecha }por este motivo: Se eliminó el artículo que solicitaste',
                    'ingecaritas@gmail.com',
                   [intercambio.solicitante.mail],
                   fail_silently=False,
