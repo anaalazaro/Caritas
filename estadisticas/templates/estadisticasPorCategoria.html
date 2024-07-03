@@ -1,0 +1,13 @@
+{% extends 'baseCaritas.html' %}
+
+{% block content %}
+<h1>Estadísticas de Intercambios por categoria.</h1>
+    <div class="container mt-5">
+        <div>{% if error_message %}
+            <p style="color: red;">{{ error_message }}</p>
+            {% elif chart_div %}
+                {{ chart_div|safe }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

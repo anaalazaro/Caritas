@@ -4,29 +4,15 @@ from crearFilial.models import Filial,Turno
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit,Button
     
-class RechazarIntercambioForm(forms.ModelForm):
+class RechazarIntercambioForm(forms.Form):
     MOTIVOS = (
-        ('motivo1', 'No me gusta'),
-        ('motivo2', 'No me conviene'),
-        ('motivo3', 'Otro'),
+        ('No me gusta', 'No me gusta'),
+        ('No me conviene', 'No me conviene'),
+        ('Prefiero otro intercambio', 'Prefiero otro intercambio'),
+        ('No me interesa', 'No me interesa'),
+        ('Otro', 'Otro'),
     )
 
-    motivo_rechazo = forms.ChoiceField(choices=MOTIVOS, widget=forms.RadioSelect, label="Motivo de rechazo", required=True)
-    class Meta:
-        model = Intercambio
-        fields = [ 'motivo_rechazo']
-
-    def __init__(self, *args, **kwargs):
-        super(RechazarIntercambioForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_method = 'post'
-        self.helper.layout = Layout(
-            Fieldset(
-                'Rechazar Intercambio',
-                'motivo_rechazo',
-            ),
-            ButtonHolder(
-                Submit('accept', 'Rechazar intercambio', css_class='btn btn-primary'),
-                Button('cancel', 'Cancelar', css_class='btn btn-secondary', onclick="window.history.back();")
-            ),
-        )
+    # otro_motivo = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'otro_motivo'}),label='Indique otro motivo:')
+    motivo_rechazo = forms.ChoiceField(choices=MOTIVOS, widget=forms.RadioSelect(attrs={'onchange': 'clearInputsAndSubmit(this);'}), label="Motivo de rechazo:", required=True)
+    otro_motivo = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'otro_motivo', 'style': 'display:none;', 'placeholder': 'Por favor, indique el motivo','maxlength': '40'}),label='', required=False)

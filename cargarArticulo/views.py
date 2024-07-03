@@ -27,7 +27,7 @@ def cargar_articulo(request):
             articulo.pendiente = True  # Establece el estado del artículo como pendiente
             articulo.save()
             messages.success(request, 'La publicación del artículo ha quedado pendiente a la aprobación del ayudante.')
-            ayudante = CustomUser.objects.filter(roles='ayudante').first()
+            ayudante = CustomUser.objects.filter(roles='ayudante',borrado=False).first()
             Notification.objects.create(
             sender=request.user,
             user=ayudante,

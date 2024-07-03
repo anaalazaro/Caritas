@@ -13,8 +13,20 @@ def delete_account(request, user_id):
     usuario = CustomUser.objects.get(pk=user_id)
     usuario_actual = request.user
     rol = usuario_actual.roles
-    intercambios_solicitante= Intercambio.objects.filter(solicitante= user_id, estado='Aprobado')
-    intercambios_destinatario= Intercambio.objects.filter(destinatario= user_id, estado='Aprobado')
+    if 'admin' in rol:
+        filial_ayudante= Filial.objects.get(ayudante=user_id)
+        intercambios_filial = Intercambio.objects.filter(filial=filial_ayudante, estado='Aceptado')
+        if not intercambios_filial.exists():
+            usuario.borrado=True
+            usuario.save()
+            filial_ayudante.ayudante=None
+            filial_ayudante.save()
+            messages.success(request, 'Se eliminó al ayudante exitosamente')
+        else:
+            messages.success(request, 'No puedes eliminar al ayudante ya que esta asociado a una filial con intercambios pendientes a efectuar')
+        return redirect('verAyudantes')   
+    intercambios_solicitante= Intercambio.objects.filter(solicitante= user_id, estado='Aceptado')
+    intercambios_destinatario= Intercambio.objects.filter(destinatario= user_id, estado='Aceptado')
     if intercambios_solicitante.exists() :
         for destinatario_usuario in intercambios_solicitante:
             send_mail(
@@ -37,9 +49,6 @@ def delete_account(request, user_id):
     usuario.save()
     messages.success(request, 'La cuenta se ha eliminado exitosamente')
     if 'admin' in rol:
-        filial_ayudante= Filial.objects.get(ayudante=user_id)
-        filial_ayudante.ayudante=None
-        filial_ayudante.save()
         return redirect('verAyudantes')
     else:
         return redirect('inicio')

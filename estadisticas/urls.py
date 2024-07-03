@@ -4,4 +4,6 @@ from . import views
 urlpatterns = [
     path('estadisticas/', views.estadisticas_periodo_tiempo, name='estadisticas'),
     path('estadisticasPorFilial/', views.estadisticas_por_filial, name='estadisticasPorFilial'),
+    path('estadisticasPorCategoria/', views.estadisticas_por_categoria, name='estadisticasPorCategoria'),
+
 ]

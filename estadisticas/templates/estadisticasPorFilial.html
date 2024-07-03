@@ -3,8 +3,8 @@
 {% block content %}
 <h1>Estadísticas de Intercambios por filial.</h1>
     <div class="container mt-5">
-        <h3>Seleccione una filial:</h3>
-        <form method="post">
+        <!-- <h3>Seleccione una filial:</h3> -->
+        <!-- <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
             {% if form.non_field_errors %}
@@ -14,7 +14,7 @@
             {% endif %}
             <button type="submit" class="btn btn-primary">Generar gráfico</button>
         </form>
-        
+         -->
         <div>{% if error_message %}
             <p style="color: red;">{{ error_message }}</p>
             {% elif chart_div %}

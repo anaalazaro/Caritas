@@ -42,16 +42,20 @@ def mostrar(request):
         # Si el usuario no tiene el rol de usuario normal, redirigir a alguna otra página o mostrar un mensaje de error
         return HttpResponse("No tienes permiso para acceder a esta página")
     user=request.user
-    sugeridos= Articulo.objects.filter(aprobado=True, borrado=False).exclude(usuario=request.user)
+    borrados= CustomUser.objects.filter(borrado=True)
+    for borrado in borrados:
+        print("borrado",borrado.username)
+    sugeridos= Articulo.objects.filter(aprobado=True, borrado=False, intercambiado=False).exclude((Q(usuario__in=borrados)) |(Q(usuario=request.user)))
     print(sugeridos)
     return render (request, 'menuPrincipal.html', {'user': user, 'articulos':sugeridos })
 
 @login_required
 def mostrarArticulosOrdenados(request):
-    usuario_actual = request.user
+    usuario_actual = request.user 
     if usuario_actual.roles != 'usuario':
        return HttpResponse("No tienes permiso para acceder a esta página")
-    ordenados= Articulo.objects.filter(aprobado=True, borrado=False).exclude(usuario=request.user).order_by('Titulo')
+    borrados= CustomUser.objects.filter(borrado=True)
+    ordenados= Articulo.objects.filter(aprobado=True, borrado=False, intercambiado=False).exclude((Q(usuario__in=borrados)) |(Q(usuario=request.user))).order_by('Titulo')
     return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': ordenados})
 
 
@@ -64,7 +68,8 @@ def mostrarPorCategoria(request):
         return HttpResponse("No tienes permiso para acceder a esta página")
     if 'categoria' in request.GET:
         categoria_seleccionada = request.GET['categoria']
-        articulos_filtrados = Articulo.objects.filter(aprobado=True, Categoria=categoria_seleccionada, borrado=False).exclude(usuario=request.user)
+        borrados= CustomUser.objects.filter(borrado=True)
+        articulos_filtrados = Articulo.objects.filter(aprobado=True, Categoria=categoria_seleccionada, borrado=False, intercambiado=False).exclude((Q(usuario__in=borrados)) |(Q(usuario=request.user)))
         if articulos_filtrados.exists():
             # Si hay artículos para la categoría seleccionada, los mostramos
             return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': articulos_filtrados})
@@ -73,7 +78,7 @@ def mostrarPorCategoria(request):
             messages.info(request, 'No hay artículos para la categoría seleccionada.')
             return render(request, 'menuPrincipal.html', {'user': request.user})
     else:
-        articulos = Articulo.objects.filter(aprobado=True, borrado=False).exclude(usuario=request.user)
+        articulos = Articulo.objects.filter(aprobado=True, borrado=False, intercambiado=False).exclude((Q(usuario__in=borrados)) |(Q(usuario=request.user)))
         # Si no se ha seleccionado ninguna categoría, puedes manejarlo de acuerdo a tu lógica
         return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': articulos})
     
@@ -110,7 +115,7 @@ def inicioAyudante(request):
     filial_ayudante= Filial.objects.get(ayudante= ayudanteActual)
     #turnos de hoy para la filial_ayudante
     turnos_hoy= Turno.objects.filter(fecha= formato_fecha,filial= filial_ayudante)
-    intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante,estado= 'Aprobado')
+    intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante,estado= 'Aceptado')
     cantidad_intercambios_hoy= intercambios.count()
     return render(request, 'inicioAyudante.html', {'cantidad_intercambios':cantidad_intercambios_hoy})
 
@@ -124,7 +129,7 @@ def mostrarIntercambiosDelDia(request):
     filial_ayudante= Filial.objects.get(ayudante= ayudanteActual)
     #turnos de hoy para la filial_ayudante
     turnos_hoy= Turno.objects.filter(fecha= formato_fecha,filial= filial_ayudante)
-    intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante,estado='Aprobado')
+    intercambios = Intercambio.objects.filter(turno__in=turnos_hoy, filial=filial_ayudante,estado='Aceptado')
     return render(request, 'listadoIntercambiosHoy.html', {'intercambios': intercambios})
 
 def promedio(numero1,numero2):
@@ -160,9 +165,13 @@ def efectuarIntercambio(request, codigo_intercambio):
                 intercambio.destinatario.save()
                 intercambio.destinatario.save()
                 intercambio.save()
+                intercambio.articulo_ofrecido.intercambiado=True
+                intercambio.articulo_solicitado.intercambiado=True
+                intercambio.articulo_ofrecido.save()
+                intercambio.articulo_solicitado.save()
                 send_mail(
                     'Intercambio',
-                    f'¡Se ha efectuado el intercambio con código {intercambio.codigo_intercambio} exitosamente! Si lo deseas, puedes calificar al usuario con el que has realizado el intercambio, dirígete a su perfil y deja tu reseña.',
+                    f'¡Se ha efectuado el intercambio con código {intercambio.codigo_intercambio} exitosamente! Si lo deseas, dirígete a tu historial de intercambios y deja tu reseña para el intercambiador.',
                 'ingecaritas@gmail.com',
                     [intercambio.destinatario.mail,intercambio.solicitante.mail],
                     fail_silently=False,
@@ -180,7 +189,7 @@ def efectuarIntercambio(request, codigo_intercambio):
                 messages.error(request, 'Código invalido. Alguno de los códigos ingresados no es válido.')
         elif codigo_solicitante and not codigo_destinatario:
             if codigo_solicitante == intercambio.codigo_intercambio_solicitante:
-                intercambio.estado= 'No Efectuado'
+                intercambio.estado= 'No efectuado'
                 #se promedia el puntaje de cada user intercambiador
                 intercambio.solicitante.puntaje +=0.5
                 intercambio.destinatario.puntaje -= 0.5
@@ -207,7 +216,7 @@ def efectuarIntercambio(request, codigo_intercambio):
                 messages.error(request, 'Código invalido. El código ingresado no es válido.')
         elif not codigo_solicitante and codigo_destinatario:
             if codigo_destinatario == intercambio.codigo_intercambio_destinatario:
-                intercambio.estado= 'No Efectuado'
+                intercambio.estado= 'No efectuado'
                 #se promedia el puntaje de cada user intercambiador
                 intercambio.solicitante.puntaje -= 0.5
                 intercambio.destinatario.puntaje +=0.5
@@ -282,10 +291,26 @@ def mostrarIntercambios(request):
 
 @login_required
 def mostrarIntercambiosAyudante(request):
-    
     ayudanteActual= request.user
     filial_ayudante= Filial.objects.get(ayudante= ayudanteActual)
-    estados_a_excluir = ['Pendiente', 'Aprobado', 'Rechazado']
+    print(datetime.now().hour > 20)
+    turnos= Turno.objects.filter(fecha__lte= datetime.now())
+    for turno in turnos:
+        intercambios = Intercambio.objects.filter(filial=filial_ayudante,estado='Aceptado',turno= turno)
+        if intercambios:
+            if datetime.now().hour > 20 or turno.fecha < datetime.now().date():
+                for intercambio in intercambios:
+                    send_mail(
+                        'Intercambio',
+                        f'Tu intercambio para el código {intercambio.codigo_intercambio} no pudo efetuarse, ya que no te presentaste.',
+                    'ingecaritas@gmail.com',
+                        [intercambio.solicitante.mail,intercambio.destinatario.mail],
+                        fail_silently=False,
+                    )
+                    intercambio.estado= 'No efectuado'
+                    intercambio.motivo_rechazo= 'El usuario no se presentó en el turno asignado al intercambio.'
+                    intercambio.save()
+    estados_a_excluir = ['Pendiente', 'Aceptado', 'Rechazado']
     intercambios = Intercambio.objects.filter(filial=filial_ayudante).exclude(estado__in=estados_a_excluir)
     print(intercambios)
     return render(request, 'listadoIntercambiosAyudante.html', {'intercambios': intercambios})
