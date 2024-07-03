@@ -58,14 +58,14 @@ def aceptar_intercambio(request, intercambio_id):
     intercambio.save()
     send_mail(
                 'Código de Intercambio',
-                f'Aceptaste la solicitud de intercambio y se genero un código único para que presentes en la filial {intercambio.filial.nombre} en el turno de {turno.fecha}, tu código es : {intercambio.codigo_intercambio_destinatario}.Por favor presentarse entre las 11 am y 20 pm. ',
+                f'Aceptaste la solicitud de intercambio y se genero un código único para que presentes en la filial {intercambio.filial.nombre} en el turno de {turno.fecha}, tu código es : {intercambio.codigo_intercambio_destinatario}, perteneciente al intercambio con código: {intercambio.codigo_intercambio}.Por favor presentarse entre las 11 am y 20 pm. ',
              'ingecaritas@gmail.com',
                 [intercambio.destinatario.mail],
                 fail_silently=False,
     )
     send_mail(
                 'Código de Intercambio',
-                f'Se acepto tu solicitud de intercambio y se genero un código único para que presentes en la filial {intercambio.filial.nombre} en el turno de {turno.fecha}, tu código es : {intercambio.codigo_intercambio_destinatario}.Por favor presentarse entre las 11 am y 20 pm. ',
+                f'Se acepto tu solicitud de intercambio y se genero un código único para que presentes en la filial {intercambio.filial.nombre} en el turno de {turno.fecha}, tu código es : {intercambio.codigo_intercambio_destinatario}perteneciente al intercambio con código: {intercambio.codigo_intercambio}. Por favor presentarse entre las 11 am y 20 pm. ',
              'ingecaritas@gmail.com',
                 [intercambio.solicitante.mail],
                 fail_silently=False,
