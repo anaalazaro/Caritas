@@ -291,9 +291,25 @@ def mostrarIntercambios(request):
 
 @login_required
 def mostrarIntercambiosAyudante(request):
-    
     ayudanteActual= request.user
     filial_ayudante= Filial.objects.get(ayudante= ayudanteActual)
+    print(datetime.now().hour > 20)
+    turnos= Turno.objects.filter(fecha__lte= datetime.now())
+    for turno in turnos:
+        intercambios = Intercambio.objects.filter(filial=filial_ayudante,estado='Aprobado',turno= turno)
+        if intercambios:
+            if datetime.now().hour > 20 or turno.fecha < datetime.now().date():
+                for intercambio in intercambios:
+                    send_mail(
+                        'Intercambio',
+                        f'Tu intercambio para el código {intercambio.codigo_intercambio} no pudo efetuarse, ya que no te presentaste.',
+                    'ingecaritas@gmail.com',
+                        [intercambio.solicitante.mail,intercambio.destinatario.mail],
+                        fail_silently=False,
+                    )
+                    intercambio.estado= 'No efectuado'
+                    intercambio.motivo_rechazo= 'El usuario no se presentó en el turno asignado al intercambio.'
+                    intercambio.save()
     estados_a_excluir = ['Pendiente', 'Aprobado', 'Rechazado']
     intercambios = Intercambio.objects.filter(filial=filial_ayudante).exclude(estado__in=estados_a_excluir)
     print(intercambios)

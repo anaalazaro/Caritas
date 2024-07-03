@@ -9,6 +9,7 @@ import plotly.express as px
 import pandas as pd
 from datetime import datetime,timedelta
 from django.utils import timezone
+from cargarArticulo.models  import Articulo
 
 
 class TruncDate(Func):
@@ -18,7 +19,6 @@ class TruncDate(Func):
 def get_exchange_data(start_date, end_date, filial):
     start_date = datetime.combine(start_date, datetime.min.time())
     end_date = datetime.combine(end_date, datetime.min.time())
-    """Obtiene la cantidad de intercambios entre dos fechas."""
     # Asegurarse de que las fechas son conscientes de la zona horaria
     start_date = timezone.make_aware(start_date, timezone.get_current_timezone())
     end_date = timezone.make_aware(end_date, timezone.get_current_timezone())
@@ -83,30 +83,53 @@ def estadisticas_periodo_tiempo(request):
     })
 
 def estadisticas_por_filial(request):
-    form = FilialForm()
     chart_div = None
     error_message = None
-    if request.method == 'POST':
-        form = FilialForm(request.POST)
-        if form.is_valid():
-            filial = form.cleaned_data['filial']
-            filial = Filial.objects.get(nombre=filial)
-            print(filial)
-            intercambios = Intercambio.objects.filter(filial=filial, estado = 'Efectuado') \
-                                      .values('filial') \
-                                      .annotate(cantidad=Count('id'))
-   
-            df = pd.DataFrame(intercambios)
-            df['filial'] = filial.nombre
-            print(df['filial'])
-            if not df.empty:
-                fig = px.line(df, x='filial', y= 'cantidad', title=f'Cantidad de Intercambios por filial')
-                chart_div = fig.to_html(full_html=False)
-            else:
-                error_message = "No hay intercambios solicitados para la filial seleccionada."
+    filiales = Filial.objects.filter(ayudante__isnull=False)
+    print(filiales)
+    if filiales:         
+        intercambios = Intercambio.objects.filter(filial__in=filiales, estado = 'Efectuado') \
+                                .values('filial__nombre') \
+                                .annotate(cantidad=Count('id'))
+
+        df = pd.DataFrame(intercambios)
+
+        if not df.empty:
+            df.rename(columns={'filial__nombre': 'filial'}, inplace=True)
+            fig = px.bar(df, x='filial', y= 'cantidad', title=f'Cantidad de Intercambios por filial')
+            chart_div = fig.to_html(full_html=False)
+        else:
+            error_message = "No se encuentran disponibles las estadísticas porque no existen filiales con intercambios efectuados."
 
     return render(request, 'estadisticasPorFilial.html', {
-        'form': form,
+        'chart_div': chart_div,
+        'error_message': error_message,
+    })
+
+def estadisticas_por_categoria(request):
+    chart_div = None
+    error_message = None
+    categorias = [
+        'Ropa',
+         'Artículos Escolares',
+         'Artículos de Limpieza',
+         'Alimentos No Perecederos',
+    ]   
+    # ariticulo = Articulo.objects.filter        
+    intercambios = Intercambio.objects.filter( estado = 'Efectuado') \
+                            .values('articulo_solicitado__Categoria') \
+                            .annotate(cantidad=Count('id'))
+
+    df = pd.DataFrame(intercambios)
+
+    if not df.empty:
+        df.rename(columns={'articulo_solicitado__Categoria': 'categoria'}, inplace=True)
+        fig = px.bar(df, x='categoria', y= 'cantidad', title=f'Cantidad de Intercambios por categoria')
+        chart_div = fig.to_html(full_html=False)
+    else:
+        error_message = "No se encuentran disponibles las estadísticas porque no existen intercambios efectuados"
+
+    return render(request, 'estadisticasPorCategoria.html', {
         'chart_div': chart_div,
         'error_message': error_message,
     })
