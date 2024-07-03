@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from notificaciones.models import Notification
 from django.utils.crypto import get_random_string
+from django.core.mail import send_mail
 
 @login_required
 def solicitar_intercambio(request, articulo_id):
@@ -46,6 +47,13 @@ def solicitar_intercambio(request, articulo_id):
             sender=solicitante,
             user=destinatario,
             message=f'Hola "{destinatario.nombre}" tienes una nueva solicitud de intercambio pendiente.',
+            )
+        send_mail(
+                'Solicitud de intercambio',
+                f'¡Hola {destinatario.nombre}, tienes una nueva solicitud de intercambio pendiente',
+                'ingecaritas@gmail.com',
+                [destinatario.mail],
+                fail_silently=False,
             )
         messages.success(request, 'Solicitud de intercambio realizada con éxito.')
         return redirect('menuPrincipal')
