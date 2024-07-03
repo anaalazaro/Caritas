@@ -11,6 +11,7 @@ def eliminar_filial(request, filial_id):
                 filial.ayudante.borrado=True
                 filial.ayudante.save()
             filial.borrado=True
+            filial.ayudante=None
             filial.save()
             messages.success(request, "Se eliminó la filial exitosamente")
         else:

@@ -12,7 +12,7 @@ def es_admin(user):
 @login_required
 @user_passes_test(es_admin)
 def registro(request):
-    filiales = Filial.objects.filter(ayudante__isnull=True)
+    filiales = Filial.objects.filter(ayudante__isnull=True, borrado=False)
     formulario = CustomUserCreationForm()
     if filiales:
         if request.method == 'POST':

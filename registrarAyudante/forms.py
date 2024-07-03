@@ -80,6 +80,8 @@ class CustomUserCreationForm(UserCreationForm):
         if CustomUser.objects.filter(dni=dni).exists():
            if(CustomUser.objects.get(dni=dni)).borrado==False:
               raise forms.ValidationError(_("Este DNI ya está registrado. Por favor, utiliza otro."))
+           else: 
+                return dni
         return dni
     
     def clean_fechaNacimiento(self):
