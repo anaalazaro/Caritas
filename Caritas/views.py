@@ -171,7 +171,7 @@ def efectuarIntercambio(request, codigo_intercambio):
                 intercambio.articulo_solicitado.save()
                 send_mail(
                     'Intercambio',
-                    f'¡Se ha efectuado el intercambio con código {intercambio.codigo_intercambio} exitosamente! Si lo deseas, puedes calificar al usuario con el que has realizado el intercambio, dirígete a su perfil y deja tu reseña.',
+                    f'¡Se ha efectuado el intercambio con código {intercambio.codigo_intercambio} exitosamente! Si lo deseas, dirígete a tu historial de intercambios y deja tu reseña para el intercambiador.',
                 'ingecaritas@gmail.com',
                     [intercambio.destinatario.mail,intercambio.solicitante.mail],
                     fail_silently=False,
