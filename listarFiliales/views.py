@@ -3,7 +3,7 @@ from crearFilial.models import Filial
 import json
 
 def listar_filiales(request):
-    filiales = Filial.objects.all()
+    filiales = Filial.objects.filter(borrado=False)
 
     # Construir una lista de diccionarios con los datos necesarios
     filiales_coords = []

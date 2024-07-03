@@ -42,16 +42,20 @@ def mostrar(request):
         # Si el usuario no tiene el rol de usuario normal, redirigir a alguna otra página o mostrar un mensaje de error
         return HttpResponse("No tienes permiso para acceder a esta página")
     user=request.user
-    sugeridos= Articulo.objects.filter(aprobado=True, borrado=False).exclude(usuario=request.user)
+    borrados= CustomUser.objects.filter(borrado=True)
+    for borrado in borrados:
+        print("borrado",borrado.username)
+    sugeridos= Articulo.objects.filter(aprobado=True, borrado=False, intercambiado=False).exclude((Q(usuario__in=borrados)) |(Q(usuario=request.user)))
     print(sugeridos)
     return render (request, 'menuPrincipal.html', {'user': user, 'articulos':sugeridos })
 
 @login_required
 def mostrarArticulosOrdenados(request):
-    usuario_actual = request.user
+    usuario_actual = request.user 
     if usuario_actual.roles != 'usuario':
        return HttpResponse("No tienes permiso para acceder a esta página")
-    ordenados= Articulo.objects.filter(aprobado=True, borrado=False).exclude(usuario=request.user).order_by('Titulo')
+    borrados= CustomUser.objects.filter(borrado=True)
+    ordenados= Articulo.objects.filter(aprobado=True, borrado=False, intercambiado=False).exclude((Q(usuario__in=borrados)) |(Q(usuario=request.user))).order_by('Titulo')
     return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': ordenados})
 
 
@@ -64,7 +68,8 @@ def mostrarPorCategoria(request):
         return HttpResponse("No tienes permiso para acceder a esta página")
     if 'categoria' in request.GET:
         categoria_seleccionada = request.GET['categoria']
-        articulos_filtrados = Articulo.objects.filter(aprobado=True, Categoria=categoria_seleccionada, borrado=False).exclude(usuario=request.user)
+        borrados= CustomUser.objects.filter(borrado=True)
+        articulos_filtrados = Articulo.objects.filter(aprobado=True, Categoria=categoria_seleccionada, borrado=False, intercambiado=False).exclude((Q(usuario__in=borrados)) |(Q(usuario=request.user)))
         if articulos_filtrados.exists():
             # Si hay artículos para la categoría seleccionada, los mostramos
             return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': articulos_filtrados})
@@ -73,7 +78,7 @@ def mostrarPorCategoria(request):
             messages.info(request, 'No hay artículos para la categoría seleccionada.')
             return render(request, 'menuPrincipal.html', {'user': request.user})
     else:
-        articulos = Articulo.objects.filter(aprobado=True, borrado=False).exclude(usuario=request.user)
+        articulos = Articulo.objects.filter(aprobado=True, borrado=False, intercambiado=False).exclude((Q(usuario__in=borrados)) |(Q(usuario=request.user)))
         # Si no se ha seleccionado ninguna categoría, puedes manejarlo de acuerdo a tu lógica
         return render(request, 'menuPrincipal.html', {'user': request.user, 'articulos': articulos})
     
@@ -160,6 +165,10 @@ def efectuarIntercambio(request, codigo_intercambio):
                 intercambio.destinatario.save()
                 intercambio.destinatario.save()
                 intercambio.save()
+                intercambio.articulo_ofrecido.intercambiado=True
+                intercambio.articulo_solicitado.intercambiado=True
+                intercambio.articulo_ofrecido.save()
+                intercambio.articulo_solicitado.save()
                 send_mail(
                     'Intercambio',
                     f'¡Se ha efectuado el intercambio con código {intercambio.codigo_intercambio} exitosamente! Si lo deseas, puedes calificar al usuario con el que has realizado el intercambio, dirígete a su perfil y deja tu reseña.',
